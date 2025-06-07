@@ -189,7 +189,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         const text = b.text.replace(/\n/g, '\\N');
         return `Dialogue: 0,${start},${end},Default,,0,0,0,,${text}`;
     });
-      return header + dialogues.join('\n') + '\n';
+    return header + dialogues.join('\n') + '\n';
 }
 
 function parseSubtitle(content, type) {
@@ -269,7 +269,7 @@ function checkSequentialTimestamps(blocks) {
         }
         prev = start;
     }
-    console.log('[checkSequentialTimestamps] 時間碼順序檢查通過');
+    // console.log('[checkSequentialTimestamps] 時間碼順序檢查通過');
     return true;
 }
 
@@ -407,7 +407,7 @@ async function main() {
             summary = '';
         }
         if (summary) {
-            console.log('摘要產生完成：', summary);
+            // console.log('摘要產生完成：', summary);
         } else {
             console.warn('未能成功產生摘要，將直接進行翻譯。');
         }
@@ -465,9 +465,9 @@ async function main() {
         process.stdout.write(`\r翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
         let translations;
         try {
-            console.error('翻譯內容:', JSON.stringify(texts, null, 2));
+            // console.error('翻譯內容:', JSON.stringify(texts, null, 2));
             translations = await translateBatch(texts, apiKey, model);
-            console.error('翻譯結果:', JSON.stringify(translations, null, 2));
+            // console.error('翻譯結果:', JSON.stringify(translations, null, 2));
             if (!Array.isArray(translations) || translations.length !== batch.length) {
                 console.error(`\n翻譯失敗: 翻譯數量與原始字幕數量不符 (input: ${batch.length}, result: ${Array.isArray(translations) ? translations.length : 'N/A'})`);
                 if (Array.isArray(translations)) {
@@ -502,14 +502,18 @@ async function main() {
         ...block,
         text: flatTranslations[idx] || ''
     }));
-    console.log('翻譯結果合併完成', translatedBlocks);
-    // 檢查時間碼順序
-    console.log('檢查時間碼順序...');
-    console.log();
-    if (!checkSequentialTimestamps(translatedBlocks)) {
-        console.error('時間碼順序錯誤');
-        process.exit(1);
-    }    console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
+    // console.log('翻譯結果合併完成', translatedBlocks);    // 檢查時間碼順序 (僅適用於 SRT 和 WebVTT)
+    if (type !== 'ass') {
+        console.log('檢查時間碼順序...');
+        console.log();
+        if (!checkSequentialTimestamps(translatedBlocks)) {
+            console.error('時間碼順序錯誤');
+            process.exit(1);
+        }
+        console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
+    } else {
+        console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
+    }
     fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, type, subtitleContent), 'utf8');
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
 }
