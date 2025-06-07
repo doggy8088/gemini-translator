@@ -11,13 +11,13 @@ const DEFAULT_MODEL = 'gemini-2.5-flash-preview-05-20';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 function parseArgs() {
-    return yargs(process.argv.slice(2))
-        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
-        .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑 (支援 .srt, .vtt, .ass)', type: 'string' })
-        .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
+    return yargs(process.argv.slice(2))        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+        .option('input', { alias: 'i', demandOption: true, describe: '輸入檔案路徑 (支援 .srt, .vtt, .ass, .md)', type: 'string' })
+        .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
         .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })        .example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
+        .example('npx @willh/gemini-translator -i input.md', '翻譯 Markdown 檔案')
         .example('npx @willh/gemini-translator -i input.srt -o output.ass', '將 SRT 翻譯並轉換為 ASS 格式')
         .example('npx @willh/gemini-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
         .example('npx @willh/gemini-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
@@ -219,6 +219,61 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     return header + dialogues.join('\n') + '\n';
 }
 
+function parseMarkdown(content) {
+    // Parse Markdown content and return chunks for translation
+    // Each chunk is treated as a block with text content
+    // For files larger than 1000 bytes, split by lines
+    const chunks = [];
+
+    if (Buffer.byteLength(content, 'utf8') > 1000) {
+        // Split large files by lines, but keep related content together
+        const lines = content.split(/\r?\n/);
+        let currentChunk = '';
+        let chunkIndex = 1;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const testChunk = currentChunk + (currentChunk ? '\n' : '') + line;
+
+            // If adding this line would exceed reasonable chunk size (500 bytes),
+            // or we hit a natural break point (empty line after content)
+            if (Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk.trim()) {
+                // Save current chunk if it has content
+                if (currentChunk.trim()) {
+                    chunks.push({
+                        index: String(chunkIndex++),
+                        text: currentChunk.trim()
+                    });
+                }
+                currentChunk = line;
+            } else {
+                currentChunk = testChunk;
+            }
+        }
+
+        // Add the last chunk
+        if (currentChunk.trim()) {
+            chunks.push({
+                index: String(chunkIndex),
+                text: currentChunk.trim()
+            });
+        }
+    } else {
+        // Small files are treated as single chunk
+        chunks.push({
+            index: '1',
+            text: content.trim()
+        });
+    }
+
+    return chunks;
+}
+
+function serializeMarkdown(blocks) {
+    // Reconstruct Markdown content from translated blocks
+    return blocks.map(b => b.text).join('\n\n');
+}
+
 function parseSubtitle(content, type) {
     switch (type) {
         case 'srt':
@@ -227,6 +282,8 @@ function parseSubtitle(content, type) {
             return parseWebVTT(content);
         case 'ass':
             return parseASS(content);
+        case 'md':
+            return parseMarkdown(content);
         default:
             throw new Error(`不支援的字幕格式: ${type}`);
     }
@@ -242,6 +299,8 @@ function serializeSubtitle(blocks, type, originalContent = '') {
             // Only pass originalContent if it's already ASS format
             const isOriginalASS = originalContent && originalContent.includes('[Script Info]');
             return serializeASS(blocks, isOriginalASS ? originalContent : '');
+        case 'md':
+            return serializeMarkdown(blocks);
         default:
             throw new Error(`不支援的字幕格式: ${type}`);
     }
@@ -258,6 +317,8 @@ function generateOutputPath(inputPath, type) {
             return `${baseName}.zh.vtt`;
         case 'ass':
             return `${baseName}.zh.ass`;
+        case 'md':
+            return `${baseName}.zh.md`;
         default:
             return `${baseName}.zh${ext}`;
     }
@@ -274,8 +335,10 @@ function detectSubtitleType(filePath) {
         case '.ass':
         case '.ssa':
             return 'ass';
+        case '.md':
+            return 'md';
         default:
-            throw new Error(`不支援的字幕檔案格式: ${ext}。支援的格式: .srt, .vtt, .webvtt, .ass, .ssa`);
+            throw new Error(`不支援的字幕檔案格式: ${ext}。支援的格式: .srt, .vtt, .webvtt, .ass, .ssa, .md`);
     }
 }
 
@@ -303,13 +366,86 @@ function checkSequentialTimestamps(blocks) {
 }
 
 // 修改 translateBatch，於 prompt 加入摘要 context
-async function translateBatch(texts, apiKey, model) {
+async function translateBatch(texts, apiKey, model, contentType = 'subtitle') {
     // 若有摘要，加入 context 以提升翻譯品質
     let contextPrompt = '';
     if (typeof globalThis.translationSummary === 'string' && globalThis.translationSummary) {
         contextPrompt = `\n\n【主題摘要】\n${globalThis.translationSummary}\n`;
     }
-    const prompt = `The following text is a string array. Translate each element in this array from English to Traditional Chinese (zh-tw). If the string string have 10 elements, the output should also be a string array with 10 elements. Do not add any extra text or formatting. Make sure the output is a valid JSON array. Here is the context of the translation task: \`\`\`${contextPrompt}\`\`\``;
+
+    const contentTypeText = contentType === 'markdown' ? 'markdown content' : 'subtitle content';
+    const formatInstructions = contentType === 'markdown' ? 'Preserve markdown formatting like headers, links, code blocks, and other markdown syntax.' : '';
+    let prompt = `The following text is a string array containing ${contentTypeText}. Translate each element in this array from English to Traditional Chinese (zh-tw). If the input has 10 elements, the output should also be a string array with 10 elements. ${formatInstructions} Do not add any extra text or formatting beyond the translation. Make sure the output is a valid JSON array. Here is the context of the translation task: \`\`\`${contextPrompt}\`\`\``;
+
+    prompt += `
+<notes>
+Use the following term mappings:
+- creating = 建立
+- create = 建立
+- 創建 = 建立
+- 创建 = 建立
+- 質量 (quality) = 品質
+- 編程 (coding) (programming) = 程式設計
+- object = 物件
+- queue = 佇列
+- stack = 堆疊
+- information = 資訊
+- invocation = 呼叫
+- code = 程式碼
+- running = 執行
+- library = 函式庫
+- schematics = 原理圖
+- building = 建構
+- Setting up = 設定
+- package = 套件
+- video = 影片
+- for loop = for 迴圈
+- class = 類別
+- Concurrency = 平行處理
+- Transaction = 交易
+- Transactional = 交易式
+- Code Snippet = 程式碼片段
+- Code Generation = 程式碼產生器
+- Any Class = 任意類別
+- Scalability = 延展性
+- Dependency Package = 相依套件
+- Dependency Injection = 相依性注入
+- Reserved Keywords = 保留字
+- Metadata =  Metadata
+- Clone = 複製
+- Memory = 記憶體
+- Built-in = 內建
+- Global = 全域
+- Compatibility = 相容性
+- Function = 函式
+- Refresh = 重新整理
+- document = 文件
+- example = 範例
+- demo = 展示
+- quality = 品質
+- tutorial = 指南
+- recipes = 秘訣
+- data source = 資料來源
+- premium requests = 進階請求
+- remote = 遠端
+- settings = 設定
+- project = 專案
+- database = 資料庫
+- cache = 快取
+- caching = 快取
+- base model = 基礎模型
+- demonstration = 展示
+- demo = 展示
+- creator = 創作者
+- integration = 整合
+- character = 字元
+
+Do not translate the following terms:
+- Semantic Kernel
+- Plugins
+- LLM
+</notes>`;
+
     const body = {
         contents: [
             { role: 'user', parts: [{ text: prompt }, { text: JSON.stringify(texts) }] },
@@ -420,8 +556,7 @@ async function main() {
     }
     if (!fs.existsSync(inputPath)) {
         console.error('找不到輸入檔案:', inputPath);
-        process.exit(1);
-    }    console.log(`檢測到輸入字幕格式: ${inputType.toUpperCase()}`);
+        process.exit(1);    }    console.log(`檢測到輸入檔案格式: ${inputType.toUpperCase()}`);
     if (inputType !== outputType) {
         console.log(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
     }
@@ -465,10 +600,10 @@ async function main() {
 
     // 產生摘要以提升翻譯品質
     const allTexts = blocks.map(b => b.text).join('\n');
-    let summary = '';
-    try {
-        console.log('正在產生字幕摘要以提升翻譯品質...');
-        const summaryPrompt = `請閱讀以下英文字幕內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
+    let summary = '';    try {
+        console.log('正在產生內容摘要以提升翻譯品質...');
+        const contentType = inputType === 'md' ? '文件' : '字幕';
+        const summaryPrompt = `請閱讀以下英文${contentType}內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
         const summaryBody = {
             contents: [
                 { role: 'user', parts: [{ text: summaryPrompt }] },
@@ -499,7 +634,8 @@ async function main() {
     globalThis.translationSummary = summary;
 
     let translatedBlocks = [];
-    console.log(`共 ${blocks.length} 條字幕，分批處理中...`);
+    const itemType = inputType === 'md' ? '段落' : '條字幕';
+    console.log(`共 ${blocks.length} ${itemType}，分批處理中...`);
     // 將 blocks 分批
     const batches = [];
     for (let i = 0; i < blocks.length; i += BATCH_SIZE) {
@@ -510,20 +646,23 @@ async function main() {
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
         process.stdout.write(`\r翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
-        let translations;
-        try {
+        let translations;        try {
             // console.error('翻譯內容:', JSON.stringify(texts, null, 2));
-            translations = await translateBatch(texts, apiKey, model);
+            const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
+            translations = await translateBatch(texts, apiKey, model, contentType);
             // console.error('翻譯結果:', JSON.stringify(translations, null, 2));
+
             if (!Array.isArray(translations) || translations.length !== batch.length) {
-                console.error(`\n翻譯失敗: 翻譯數量與原始字幕數量不符 (input: ${batch.length}, result: ${Array.isArray(translations) ? translations.length : 'N/A'})`);
+                const itemType = inputType === 'md' ? '段落' : '字幕';
+                console.error(`\n翻譯失敗: 翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(translations) ? translations.length : 'N/A'})`);
                 if (Array.isArray(translations)) {
                     console.error('翻譯結果:', JSON.stringify(translations, null, 2));
                 }
-                throw new Error('翻譯數量與原始字幕數量不符');
+                throw new Error(`翻譯數量與原始${itemType}數量不符`);
             }
         } catch (e) {
-            if (!e.message || !e.message.includes('翻譯數量與原始字幕數量不符')) {
+            const itemType = inputType === 'md' ? '段落' : '字幕';
+            if (!e.message || !e.message.includes(`翻譯數量與原始${itemType}數量不符`)) {
                 console.error(`\n翻譯失敗:`, e.message);
                 throw e;
             }
@@ -550,7 +689,7 @@ async function main() {
         text: flatTranslations[idx] || ''
     }));
     // console.log('翻譯結果合併完成', translatedBlocks);    // 檢查時間碼順序 (僅適用於 SRT 和 WebVTT)
-    if (outputType !== 'ass') {
+    if (outputType !== 'ass' && outputType !== 'md') {
         console.log('檢查時間碼順序...');
         console.log();
         if (!checkSequentialTimestamps(translatedBlocks)) {
@@ -559,7 +698,7 @@ async function main() {
         }
         console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
     } else {
-        // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
+        // console.log('ASS 和 Markdown 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
     fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, outputType, subtitleContent), 'utf8');
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);

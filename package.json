@@ -8,10 +8,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["gemini", "srt", "subtitle", "translator", "chinese", "traditional"],
+  "keywords": ["gemini", "srt", "subtitle", "translator", "chinese", "traditional", "markdown"],
   "author": "willh",
   "license": "MIT",
-  "description": "A tool to translate SRT subtitle files from English to Traditional Chinese using Google Gemini API",
+  "description": "A tool to translate SRT, WebVTT, ASS and Markdown files from English to Traditional Chinese using Google Gemini API",
   "dependencies": {
     "axios": "^1.9.0",
     "yargs": "^18.0.0"
