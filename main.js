@@ -15,12 +15,12 @@ function parseArgs() {
         .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑 (支援 .srt, .vtt, .ass)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })
-        .option('autofix', { describe: '自動修正字幕序號不連續問題 (僅適用於 SRT)', type: 'boolean', default: false })
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })
         .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-srt-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-srt-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
-        .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正字幕序號不連續問題')
+        .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
+        .example('npx @willh/gemini-srt-translator -i input.vtt --autofix', '自動修正 WebVTT 字幕序號不連續問題')
         .help('h')
         .alias('h', 'help')
         .wrap(null)
@@ -51,51 +51,73 @@ function serializeSRT(blocks) {
 
 function parseWebVTT(content) {
     // 解析 WebVTT，回傳 [{index, time, text}]
-    const lines = content.split(/\r?\n/);
+    // 分割成段落
+    const segments = content.split(/\n\s*\n/);
     const blocks = [];
-    let currentBlock = null;
-    let index = 1;
 
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-
-        // Skip WEBVTT header and empty lines
-        if (line === 'WEBVTT' || line === '') {
+    for (const segment of segments) {
+        const lines = segment.trim().split(/\r?\n/);
+        if (lines.length === 0 || lines[0].trim() === 'WEBVTT') {
             continue;
         }
 
-        // Check if this is a timestamp line
-        if (line.includes(' --> ')) {
-            if (currentBlock) {
-                // Save previous block
-                blocks.push(currentBlock);
+        let index = null;
+        let timeIndex = -1;
+
+        // 尋找時間碼行
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].includes(' --> ')) {
+                timeIndex = i;
+                break;
             }
-            currentBlock = {
-                index: String(index++),
-                time: line,
-                text: ''
-            };
-        } else if (currentBlock) {
-            // This is subtitle text
-            if (currentBlock.text) {
-                currentBlock.text += '\n' + line;
-            } else {
-                currentBlock.text = line;
+        }
+
+        if (timeIndex === -1) {
+            continue; // 沒有找到時間碼，跳過這個段落
+        }
+
+        // 檢查時間碼前面是否有索引
+        if (timeIndex > 0) {
+            const potentialIndex = lines[timeIndex - 1].trim();
+            if (!isNaN(parseInt(potentialIndex, 10)) && String(parseInt(potentialIndex, 10)) === potentialIndex) {
+                index = potentialIndex;
             }
+        }
+
+        const time = lines[timeIndex].trim();
+        const textLines = lines.slice(timeIndex + 1);
+        const text = textLines.join('\n').trim();
+
+        if (text) {
+            blocks.push({
+                index: index,
+                time: time,
+                text: text
+            });
         }
     }
 
-    // Add the last block
-    if (currentBlock) {
-        blocks.push(currentBlock);
+    // 為沒有索引的塊分配順序索引
+    let autoIndex = 1;
+    for (const block of blocks) {
+        if (!block.index) {
+            block.index = String(autoIndex);
+        }
+        autoIndex++;
     }
 
-    return blocks.filter(b => b.text.trim());
+    return blocks;
 }
 
 function serializeWebVTT(blocks) {
     let result = 'WEBVTT\n\n';
-    result += blocks.map(b => `${b.time}\n${b.text}\n`).join('\n');
+    result += blocks.map(b => {
+        if (b.index) {
+            return `${b.index}\n${b.time}\n${b.text}`;
+        } else {
+            return `${b.time}\n${b.text}`;
+        }
+    }).join('\n\n');
     return result;
 }
 
@@ -377,10 +399,47 @@ async function main() {
         process.exit(1);
     }
 
-    console.log(`檢測到字幕格式: ${type.toUpperCase()}`);
-
-    const subtitleContent = fs.readFileSync(inputPath, 'utf8');
+    console.log(`檢測到字幕格式: ${type.toUpperCase()}`);    const subtitleContent = fs.readFileSync(inputPath, 'utf8');
     const blocks = parseSubtitle(subtitleContent, type);
+
+    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
+    if (type === 'srt' || type === 'webvtt') {
+        const indices = blocks.map(b => parseInt(b.index, 10));
+        let broken = [];
+        for (let i = 1; i < indices.length; ++i) {
+            if (indices[i] !== indices[i - 1] + 1) {
+                broken.push({
+                    missing: indices[i - 1] + 1,
+                    prevTime: blocks[i - 1].time,
+                    nextTime: blocks[i].time,
+                    pos: i
+                });
+            }
+        }
+        if (broken.length > 0) {
+            if (argv.autofix) {
+                console.warn('發現字幕序號不連續，自動修正中...');
+                // 重新編號 blocks
+                for (let i = 0; i < blocks.length; ++i) {
+                    blocks[i].index = String(i + 1);
+                }
+                // 修正後直接覆蓋原檔，根據格式使用對應的序列化函數
+                const fixedContent = type === 'srt' ? serializeSRT(blocks) : serializeWebVTT(blocks);
+                fs.writeFileSync(inputPath, fixedContent, 'utf8');
+                console.log('已自動修正並覆蓋原始檔案，請重新執行本程式。');
+                process.exit(0);
+            } else {
+                console.error('字幕序號不連續，發現缺漏：');
+                broken.forEach(b => {
+                    console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
+                });
+                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
+                const fileExt = type === 'srt' ? 'srt' : 'vtt';
+                console.error(`例如：npx @willh/gemini-srt-translator --input input.${fileExt} --autofix`);
+                process.exit(1);
+            }
+        }
+    }
 
     // 產生摘要以提升翻譯品質
     const allTexts = blocks.map(b => b.text).join('\n');
@@ -417,40 +476,6 @@ async function main() {
     }    // 將摘要存入 global 以便後續翻譯任務使用
     globalThis.translationSummary = summary;
 
-    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (僅適用於 SRT)
-    if (type === 'srt') {
-        const indices = blocks.map(b => parseInt(b.index, 10));
-        let broken = [];
-        for (let i = 1; i < indices.length; ++i) {
-            if (indices[i] !== indices[i - 1] + 1) {
-                broken.push({
-                    missing: indices[i - 1] + 1,
-                    prevTime: blocks[i - 1].time,
-                    nextTime: blocks[i].time,
-                    pos: i
-                });
-            }
-        }
-        if (broken.length > 0) {
-            if (argv.autofix) {
-                console.warn('發現字幕序號不連續，自動修正中...');
-                // 重新編號 blocks
-                for (let i = 0; i < blocks.length; ++i) {
-                    blocks[i].index = String(i + 1);
-                }
-                // 修正後直接覆蓋原檔
-                fs.writeFileSync(inputPath, serializeSRT(blocks), 'utf8');
-                console.log('已自動修正並覆蓋原始檔案，請重新執行本程式。');
-                process.exit(0);
-            } else {
-                console.error('字幕序號不連續，發現缺漏：');
-                broken.forEach(b => {
-                    console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
-                });
-                process.exit(1);
-            }
-        }
-    }
     let translatedBlocks = [];
     console.log(`共 ${blocks.length} 條字幕，分批處理中...`);
     // 將 blocks 分批
@@ -512,7 +537,7 @@ async function main() {
         }
         console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
     } else {
-        console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
+        // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
     fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, type, subtitleContent), 'utf8');
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
