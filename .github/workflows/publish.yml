@@ -29,7 +29,9 @@ jobs:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
     - name: Build package
-      run: npm pack
+      run: |
+        npm pack
+        echo "PACKAGE_FILE=$(ls *.tgz)" >> $GITHUB_ENV
 
     - name: Publish to NPM
       run: npm publish --access public
@@ -38,11 +40,8 @@ jobs:
 
     - name: Upload package to release
       if: github.event_name == 'release'
-      uses: actions/upload-release-asset@v1
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ env.PACKAGE_FILE }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tgz
-        asset_name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tgz
-        asset_content_type: application/gzip
