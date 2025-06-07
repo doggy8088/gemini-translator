@@ -1,0 +1,20 @@
+[Script Info]
+Title: Converted from WebVTT
+ScriptType: v4.00+
+WrapStyle: 0
+PlayResX: 1280
+PlayResY: 720
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Default, 微軟正黑體,48,&H0080FFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,1,0,1,2,0,2,1,1,40,1
+Style: Secondary,Helvetica,12,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,2,0,2,1,1,40,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.00,Default,,0,0,0,,我們將在 agent edit
+Dialogue: 0,0:00:01.00,0:00:05.00,Default,,0,0,0,,和 ask 之間切換，以展示如何使用
+Dialogue: 0,0:00:05.00,0:00:07.00,Default,,0,0,0,,這三種不同模式。
+Dialogue: 0,0:00:07.00,0:00:08.00,Default,,0,0,0,,ask 模式非常適合用於溝通
+Dialogue: 0,0:00:08.00,0:00:10.00,Default,,0,0,0,,您想進行的更改。

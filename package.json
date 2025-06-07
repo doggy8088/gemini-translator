@@ -6,7 +6,12 @@
     "gemini-translator": "./main.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/test-runner.js",
+    "test:ci": "npm test",
+    "lint": "echo \"Linting with basic checks\" && node -c main.js && node -c promisePool.js",
+    "validate": "npm ls && npm pack --dry-run",
+    "prepare": "npm run lint",
+    "prepublishOnly": "npm run test && npm run validate"
   },
   "keywords": ["gemini", "srt", "subtitle", "translator", "chinese", "traditional", "markdown"],
   "author": "willh",

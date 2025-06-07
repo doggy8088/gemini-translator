@@ -1,0 +1,20 @@
+[Script Info]
+Title: Converted from WebVTT
+ScriptType: v4.00+
+WrapStyle: 0
+PlayResX: 1280
+PlayResY: 720
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Default, 微軟正黑體,48,&H0080FFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,1,0,1,2,0,2,1,1,40,1
+Style: Secondary,Helvetica,12,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,2,0,2,1,1,40,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.00,Default,,0,0,0,,we are going between agent edit
+Dialogue: 0,0:00:01.00,0:00:05.00,Default,,0,0,0,,and ask to kind of show how you can use
+Dialogue: 0,0:00:05.00,0:00:07.00,Default,,0,0,0,,these three different modes.
+Dialogue: 0,0:00:07.00,0:00:08.00,Default,,0,0,0,,ask is really good at talking
+Dialogue: 0,0:00:08.00,0:00:10.00,Default,,0,0,0,,through changes that you want to do.

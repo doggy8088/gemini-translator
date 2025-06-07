@@ -1,0 +1,10111 @@
+1
+00:00:00,125 --> 00:00:01,875
+we are going between agent edit
+
+2
+00:00:01,875 --> 00:00:05,750
+and ask to kind of show how you can use
+
+3
+00:00:05,750 --> 00:00:07,333
+these three different modes.
+
+4
+00:00:07,333 --> 00:00:08,875
+ask is really good at talking
+
+5
+00:00:08,875 --> 00:00:10,583
+through changes that you want to do.
+
+6
+00:00:10,583 --> 00:00:12,833
+Edit mode is for those specific changes
+
+7
+00:00:12,833 --> 00:00:13,750
+that you want.
+
+8
+00:00:13,750 --> 00:00:14,958
+And then agent mode
+
+9
+00:00:14,958 --> 00:00:16,125
+is when you just want to vibe,
+
+10
+00:00:16,125 --> 00:00:17,208
+So you just use Agent Mode
+
+11
+00:00:17,208 --> 00:00:18,291
+to get it done for you.
+
+12
+00:00:18,291 --> 00:00:19,750
+Agent mode is just so good.
+
+13
+00:00:19,750 --> 00:00:21,875
+Honestly. Yes.
+
+14
+00:00:21,875 --> 00:00:24,875
+Oh my goodness.
+
+15
+00:00:30,875 --> 00:00:31,625
+Hi everyone.
+
+16
+00:00:31,625 --> 00:00:33,833
+I'm Kate Asia and I'm here with John.
+
+17
+00:00:33,833 --> 00:00:36,500
+And today what are we doing John.
+
+18
+00:00:36,500 --> 00:00:37,666
+I think we're going to take a look
+
+19
+00:00:37,666 --> 00:00:39,291
+at the whole bunch of different models
+
+20
+00:00:39,291 --> 00:00:40,750
+that are available inside copilot.
+
+21
+00:00:40,750 --> 00:00:41,125
+And we're going to
+
+22
+00:00:41,125 --> 00:00:43,083
+just try them out in the different modes.
+
+23
+00:00:43,083 --> 00:00:45,000
+So there's, ask mode
+
+24
+00:00:45,000 --> 00:00:47,291
+where we can just ask questions,
+
+25
+00:00:47,291 --> 00:00:48,916
+get responses from Copilot.
+
+26
+00:00:48,916 --> 00:00:50,291
+There's edit mode
+
+27
+00:00:50,291 --> 00:00:53,000
+where we can pull in a bunch of files
+
+28
+00:00:53,000 --> 00:00:54,750
+and do mass edits, refactor
+
+29
+00:00:54,750 --> 00:00:56,250
+changes across them.
+
+30
+00:00:56,250 --> 00:00:58,208
+And then there's agent mode
+
+31
+00:00:58,208 --> 00:00:59,541
+which is really great.
+
+32
+00:00:59,541 --> 00:01:00,916
+and this is one of my favorite ways
+
+33
+00:01:00,916 --> 00:01:03,291
+to, to do prompting for agent mode.
+
+34
+00:01:03,291 --> 00:01:03,500
+Right.
+
+35
+00:01:03,500 --> 00:01:06,500
+Because what it does, it takes
+
+36
+00:01:06,708 --> 00:01:09,708
+really a fairly large prompt, usually,
+
+37
+00:01:10,125 --> 00:01:11,541
+pretty descriptive
+
+38
+00:01:11,541 --> 00:01:12,750
+about a number of different things
+
+39
+00:01:12,750 --> 00:01:13,666
+you want to do.
+
+40
+00:01:13,666 --> 00:01:15,500
+And it's going to run through it.
+
+41
+00:01:15,500 --> 00:01:17,666
+It's going to pause every now
+
+42
+00:01:17,666 --> 00:01:18,500
+and then kind of ask
+
+43
+00:01:18,500 --> 00:01:19,875
+if it's doing the right thing,
+
+44
+00:01:19,875 --> 00:01:21,625
+tell us what it wants to do next.
+
+45
+00:01:21,625 --> 00:01:23,041
+Go ahead and do more.
+
+46
+00:01:23,041 --> 00:01:24,000
+And then we get
+
+47
+00:01:24,000 --> 00:01:24,750
+to kind of check in with it
+
+48
+00:01:24,750 --> 00:01:26,333
+and see how the progress is going
+
+49
+00:01:26,333 --> 00:01:27,000
+each time.
+
+50
+00:01:27,000 --> 00:01:29,083
+But one of the keys to
+
+51
+00:01:29,083 --> 00:01:29,916
+that is having
+
+52
+00:01:29,916 --> 00:01:31,791
+a really good solid prompt.
+
+53
+00:01:31,791 --> 00:01:32,916
+So yes,
+
+54
+00:01:32,916 --> 00:01:33,916
+it's kind of my standard
+
+55
+00:01:33,916 --> 00:01:34,833
+for how I tend to do it
+
+56
+00:01:34,833 --> 00:01:35,166
+nowadays,
+
+57
+00:01:35,166 --> 00:01:36,500
+where I actually just put the prompt
+
+58
+00:01:36,500 --> 00:01:40,333
+into a read, me and, you know, just just
+
+59
+00:01:40,750 --> 00:01:42,166
+so our audience knows,
+
+60
+00:01:42,166 --> 00:01:44,250
+this is not my first cut at this, right?
+
+61
+00:01:44,250 --> 00:01:45,583
+Meaning
+
+62
+00:01:45,583 --> 00:01:47,250
+I was kind of working with copilot
+
+63
+00:01:47,250 --> 00:01:48,083
+and saying, like, okay,
+
+64
+00:01:48,083 --> 00:01:49,041
+this is what I want to do,
+
+65
+00:01:49,041 --> 00:01:50,875
+but help me refine this.
+
+66
+00:01:50,875 --> 00:01:51,833
+Read me
+
+67
+00:01:51,833 --> 00:01:53,791
+basically making it a full PDF
+
+68
+00:01:53,791 --> 00:01:55,666
+for product requirement stock,
+
+69
+00:01:55,666 --> 00:01:57,333
+and putting all the things in there
+
+70
+00:01:57,333 --> 00:01:58,000
+that we would need
+
+71
+00:01:58,000 --> 00:01:58,958
+and then testing it out
+
+72
+00:01:58,958 --> 00:02:00,375
+a little bit to see what things were good
+
+73
+00:02:00,375 --> 00:02:01,166
+and what things were weren't.
+
+74
+00:02:01,166 --> 00:02:02,875
+I imagine that's a lot of what
+
+75
+00:02:02,875 --> 00:02:04,041
+a lot of the developers out
+
+76
+00:02:04,041 --> 00:02:04,958
+there are hitting, right.
+
+77
+00:02:04,958 --> 00:02:05,791
+It's just kind of
+
+78
+00:02:05,791 --> 00:02:08,166
+tuning their prompts properly.
+
+79
+00:02:08,166 --> 00:02:10,250
+So yes, the situation they're in.
+
+80
+00:02:10,250 --> 00:02:11,791
+So it's like using Copilot
+
+81
+00:02:11,791 --> 00:02:13,125
+to create that PRD,
+
+82
+00:02:13,125 --> 00:02:15,458
+to use Copilot to build
+
+83
+00:02:15,458 --> 00:02:17,708
+the app based on the PRD, I love it.
+
+84
+00:02:17,708 --> 00:02:18,875
+so what we've got here then
+
+85
+00:02:18,875 --> 00:02:20,416
+is, is this read me now,
+
+86
+00:02:20,416 --> 00:02:21,416
+which really contains
+
+87
+00:02:21,416 --> 00:02:22,125
+all the stuff
+
+88
+00:02:22,125 --> 00:02:24,750
+that I'm gonna feed into copilot.
+
+89
+00:02:24,750 --> 00:02:25,916
+And I guess you're going to do with it
+
+90
+00:02:25,916 --> 00:02:27,833
+all, and we'll see how it goes.
+
+91
+00:02:27,833 --> 00:02:29,250
+It's a basic travel
+
+92
+00:02:29,250 --> 00:02:30,541
+reservation app, you know?
+
+93
+00:02:30,541 --> 00:02:33,166
+So, I want to view hotel rooms.
+
+94
+00:02:33,166 --> 00:02:33,750
+I want to be able to make
+
+95
+00:02:33,750 --> 00:02:35,583
+a reservation, etc..
+
+96
+00:02:35,583 --> 00:02:36,833
+And intentionally we're
+
+97
+00:02:36,833 --> 00:02:38,250
+keeping the technology stack
+
+98
+00:02:38,250 --> 00:02:39,875
+really simple here, right?
+
+99
+00:02:39,875 --> 00:02:41,916
+Obviously more complex.
+
+100
+00:02:41,916 --> 00:02:42,875
+This isn't the way you do it
+
+101
+00:02:42,875 --> 00:02:43,916
+in a real production app.
+
+102
+00:02:43,916 --> 00:02:44,208
+I'm like,
+
+103
+00:02:44,208 --> 00:02:45,708
+loading Vue.js from a car
+
+104
+00:02:45,708 --> 00:02:46,833
+and I don't have a build step
+
+105
+00:02:46,833 --> 00:02:48,083
+for the front end, that kind of stuff.
+
+106
+00:02:48,083 --> 00:02:49,208
+It's okay.
+
+107
+00:02:49,208 --> 00:02:50,583
+Okay, we want it to be fast
+
+108
+00:02:50,583 --> 00:02:52,208
+so our viewers don't have to wait forever
+
+109
+00:02:52,208 --> 00:02:53,375
+for a million,
+
+110
+00:02:53,375 --> 00:02:54,416
+you know, node modules
+
+111
+00:02:54,416 --> 00:02:56,416
+to pull down and install and all of that.
+
+112
+00:02:58,291 --> 00:02:59,958
+And we've got some specific instructions.
+
+113
+00:02:59,958 --> 00:03:02,041
+This is something I really like to do
+
+114
+00:03:02,041 --> 00:03:03,625
+where I'm going to initially outline
+
+115
+00:03:03,625 --> 00:03:05,416
+what the project structure
+
+116
+00:03:05,416 --> 00:03:06,666
+is going to be.
+
+117
+00:03:06,666 --> 00:03:07,958
+Now, some of the models
+
+118
+00:03:07,958 --> 00:03:09,083
+that we're going to play with,
+
+119
+00:03:09,083 --> 00:03:11,625
+except visual inputs too.
+
+120
+00:03:11,625 --> 00:03:13,666
+So I could just as a visual diagram,
+
+121
+00:03:13,666 --> 00:03:15,208
+but you know, for now
+
+122
+00:03:15,208 --> 00:03:17,166
+I'm just doing it in markdown here
+
+123
+00:03:17,166 --> 00:03:19,208
+so that the models can read it.
+
+124
+00:03:19,208 --> 00:03:20,458
+And I really love that,
+
+125
+00:03:20,458 --> 00:03:21,791
+you know, you've structured
+
+126
+00:03:21,791 --> 00:03:22,750
+the read me this way
+
+127
+00:03:22,750 --> 00:03:26,500
+because sometimes when I ask agent mode
+
+128
+00:03:26,500 --> 00:03:28,625
+with whichever model to,
+
+129
+00:03:28,625 --> 00:03:30,416
+you know, to spin up a react
+
+130
+00:03:30,416 --> 00:03:31,375
+app or spin up a Vue
+
+131
+00:03:31,375 --> 00:03:34,333
+app, it's not able to do it accurately.
+
+132
+00:03:34,333 --> 00:03:36,416
+So I think having this project structure
+
+133
+00:03:36,416 --> 00:03:37,500
+to tell it, hey, here's
+
+134
+00:03:37,500 --> 00:03:39,166
+exactly how I want you to do this.
+
+135
+00:03:39,166 --> 00:03:39,916
+I think that's going
+
+136
+00:03:39,916 --> 00:03:40,583
+to make a difference.
+
+137
+00:03:40,583 --> 00:03:42,375
+I'm curious to see how that works.
+
+138
+00:03:42,375 --> 00:03:42,750
+Plus, it's
+
+139
+00:03:42,750 --> 00:03:44,333
+an opportunity for us as developers
+
+140
+00:03:44,333 --> 00:03:46,666
+to kind of make thing to content
+
+141
+00:03:46,666 --> 00:03:48,083
+if we like to have it structured
+
+142
+00:03:48,083 --> 00:03:48,750
+because we all have a
+
+143
+00:03:48,750 --> 00:03:50,208
+different preferences
+
+144
+00:03:50,208 --> 00:03:51,000
+where exactly
+
+145
+00:03:51,000 --> 00:03:52,791
+we want our templates, where we want,
+
+146
+00:03:52,791 --> 00:03:53,041
+you know,
+
+147
+00:03:53,041 --> 00:03:54,458
+our virtual end to exist,
+
+148
+00:03:54,458 --> 00:03:55,791
+Every good read. Me too.
+
+149
+00:03:55,791 --> 00:03:56,833
+Always has set up instructions.
+
+150
+00:03:56,833 --> 00:03:58,875
+And that's useful for us as humans,
+
+151
+00:03:58,875 --> 00:03:59,583
+because of course,
+
+152
+00:03:59,583 --> 00:04:00,875
+we're going to want to be able to go in
+
+153
+00:04:00,875 --> 00:04:02,833
+and set up this project elsewhere.
+
+154
+00:04:02,833 --> 00:04:05,416
+But it's also really useful to the model
+
+155
+00:04:05,416 --> 00:04:06,958
+because it can look through this
+
+156
+00:04:06,958 --> 00:04:09,458
+and I can get hints as to some
+
+157
+00:04:09,458 --> 00:04:10,458
+I want like,
+
+158
+00:04:10,458 --> 00:04:10,833
+you know,
+
+159
+00:04:10,833 --> 00:04:11,125
+I'm saying
+
+160
+00:04:11,125 --> 00:04:12,041
+explicitly here,
+
+161
+00:04:12,041 --> 00:04:12,791
+like you're going to set up
+
+162
+00:04:12,791 --> 00:04:14,375
+a Python virtual environment.
+
+163
+00:04:14,375 --> 00:04:15,916
+Best practice right?
+
+164
+00:04:15,916 --> 00:04:17,833
+So hopefully we will run it through.
+
+165
+00:04:17,833 --> 00:04:20,333
+It'll actually go and do that for us.
+
+166
+00:04:20,333 --> 00:04:22,208
+how is the read me
+
+167
+00:04:22,208 --> 00:04:24,083
+right and copilot instructions.
+
+168
+00:04:24,083 --> 00:04:26,916
+How are these two different.
+
+169
+00:04:26,916 --> 00:04:30,875
+So in the instructions we have like
+
+170
+00:04:30,875 --> 00:04:34,041
+operator interaction security environment
+
+171
+00:04:34,041 --> 00:04:37,208
+variables version control code styling.
+
+172
+00:04:37,208 --> 00:04:38,000
+So it's essentially
+
+173
+00:04:38,000 --> 00:04:39,416
+like guiding the model
+
+174
+00:04:39,416 --> 00:04:42,125
+on how you wanted to build the app
+
+175
+00:04:42,125 --> 00:04:43,500
+testing requirements.
+
+176
+00:04:43,500 --> 00:04:44,750
+Python projects I can see.
+
+177
+00:04:44,750 --> 00:04:47,125
+So like the read me is the PRD
+
+178
+00:04:47,125 --> 00:04:48,041
+essentially where you're like,
+
+179
+00:04:48,041 --> 00:04:49,166
+hey, here's what we're building.
+
+180
+00:04:49,166 --> 00:04:50,500
+Here is a tech stack.
+
+181
+00:04:50,500 --> 00:04:52,250
+And then in the instructions
+
+182
+00:04:52,250 --> 00:04:53,291
+you went ahead and gave it
+
+183
+00:04:53,291 --> 00:04:54,708
+like specific guidelines
+
+184
+00:04:54,708 --> 00:04:55,250
+on what you want,
+
+185
+00:04:55,250 --> 00:04:57,250
+the shape of the code to be.
+
+186
+00:04:57,250 --> 00:04:57,708
+Yeah.
+
+187
+00:04:57,708 --> 00:04:58,250
+And the
+
+188
+00:04:58,250 --> 00:04:59,666
+instructions are something
+
+189
+00:04:59,666 --> 00:05:01,041
+I'll actually end up reusing
+
+190
+00:05:01,041 --> 00:05:02,875
+between projects often. Right.
+
+191
+00:05:02,875 --> 00:05:04,333
+So if people haven't used
+
+192
+00:05:04,333 --> 00:05:05,916
+copilot instructions yet,
+
+193
+00:05:05,916 --> 00:05:07,291
+I think to know about it,
+
+194
+00:05:07,291 --> 00:05:08,250
+is it basically
+
+195
+00:05:08,250 --> 00:05:09,708
+it's kind of like the pre prompt.
+
+196
+00:05:09,708 --> 00:05:10,625
+Like before you begin
+
+197
+00:05:10,625 --> 00:05:11,916
+any interaction session
+
+198
+00:05:11,916 --> 00:05:13,000
+with copilot,
+
+199
+00:05:13,000 --> 00:05:15,666
+it's going to have that already there.
+
+200
+00:05:15,666 --> 00:05:18,083
+It's going to know the instructions file.
+
+201
+00:05:18,083 --> 00:05:20,458
+So when you're working on one project
+
+202
+00:05:20,458 --> 00:05:21,416
+you put in their stuff
+
+203
+00:05:21,416 --> 00:05:22,500
+that you want to apply kind of
+
+204
+00:05:22,500 --> 00:05:24,291
+to every interaction you have.
+
+205
+00:05:24,291 --> 00:05:26,166
+But you also want to narrow it down.
+
+206
+00:05:26,166 --> 00:05:27,416
+So, you know, that's why there's that.
+
+207
+00:05:27,416 --> 00:05:28,833
+Like for Python projects,
+
+208
+00:05:28,833 --> 00:05:31,833
+only if I happen doing a step
+
+209
+00:05:31,916 --> 00:05:33,625
+that's not related to Python,
+
+210
+00:05:33,625 --> 00:05:34,333
+it should basically
+
+211
+00:05:34,333 --> 00:05:35,333
+just ignore that section
+
+212
+00:05:35,333 --> 00:05:37,208
+because it's not going to be relevant.
+
+213
+00:05:37,208 --> 00:05:37,958
+But then the other thing
+
+214
+00:05:37,958 --> 00:05:38,666
+is I'll take this
+
+215
+00:05:38,666 --> 00:05:39,416
+and I'll take the same
+
+216
+00:05:39,416 --> 00:05:40,458
+copilot instructions file.
+
+217
+00:05:40,458 --> 00:05:41,375
+And it's just one of those things
+
+218
+00:05:41,375 --> 00:05:44,333
+I seed into any new project,
+
+219
+00:05:44,333 --> 00:05:45,666
+and I might adjust it,
+
+220
+00:05:45,666 --> 00:05:46,583
+but there's certain things
+
+221
+00:05:46,583 --> 00:05:47,291
+that I'm going to want
+
+222
+00:05:47,291 --> 00:05:49,083
+always to be the same. Right?
+
+223
+00:05:49,083 --> 00:05:49,750
+For sure.
+
+224
+00:05:49,750 --> 00:05:51,750
+So here's one that I
+
+225
+00:05:51,750 --> 00:05:53,625
+that I think is kind of fun.
+
+226
+00:05:53,625 --> 00:05:54,291
+I picked this up
+
+227
+00:05:54,291 --> 00:05:55,791
+from someone actually, at a conference
+
+228
+00:05:55,791 --> 00:05:57,083
+a little while ago.
+
+229
+00:05:57,083 --> 00:06:00,000
+And this has copilots working.
+
+230
+00:06:00,000 --> 00:06:01,750
+I want a history of what it's doing.
+
+231
+00:06:01,750 --> 00:06:02,041
+Right.
+
+232
+00:06:02,041 --> 00:06:03,916
+Because eventually that chat session
+
+233
+00:06:03,916 --> 00:06:04,791
+is going to go away.
+
+234
+00:06:04,791 --> 00:06:06,416
+You know, I'm going to restart vs code.
+
+235
+00:06:06,416 --> 00:06:07,125
+I'm going to clear it out
+
+236
+00:06:07,125 --> 00:06:08,333
+and do something else.
+
+237
+00:06:08,333 --> 00:06:10,166
+I want an actual record,
+
+238
+00:06:10,166 --> 00:06:12,458
+not just of the actual commits,
+
+239
+00:06:12,458 --> 00:06:13,666
+but of the actual changes
+
+240
+00:06:13,666 --> 00:06:14,458
+that occurred locally
+
+241
+00:06:14,458 --> 00:06:15,583
+before I even necessarily
+
+242
+00:06:15,583 --> 00:06:16,875
+committed anything.
+
+243
+00:06:16,875 --> 00:06:18,291
+So I just tell it.
+
+244
+00:06:18,291 --> 00:06:20,666
+Hey, make of changelog.md
+
+245
+00:06:20,666 --> 00:06:23,625
+and then each time you do something,
+
+246
+00:06:23,625 --> 00:06:25,250
+add on to that changelog.
+
+247
+00:06:25,250 --> 00:06:26,625
+And that just gives me a history.
+
+248
+00:06:26,625 --> 00:06:27,916
+I can see.
+
+249
+00:06:27,916 --> 00:06:28,291
+Love it.
+
+250
+00:06:28,291 --> 00:06:29,750
+I've never seen this before
+
+251
+00:06:29,750 --> 00:06:31,375
+and now that I'm looking at it,
+
+252
+00:06:31,375 --> 00:06:33,083
+it makes so much sense.
+
+253
+00:06:33,083 --> 00:06:33,791
+It makes so much,
+
+254
+00:06:33,791 --> 00:06:34,333
+so much sense
+
+255
+00:06:34,333 --> 00:06:35,166
+to have it do its own
+
+256
+00:06:35,166 --> 00:06:36,708
+versioning on the of the changes
+
+257
+00:06:36,708 --> 00:06:37,583
+that it's doing.
+
+258
+00:06:37,583 --> 00:06:38,666
+But should we like,
+
+259
+00:06:38,666 --> 00:06:40,833
+get into building something?
+
+260
+00:06:40,833 --> 00:06:42,083
+Let's we've talked enough.
+
+261
+00:06:42,083 --> 00:06:44,625
+Let's let's make this happen. All right.
+
+262
+00:06:45,625 --> 00:06:46,375
+What model do you want
+
+263
+00:06:46,375 --> 00:06:47,625
+to play with today.
+
+264
+00:06:47,625 --> 00:06:52,625
+So I've been partial towards cloud 3.5.
+
+265
+00:06:52,791 --> 00:06:53,791
+For some reason
+
+266
+00:06:53,791 --> 00:06:56,791
+I tend to get the best results from 30.5,
+
+267
+00:06:57,083 --> 00:06:59,041
+but I am open. But okay.
+
+268
+00:06:59,041 --> 00:07:00,500
+So I can start with 3.5.
+
+269
+00:07:00,500 --> 00:07:02,458
+And you can do.
+
+270
+00:07:02,458 --> 00:07:02,833
+Yeah.
+
+271
+00:07:02,833 --> 00:07:03,958
+I'll, and actually
+
+272
+00:07:03,958 --> 00:07:05,166
+before I even pick, why don't
+
+273
+00:07:05,166 --> 00:07:07,666
+why don't we point out to right here
+
+274
+00:07:07,666 --> 00:07:10,000
+I'm looking in ask mode.
+
+275
+00:07:10,000 --> 00:07:12,208
+Uhhuh. And there's three modes, right.
+
+276
+00:07:12,208 --> 00:07:14,250
+There's there's ask, there's edit
+
+277
+00:07:14,250 --> 00:07:15,375
+and there's agent. Right.
+
+278
+00:07:15,375 --> 00:07:16,458
+So an ask mode,
+
+279
+00:07:16,458 --> 00:07:18,333
+you have the largest breadth
+
+280
+00:07:18,333 --> 00:07:19,791
+of selection for your models.
+
+281
+00:07:19,791 --> 00:07:21,208
+So yes we could do this
+
+282
+00:07:21,208 --> 00:07:23,000
+list is a lot bigger
+
+283
+00:07:23,000 --> 00:07:25,000
+when you move into Agent mode
+
+284
+00:07:25,000 --> 00:07:27,916
+you get a subset of certain models.
+
+285
+00:07:27,916 --> 00:07:29,958
+Just don't work in agent mode. Right.
+
+286
+00:07:29,958 --> 00:07:30,583
+Okay.
+
+287
+00:07:30,583 --> 00:07:31,625
+So this is what we have to work from
+
+288
+00:07:31,625 --> 00:07:32,208
+for now.
+
+289
+00:07:32,208 --> 00:07:33,166
+And then we'll go and play
+
+290
+00:07:33,166 --> 00:07:34,791
+with the others and ask mode later,
+
+291
+00:07:34,791 --> 00:07:35,458
+I guess.
+
+292
+00:07:35,458 --> 00:07:37,625
+So let me do three five.
+
+293
+00:07:37,625 --> 00:07:39,083
+You know what?
+
+294
+00:07:39,083 --> 00:07:41,083
+Let's let's give people a preview. Right?
+
+295
+00:07:41,083 --> 00:07:44,000
+I've got my 2.5 pro.
+
+296
+00:07:44,000 --> 00:07:45,750
+Right. Let's do it.
+
+297
+00:07:45,750 --> 00:07:47,000
+Only came out recently.
+
+298
+00:07:47,000 --> 00:07:48,708
+Eventually this will move out,
+
+299
+00:07:48,708 --> 00:07:51,708
+you know, hopefully to, GA.
+
+300
+00:07:51,750 --> 00:07:52,875
+But for now,
+
+301
+00:07:52,875 --> 00:07:54,208
+we've got internal access to it.
+
+302
+00:07:54,208 --> 00:07:55,416
+GitHub. So why not?
+
+303
+00:07:57,916 --> 00:07:59,083
+All right.
+
+304
+00:07:59,083 --> 00:08:00,083
+I think what I'm going to do
+
+305
+00:08:00,083 --> 00:08:01,208
+is I'm just going to highlight
+
+306
+00:08:01,208 --> 00:08:03,000
+the readme to give it focus.
+
+307
+00:08:03,000 --> 00:08:03,750
+And then I'm just going to say
+
+308
+00:08:03,750 --> 00:08:05,458
+implement this.
+
+309
+00:08:05,458 --> 00:08:06,541
+Oh type.
+
+310
+00:08:06,541 --> 00:08:08,000
+That's very
+
+311
+00:08:08,000 --> 00:08:08,583
+I'm going to I'm
+
+312
+00:08:08,583 --> 00:08:09,500
+going to do the same thing.
+
+313
+00:08:09,500 --> 00:08:12,750
+I've never been so like two words.
+
+314
+00:08:13,500 --> 00:08:14,708
+Let's see what happens.
+
+315
+00:08:14,708 --> 00:08:17,125
+Well I'm able to do this okay.
+
+316
+00:08:17,125 --> 00:08:20,125
+So boop.
+
+317
+00:08:25,041 --> 00:08:25,375
+All right.
+
+318
+00:08:25,375 --> 00:08:27,000
+So so far already.
+
+319
+00:08:27,000 --> 00:08:27,750
+You know you can see
+
+320
+00:08:27,750 --> 00:08:29,916
+code is already like writing stuff
+
+321
+00:08:29,916 --> 00:08:30,833
+like it's. Yeah.
+
+322
+00:08:30,833 --> 00:08:32,083
+And it's telling me, of course,
+
+323
+00:08:32,083 --> 00:08:33,083
+what to use for references,
+
+324
+00:08:33,083 --> 00:08:34,500
+which is just the copilot instructions
+
+325
+00:08:34,500 --> 00:08:36,625
+for now. Right.
+
+326
+00:08:36,625 --> 00:08:37,416
+So, Claude,
+
+327
+00:08:37,416 --> 00:08:38,041
+it looks like he's
+
+328
+00:08:38,041 --> 00:08:40,708
+going right to building. Yes.
+
+329
+00:08:40,708 --> 00:08:43,583
+LS 2.5 Pro is kind of giving me
+
+330
+00:08:43,583 --> 00:08:44,583
+a description.
+
+331
+00:08:44,583 --> 00:08:46,750
+A pretty heavy description
+
+332
+00:08:46,750 --> 00:08:49,000
+of what it's plan it's going to be.
+
+333
+00:08:49,000 --> 00:08:51,625
+Not going to lie, I'm liking what Gemini
+
+334
+00:08:51,625 --> 00:08:53,791
+2.5 Pro did before
+
+335
+00:08:53,791 --> 00:08:55,583
+it went into that terminal command.
+
+336
+00:08:55,583 --> 00:08:56,750
+Right. Yeah.
+
+337
+00:08:56,750 --> 00:08:58,166
+And you know I always like to point out
+
+338
+00:08:58,166 --> 00:08:59,541
+with these two
+
+339
+00:08:59,541 --> 00:09:01,541
+you're about to hit continue right there.
+
+340
+00:09:02,625 --> 00:09:04,166
+Copilot can access the terminal,
+
+341
+00:09:04,166 --> 00:09:05,958
+but only when you give it permission to.
+
+342
+00:09:05,958 --> 00:09:07,250
+So it's not gonna, like, run off
+
+343
+00:09:07,250 --> 00:09:08,583
+and do a whole bunch of stuff
+
+344
+00:09:08,583 --> 00:09:10,666
+on your machine without you asking.
+
+345
+00:09:10,666 --> 00:09:11,791
+It's going to pause there and say,
+
+346
+00:09:11,791 --> 00:09:12,500
+okay, this is the command
+
+347
+00:09:12,500 --> 00:09:13,125
+I want to execute.
+
+348
+00:09:13,125 --> 00:09:14,416
+Do I have permission to go ahead?
+
+349
+00:09:14,416 --> 00:09:16,583
+I think that's hugely important.
+
+350
+00:09:16,583 --> 00:09:18,291
+I think so too.
+
+351
+00:09:18,291 --> 00:09:18,625
+All right.
+
+352
+00:09:18,625 --> 00:09:20,541
+So we're both seeing here we've got
+
+353
+00:09:20,541 --> 00:09:22,833
+we've got files that are appearing.
+
+354
+00:09:22,833 --> 00:09:23,208
+Yeah.
+
+355
+00:09:23,208 --> 00:09:26,333
+And we've got the option to keep or undo
+
+356
+00:09:26,333 --> 00:09:29,333
+any of those individually.
+
+357
+00:09:29,708 --> 00:09:31,458
+But also,
+
+358
+00:09:31,458 --> 00:09:33,875
+to keep or undo them in unmasks.
+
+359
+00:09:33,875 --> 00:09:35,541
+Right.
+
+360
+00:09:35,541 --> 00:09:37,541
+So I'm liking what it's built so far
+
+361
+00:09:37,541 --> 00:09:39,916
+and I'm going to keep those, but,
+
+362
+00:09:39,916 --> 00:09:43,666
+no, I know, so Clyde is still going in
+
+363
+00:09:43,666 --> 00:09:44,875
+Gemini Star
+
+364
+00:09:44,875 --> 00:09:47,166
+GPT why is why does that happen?
+
+365
+00:09:47,166 --> 00:09:48,250
+It's in preview mode.
+
+366
+00:09:48,250 --> 00:09:51,291
+So hey, you know the the hosting.
+
+367
+00:09:51,291 --> 00:09:52,125
+This is one of the reason
+
+368
+00:09:52,125 --> 00:09:53,416
+we dogfood things
+
+369
+00:09:53,416 --> 00:09:54,375
+internally, right,
+
+370
+00:09:54,375 --> 00:09:56,666
+is because sometimes they break
+
+371
+00:09:56,666 --> 00:09:58,166
+and we have to figure out why.
+
+372
+00:09:58,166 --> 00:10:00,000
+I have seen this happen before,
+
+373
+00:10:00,000 --> 00:10:00,833
+and I have a feeling it's
+
+374
+00:10:00,833 --> 00:10:01,958
+because, you know,
+
+375
+00:10:01,958 --> 00:10:03,458
+we have certain internal quotas
+
+376
+00:10:03,458 --> 00:10:04,625
+and that sort of thing that we can use.
+
+377
+00:10:04,625 --> 00:10:06,166
+So I might have hit it, but,
+
+378
+00:10:06,166 --> 00:10:07,500
+I can actually just try
+
+379
+00:10:07,500 --> 00:10:09,166
+telling it to continue
+
+380
+00:10:10,458 --> 00:10:11,375
+and see if it's able to
+
+381
+00:10:11,375 --> 00:10:12,666
+pick up from where it was.
+
+382
+00:10:12,666 --> 00:10:14,708
+Maybe. Okay.
+
+383
+00:10:14,708 --> 00:10:16,416
+If not, I mean,
+
+384
+00:10:16,416 --> 00:10:17,875
+and this is one of those things
+
+385
+00:10:17,875 --> 00:10:18,833
+with the gentle coding, right?
+
+386
+00:10:18,833 --> 00:10:21,333
+It builds so much stuff,
+
+387
+00:10:21,333 --> 00:10:23,333
+I I'd be afraid
+
+388
+00:10:23,333 --> 00:10:25,458
+if it didn't work here and continue.
+
+389
+00:10:25,458 --> 00:10:27,750
+I could just undo all of these,
+
+390
+00:10:27,750 --> 00:10:28,875
+wipe it all out.
+
+391
+00:10:28,875 --> 00:10:29,625
+I still got my read
+
+392
+00:10:29,625 --> 00:10:32,291
+me there and just start over and it's
+
+393
+00:10:32,291 --> 00:10:33,458
+back.
+
+394
+00:10:33,458 --> 00:10:34,750
+Just choose a different agent
+
+395
+00:10:34,750 --> 00:10:36,791
+and go again, right?
+
+396
+00:10:36,791 --> 00:10:38,666
+Exactly.
+
+397
+00:10:38,666 --> 00:10:41,333
+So I'm still working.
+
+398
+00:10:41,333 --> 00:10:42,666
+Claude is still going.
+
+399
+00:10:42,666 --> 00:10:43,500
+It's going nuts. Let's.
+
+400
+00:10:43,500 --> 00:10:43,958
+Let's watch.
+
+401
+00:10:43,958 --> 00:10:45,791
+Cheers for what it looks like
+
+402
+00:10:45,791 --> 00:10:47,333
+Gemini spinning back up
+
+403
+00:10:47,333 --> 00:10:49,166
+and so set up for a while.
+
+404
+00:10:49,166 --> 00:10:51,750
+So now Claude has started the server
+
+405
+00:10:51,750 --> 00:10:53,041
+like it's.
+
+406
+00:10:53,041 --> 00:10:54,083
+Oh, you're actually at the point
+
+407
+00:10:54,083 --> 00:10:56,875
+of executing right now. That's great.
+
+408
+00:10:56,875 --> 00:10:58,416
+All right, what do we got?
+
+409
+00:10:58,416 --> 00:11:01,416
+Okay, I'll just open.
+
+410
+00:11:01,625 --> 00:11:02,125
+I'm gonna try.
+
+411
+00:11:04,500 --> 00:11:05,291
+I see we've got an,
+
+412
+00:11:05,291 --> 00:11:08,291
+python at the top.
+
+413
+00:11:08,333 --> 00:11:11,250
+Like, in the data Json structure.
+
+414
+00:11:11,250 --> 00:11:11,583
+We asked it
+
+415
+00:11:11,583 --> 00:11:13,375
+to make a single main.js
+
+416
+00:11:13,375 --> 00:11:15,583
+and a single index HTML.
+
+417
+00:11:15,583 --> 00:11:16,583
+I'm going to guess for now.
+
+418
+00:11:16,583 --> 00:11:17,083
+It probably put
+
+419
+00:11:17,083 --> 00:11:19,375
+the CSS embedded in the HTML,
+
+420
+00:11:19,375 --> 00:11:20,708
+or it's just using the base
+
+421
+00:11:20,708 --> 00:11:21,708
+tailwind styling.
+
+422
+00:11:21,708 --> 00:11:23,125
+I don't know.
+
+423
+00:11:23,125 --> 00:11:25,666
+Yeah. Let's try it out.
+
+424
+00:11:25,666 --> 00:11:28,458
+It's keeps opening in the wrong
+
+425
+00:11:28,458 --> 00:11:29,708
+browser window.
+
+426
+00:11:29,708 --> 00:11:34,583
+So I'm just going to copy paste here.
+
+427
+00:11:39,541 --> 00:11:41,541
+All right.
+
+428
+00:11:41,541 --> 00:11:41,958
+We can't.
+
+429
+00:11:41,958 --> 00:11:44,666
+Yeah.
+
+430
+00:11:44,666 --> 00:11:47,416
+Let's see.
+
+431
+00:11:47,416 --> 00:11:50,041
+Okay I need to zoom in here to see
+
+432
+00:11:50,041 --> 00:11:51,333
+unexpected token.
+
+433
+00:11:51,333 --> 00:11:52,750
+See the end here in
+
+434
+00:11:52,750 --> 00:11:56,416
+that CSS should not be used in okay.
+
+435
+00:11:56,708 --> 00:11:57,833
+So I'm not too worried about that.
+
+436
+00:11:57,833 --> 00:11:59,458
+I actually saw that during testing.
+
+437
+00:11:59,458 --> 00:12:00,041
+And it's basically
+
+438
+00:12:00,041 --> 00:12:02,000
+just because we're doing unexpected
+
+439
+00:12:02,000 --> 00:12:03,750
+like loading and tailwind.
+
+440
+00:12:03,750 --> 00:12:05,125
+So it's actually this one.
+
+441
+00:12:05,125 --> 00:12:06,000
+It's actually that one.
+
+442
+00:12:06,000 --> 00:12:07,916
+Yeah. Yeah. All right.
+
+443
+00:12:07,916 --> 00:12:09,625
+Well I mean this gives us a chance to
+
+444
+00:12:09,625 --> 00:12:10,291
+to show off
+
+445
+00:12:10,291 --> 00:12:11,791
+one of our favorite things about copilot.
+
+446
+00:12:11,791 --> 00:12:12,000
+Right.
+
+447
+00:12:12,000 --> 00:12:15,041
+Which is when you hit a bug like this,
+
+448
+00:12:15,041 --> 00:12:15,791
+you can just ask it
+
+449
+00:12:15,791 --> 00:12:17,125
+what's going on and have it. Yeah.
+
+450
+00:12:18,083 --> 00:12:19,166
+A solution,
+
+451
+00:12:19,166 --> 00:12:20,666
+exactly what I was going to do.
+
+452
+00:12:20,666 --> 00:12:23,666
+So I got this error
+
+453
+00:12:24,291 --> 00:12:25,750
+and then you just paste it.
+
+454
+00:12:25,750 --> 00:12:26,416
+Something else
+
+455
+00:12:26,416 --> 00:12:27,708
+I like to do is
+
+456
+00:12:27,708 --> 00:12:29,291
+I like to just like
+
+457
+00:12:29,291 --> 00:12:31,583
+actually take a screenshot
+
+458
+00:12:31,583 --> 00:12:33,083
+and just paste it.
+
+459
+00:12:33,083 --> 00:12:34,666
+Oh, nice. Yes.
+
+460
+00:12:34,666 --> 00:12:36,291
+And then just pop it in and. Yeah.
+
+461
+00:12:36,291 --> 00:12:38,916
+Claude does take that visual input.
+
+462
+00:12:38,916 --> 00:12:39,416
+So like,
+
+463
+00:12:39,416 --> 00:12:41,083
+if you're using like,
+
+464
+00:12:41,083 --> 00:12:42,791
+I think or for mini
+
+465
+00:12:42,791 --> 00:12:44,916
+or for mini does not take visual input
+
+466
+00:12:44,916 --> 00:12:46,083
+and you'll see it by like
+
+467
+00:12:46,083 --> 00:12:48,208
+like it crosses it out out there
+
+468
+00:12:48,208 --> 00:12:49,875
+to indicate like inaugural.
+
+469
+00:12:49,875 --> 00:12:51,958
+I cannot see that.
+
+470
+00:12:51,958 --> 00:12:53,000
+Oh that is so cool.
+
+471
+00:12:53,000 --> 00:12:56,000
+I hadn't noticed that little UI change.
+
+472
+00:12:57,000 --> 00:12:57,875
+We should probably point out
+
+473
+00:12:57,875 --> 00:12:58,583
+to people too.
+
+474
+00:12:58,583 --> 00:12:59,083
+I bet a lot of
+
+475
+00:12:59,083 --> 00:13:00,125
+folks are used to dragging
+
+476
+00:13:00,125 --> 00:13:00,708
+and dropping
+
+477
+00:13:00,708 --> 00:13:02,208
+from their file tree
+
+478
+00:13:02,208 --> 00:13:05,041
+in vs code into the chat.
+
+479
+00:13:05,041 --> 00:13:06,291
+But the files
+
+480
+00:13:06,291 --> 00:13:07,833
+you drop in as you just demonstrate
+
+481
+00:13:07,833 --> 00:13:08,666
+don't actually have to be
+
+482
+00:13:08,666 --> 00:13:09,416
+in your project.
+
+483
+00:13:09,416 --> 00:13:11,375
+Like you can pull a file
+
+484
+00:13:11,375 --> 00:13:13,208
+from anywhere on your computer,
+
+485
+00:13:13,208 --> 00:13:16,666
+drag, drop it onto the the chat window,
+
+486
+00:13:16,958 --> 00:13:18,958
+and that's going to make it
+
+487
+00:13:18,958 --> 00:13:21,583
+available to the interaction.
+
+488
+00:13:21,583 --> 00:13:21,791
+All right.
+
+489
+00:13:21,791 --> 00:13:22,916
+So you've been doing all this.
+
+490
+00:13:22,916 --> 00:13:24,541
+Gemini has finally gotten to the point
+
+491
+00:13:24,541 --> 00:13:26,166
+where I can run now.
+
+492
+00:13:26,166 --> 00:13:26,625
+All right.
+
+493
+00:13:26,625 --> 00:13:27,291
+So it's setting up
+
+494
+00:13:27,291 --> 00:13:29,333
+my virtual environment.
+
+495
+00:13:29,333 --> 00:13:30,250
+Yay.
+
+496
+00:13:30,250 --> 00:13:31,875
+It's built a whole bunch of files.
+
+497
+00:13:34,041 --> 00:13:34,833
+That's I
+
+498
+00:13:34,833 --> 00:13:35,583
+call out
+
+499
+00:13:35,583 --> 00:13:36,458
+because I
+
+500
+00:13:36,458 --> 00:13:37,208
+don't believe
+
+501
+00:13:37,208 --> 00:13:40,000
+could set up a virtual environment.
+
+502
+00:13:40,000 --> 00:13:41,875
+unless it did, and I.
+
+503
+00:13:41,875 --> 00:13:44,625
+I was just vibing too hard.
+
+504
+00:13:44,625 --> 00:13:47,625
+I think,
+
+505
+00:13:48,791 --> 00:13:49,500
+yeah, it did.
+
+506
+00:13:49,500 --> 00:13:51,000
+It's right here.
+
+507
+00:13:51,000 --> 00:13:51,541
+Okay.
+
+508
+00:13:51,541 --> 00:13:52,791
+So it's one of the first things
+
+509
+00:13:52,791 --> 00:13:54,458
+that it did was to create that.
+
+510
+00:13:54,458 --> 00:13:56,083
+Okay.
+
+511
+00:13:56,083 --> 00:13:56,333
+All right.
+
+512
+00:13:56,333 --> 00:13:58,125
+So someone thinks it's done
+
+513
+00:13:58,125 --> 00:13:58,750
+but I didn't see it.
+
+514
+00:13:58,750 --> 00:14:01,708
+Okay. Execute.
+
+515
+00:14:01,708 --> 00:14:04,458
+What I'm going to do though, I know it's
+
+516
+00:14:04,458 --> 00:14:05,916
+12 told me what I have to do. Right.
+
+517
+00:14:05,916 --> 00:14:06,916
+So I'm just going to go
+
+518
+00:14:06,916 --> 00:14:08,958
+into a new terminal window
+
+519
+00:14:08,958 --> 00:14:11,958
+and I'm just going to execute,
+
+520
+00:14:12,625 --> 00:14:16,708
+so I'll activate my virtual environment
+
+521
+00:14:16,708 --> 00:14:19,708
+and then I'll fire a python.
+
+522
+00:14:19,833 --> 00:14:21,125
+Come on, little terminal. What?
+
+523
+00:14:21,125 --> 00:14:22,583
+Don't you love me
+
+524
+00:14:22,583 --> 00:14:24,958
+so, so far while you're doing that, I.
+
+525
+00:14:24,958 --> 00:14:26,916
+You can see why I tend to stick with
+
+526
+00:14:26,916 --> 00:14:28,166
+cloud 3.5 on it.
+
+527
+00:14:29,875 --> 00:14:31,833
+Because for me, I get the best ones.
+
+528
+00:14:31,833 --> 00:14:33,833
+I've been getting the best results using.
+
+529
+00:14:33,833 --> 00:14:36,833
+Quote 3.5.
+
+530
+00:14:37,166 --> 00:14:37,500
+You know,
+
+531
+00:14:37,500 --> 00:14:39,916
+and that is what I tend to use a lot.
+
+532
+00:14:39,916 --> 00:14:42,625
+I think part of it is like it's
+
+533
+00:14:42,625 --> 00:14:43,791
+just the right balance
+
+534
+00:14:43,791 --> 00:14:45,583
+of like speed, precision.
+
+535
+00:14:45,583 --> 00:14:48,333
+Right. Okay, there we go.
+
+536
+00:14:48,333 --> 00:14:49,083
+All right.
+
+537
+00:14:49,083 --> 00:14:50,875
+Because, yeah, like, I don't know.
+
+538
+00:14:50,875 --> 00:14:51,208
+We'll see
+
+539
+00:14:51,208 --> 00:14:53,458
+if Gemini's result is a lot better,
+
+540
+00:14:53,458 --> 00:14:53,958
+I don't know.
+
+541
+00:14:53,958 --> 00:14:56,333
+Oh, does it load on the first try?
+
+542
+00:14:56,333 --> 00:14:57,125
+Yeah.
+
+543
+00:14:57,125 --> 00:14:58,166
+Okay.
+
+544
+00:14:58,166 --> 00:14:59,458
+Oh, I just didn't,
+
+545
+00:14:59,458 --> 00:15:00,208
+I didn't do
+
+546
+00:15:00,208 --> 00:15:00,791
+my pep,
+
+547
+00:15:00,791 --> 00:15:03,250
+requirements install, that's all.
+
+548
+00:15:03,250 --> 00:15:04,791
+Fortunately,
+
+549
+00:15:04,791 --> 00:15:06,250
+I know, I know what that is, so.
+
+550
+00:15:06,250 --> 00:15:07,125
+Okay, actually, though,
+
+551
+00:15:07,125 --> 00:15:07,791
+I'm going to do it
+
+552
+00:15:07,791 --> 00:15:09,958
+the right way, right at the right way,
+
+553
+00:15:09,958 --> 00:15:11,541
+which is, I like to
+
+554
+00:15:11,541 --> 00:15:12,750
+I like to trust my, brain.
+
+555
+00:15:12,750 --> 00:15:13,833
+I know what it does.
+
+556
+00:15:13,833 --> 00:15:14,750
+But at the same time,
+
+557
+00:15:14,750 --> 00:15:17,750
+I like to see how the model reacts.
+
+558
+00:15:18,083 --> 00:15:18,791
+Yeah. Okay.
+
+559
+00:15:18,791 --> 00:15:20,291
+So I'm going to feed it back that error
+
+560
+00:15:20,291 --> 00:15:21,041
+and hopefully it tells me
+
+561
+00:15:21,041 --> 00:15:22,083
+I need to do a pip3
+
+562
+00:15:22,083 --> 00:15:23,375
+install of the requirements
+
+563
+00:15:23,375 --> 00:15:24,583
+file or something like that.
+
+564
+00:15:25,833 --> 00:15:26,541
+Uhhuh.
+
+565
+00:15:26,541 --> 00:15:29,541
+No, no. Okay. What.
+
+566
+00:15:29,541 --> 00:15:29,916
+All right.
+
+567
+00:15:29,916 --> 00:15:32,916
+Well.
+
+568
+00:15:34,125 --> 00:15:34,458
+I know
+
+569
+00:15:34,458 --> 00:15:37,458
+I'll check what we have here.
+
+570
+00:15:39,416 --> 00:15:40,666
+Yeah.
+
+571
+00:15:40,666 --> 00:15:42,291
+Did I resolve the error?
+
+572
+00:15:42,291 --> 00:15:45,041
+I did not okay,
+
+573
+00:15:45,041 --> 00:15:47,500
+so we might have a little bit of a
+
+574
+00:15:47,500 --> 00:15:48,750
+more debugging to do.
+
+575
+00:15:48,750 --> 00:15:50,708
+One did it,
+
+576
+00:15:50,708 --> 00:15:53,375
+did it save the file after it changed it?
+
+577
+00:15:53,375 --> 00:15:55,916
+Yeah. It did. Okay.
+
+578
+00:15:55,916 --> 00:15:56,958
+So I've had that problem
+
+579
+00:15:56,958 --> 00:15:59,416
+occasionally where
+
+580
+00:15:59,416 --> 00:16:01,250
+there's a, there's a
+
+581
+00:16:01,250 --> 00:16:03,291
+I guess the viewers should know,
+
+582
+00:16:03,291 --> 00:16:04,583
+there's the keep step.
+
+583
+00:16:04,583 --> 00:16:06,166
+But sometimes you also have
+
+584
+00:16:06,166 --> 00:16:07,625
+to manually save the file
+
+585
+00:16:07,625 --> 00:16:10,458
+or do a save all I found,
+
+586
+00:16:10,458 --> 00:16:12,583
+just to actually get it down to disk.
+
+587
+00:16:12,583 --> 00:16:15,583
+Yeah. It's all saved.
+
+588
+00:16:15,750 --> 00:16:16,125
+Yeah.
+
+589
+00:16:16,125 --> 00:16:17,083
+We kind of want to see
+
+590
+00:16:17,083 --> 00:16:19,750
+what the model can do. So.
+
+591
+00:16:19,750 --> 00:16:21,291
+Okay, while you're doing that,
+
+592
+00:16:21,291 --> 00:16:22,875
+I've got mine spun up.
+
+593
+00:16:22,875 --> 00:16:24,791
+So let's take a look. All.
+
+594
+00:16:26,291 --> 00:16:29,291
+This is fun.
+
+595
+00:16:29,708 --> 00:16:31,000
+Oh, did all of this gives me
+
+596
+00:16:31,000 --> 00:16:31,958
+an opportunity to talk about this?
+
+597
+00:16:31,958 --> 00:16:34,958
+By the way, since it's here, it's like,
+
+598
+00:16:35,083 --> 00:16:37,541
+So Cassidy recently wrote a great blog
+
+599
+00:16:37,541 --> 00:16:39,166
+post called which I models
+
+600
+00:16:39,166 --> 00:16:41,083
+I use with GitHub Copilot. Right.
+
+601
+00:16:41,083 --> 00:16:43,833
+So you're watching this gem here,
+
+602
+00:16:43,833 --> 00:16:46,041
+but if you want like her opinions
+
+603
+00:16:46,041 --> 00:16:47,916
+about what models are good for,
+
+604
+00:16:47,916 --> 00:16:49,875
+what she's got a nice little Tldr
+
+605
+00:16:49,875 --> 00:16:50,541
+breakdown
+
+606
+00:16:50,541 --> 00:16:52,625
+and then talking about each one, right?
+
+607
+00:16:52,625 --> 00:16:54,208
+Let's see, let's see.
+
+608
+00:16:54,208 --> 00:16:54,875
+All right. Okay.
+
+609
+00:16:54,875 --> 00:16:57,208
+So so close.
+
+610
+00:16:57,208 --> 00:16:59,625
+I know the witnesses, though. Okay, cool.
+
+611
+00:16:59,625 --> 00:16:59,916
+You know,
+
+612
+00:16:59,916 --> 00:17:01,250
+and I'll we'll see what
+
+613
+00:17:01,250 --> 00:17:02,125
+it we'll see what it does
+
+614
+00:17:02,125 --> 00:17:03,500
+when I give it the input.
+
+615
+00:17:03,500 --> 00:17:04,125
+But,
+
+616
+00:17:04,125 --> 00:17:08,125
+just to talk through that for viewers,
+
+617
+00:17:08,125 --> 00:17:08,958
+Jinja is,
+
+618
+00:17:08,958 --> 00:17:10,500
+generally server
+
+619
+00:17:10,500 --> 00:17:13,500
+side templating language,
+
+620
+00:17:13,541 --> 00:17:16,541
+and it uses a very similar syntax
+
+621
+00:17:16,708 --> 00:17:19,708
+to, what Vue.js does.
+
+622
+00:17:19,791 --> 00:17:22,291
+So when you just dump them
+
+623
+00:17:22,291 --> 00:17:24,083
+both into a single file,
+
+624
+00:17:24,083 --> 00:17:25,708
+it can be a little confusing
+
+625
+00:17:25,708 --> 00:17:27,083
+for the interpreters
+
+626
+00:17:27,083 --> 00:17:27,833
+as to which thing it's
+
+627
+00:17:27,833 --> 00:17:29,875
+supposed to interpret in which context.
+
+628
+00:17:29,875 --> 00:17:31,083
+So it'll probably have to do
+
+629
+00:17:31,083 --> 00:17:33,833
+some escaping here. Yeah.
+
+630
+00:17:33,833 --> 00:17:36,916
+To protect, the server side,
+
+631
+00:17:37,291 --> 00:17:40,875
+rendering engine from the components
+
+632
+00:17:40,875 --> 00:17:42,125
+that are only supposed to be interpreted
+
+633
+00:17:42,125 --> 00:17:45,125
+on the front end by Vue, I see.
+
+634
+00:17:45,625 --> 00:17:46,250
+Okay, there we go.
+
+635
+00:17:46,250 --> 00:17:47,958
+So yeah, it's it's it's wrapping.
+
+636
+00:17:47,958 --> 00:17:49,750
+It's going to wrap some stuff in raw.
+
+637
+00:17:50,958 --> 00:17:53,958
+It looks like.
+
+638
+00:17:55,333 --> 00:17:55,916
+And let's I
+
+639
+00:17:55,916 --> 00:17:58,208
+don't know if I need to reload or not.
+
+640
+00:17:58,208 --> 00:18:01,208
+Let's see if that takes.
+
+641
+00:18:02,041 --> 00:18:03,708
+Yes.
+
+642
+00:18:03,708 --> 00:18:06,708
+Oh my goodness.
+
+643
+00:18:07,041 --> 00:18:07,666
+All right.
+
+644
+00:18:07,666 --> 00:18:11,625
+And, so so I have the same error.
+
+645
+00:18:11,625 --> 00:18:13,166
+I'm so impressed. Okay.
+
+646
+00:18:13,166 --> 00:18:16,166
+So Gemini was able to, to do it
+
+647
+00:18:16,958 --> 00:18:18,208
+and it resolved
+
+648
+00:18:18,208 --> 00:18:21,000
+whatever error you had on the first go.
+
+649
+00:18:21,000 --> 00:18:24,000
+Meanwhile, like quad cloudy Tokyo
+
+650
+00:18:24,666 --> 00:18:27,500
+has been has not been able to identify
+
+651
+00:18:27,500 --> 00:18:28,375
+the unexpected
+
+652
+00:18:28,375 --> 00:18:31,916
+token on line 131 in Main.js right.
+
+653
+00:18:33,083 --> 00:18:34,250
+Is this one of these places
+
+654
+00:18:34,250 --> 00:18:34,750
+where we need.
+
+655
+00:18:34,750 --> 00:18:36,375
+And that's the actual line, right?
+
+656
+00:18:36,375 --> 00:18:37,458
+Yeah, this is the line.
+
+657
+00:18:37,458 --> 00:18:39,625
+So I'm kind of looking to see
+
+658
+00:18:39,625 --> 00:18:42,625
+I could also change the model.
+
+659
+00:18:42,833 --> 00:18:44,875
+Yeah, yeah.
+
+660
+00:18:44,875 --> 00:18:46,708
+Opportunity for us to find out.
+
+661
+00:18:46,708 --> 00:18:49,708
+Which one should I use?
+
+662
+00:18:50,666 --> 00:18:52,375
+Oh, well,
+
+663
+00:18:52,375 --> 00:18:54,500
+I mean, two fives when performing well,
+
+664
+00:18:54,500 --> 00:18:56,875
+but we've also kind of shown it off
+
+665
+00:18:56,875 --> 00:18:58,291
+three, seven.
+
+666
+00:18:58,291 --> 00:18:59,750
+I know I was going to go,
+
+667
+00:18:59,750 --> 00:19:01,916
+I was going to go three seven thinking.
+
+668
+00:19:01,916 --> 00:19:03,541
+And now we can ask. Right.
+
+669
+00:19:03,541 --> 00:19:03,916
+Okay.
+
+670
+00:19:03,916 --> 00:19:06,250
+We can say like what is wrong with this?
+
+671
+00:19:06,250 --> 00:19:08,166
+What is wrong with the highlighted line.
+
+672
+00:19:08,166 --> 00:19:08,458
+Yeah.
+
+673
+00:19:09,708 --> 00:19:10,583
+And maybe we give it
+
+674
+00:19:10,583 --> 00:19:11,625
+the, the error message.
+
+675
+00:19:11,625 --> 00:19:14,625
+We're saying, yeah, okay.
+
+676
+00:19:21,000 --> 00:19:21,500
+All right.
+
+677
+00:19:21,500 --> 00:19:24,500
+Let's see.
+
+678
+00:19:27,666 --> 00:19:28,416
+And so let's see.
+
+679
+00:19:28,416 --> 00:19:30,541
+So it's referencing the instructions
+
+680
+00:19:30,541 --> 00:19:33,541
+and then it references Main.js.
+
+681
+00:19:34,375 --> 00:19:34,791
+All right.
+
+682
+00:19:34,791 --> 00:19:36,083
+So it's thinking you know
+
+683
+00:19:36,083 --> 00:19:39,000
+thinking takes time. It does.
+
+684
+00:19:39,000 --> 00:19:40,166
+But you know it's crazy.
+
+685
+00:19:40,166 --> 00:19:41,125
+Like sometimes
+
+686
+00:19:41,125 --> 00:19:42,541
+I feel like the models are slow,
+
+687
+00:19:42,541 --> 00:19:44,458
+but are they slow?
+
+688
+00:19:44,458 --> 00:19:45,750
+I don't think so.
+
+689
+00:19:45,750 --> 00:19:47,333
+I think it's just like we're impatient.
+
+690
+00:19:47,333 --> 00:19:47,916
+Impatient?
+
+691
+00:19:47,916 --> 00:19:49,958
+We want wanted to be like a microwave.
+
+692
+00:19:49,958 --> 00:19:50,333
+We've gotten
+
+693
+00:19:50,333 --> 00:19:52,291
+so used to having our answers right now.
+
+694
+00:19:52,291 --> 00:19:54,500
+I don't
+
+695
+00:19:54,500 --> 00:19:56,375
+if I could build this much this quickly
+
+696
+00:19:56,375 --> 00:19:59,791
+20 years ago, I would have been listen,
+
+697
+00:20:00,416 --> 00:20:02,125
+craziness.
+
+698
+00:20:02,125 --> 00:20:02,750
+Okay.
+
+699
+00:20:02,750 --> 00:20:05,166
+All right. Okay.
+
+700
+00:20:05,166 --> 00:20:06,291
+Now, what I love about this is,
+
+701
+00:20:06,291 --> 00:20:07,875
+unlike the others,
+
+702
+00:20:07,875 --> 00:20:08,666
+which are just like,
+
+703
+00:20:08,666 --> 00:20:09,791
+okay, I'll rewrite it,
+
+704
+00:20:09,791 --> 00:20:11,250
+and they kind of give a brief,
+
+705
+00:20:11,250 --> 00:20:12,583
+a deep explanation.
+
+706
+00:20:14,250 --> 00:20:14,666
+So now
+
+707
+00:20:14,666 --> 00:20:15,166
+it's saying it's
+
+708
+00:20:15,166 --> 00:20:16,541
+because there is a space,
+
+709
+00:20:16,541 --> 00:20:18,416
+but I just added this space.
+
+710
+00:20:18,416 --> 00:20:23,125
+So, remove the problematic space,
+
+711
+00:20:23,625 --> 00:20:25,083
+adds a formatting method
+
+712
+00:20:25,083 --> 00:20:27,541
+for better maintainability.
+
+713
+00:20:27,541 --> 00:20:27,791
+All right.
+
+714
+00:20:27,791 --> 00:20:29,333
+I'm just going to do this.
+
+715
+00:20:29,333 --> 00:20:31,583
+How about that?
+
+716
+00:20:31,583 --> 00:20:35,333
+Oh, if I do apply an editor from here.
+
+717
+00:20:35,666 --> 00:20:36,708
+Yeah.
+
+718
+00:20:36,708 --> 00:20:37,208
+Let's see
+
+719
+00:20:37,208 --> 00:20:38,875
+if it will intelligently know
+
+720
+00:20:38,875 --> 00:20:41,333
+where to apply these changes.
+
+721
+00:20:41,333 --> 00:20:43,750
+Yeah okay.
+
+722
+00:20:43,750 --> 00:20:46,166
+What would you have done.
+
+723
+00:20:46,166 --> 00:20:47,791
+You know, probably just because I've,
+
+724
+00:20:47,791 --> 00:20:48,958
+I've seen this a couple times.
+
+725
+00:20:48,958 --> 00:20:50,333
+Probably I would have asked it
+
+726
+00:20:50,333 --> 00:20:52,125
+if room dot price
+
+727
+00:20:52,125 --> 00:20:54,833
+is actually a valid variable
+
+728
+00:20:54,833 --> 00:20:56,333
+like it's awesome.
+
+729
+00:20:56,333 --> 00:20:58,708
+Price isn't in the data model.
+
+730
+00:20:58,708 --> 00:21:00,916
+And so sometimes I've seen syntax errors
+
+731
+00:21:00,916 --> 00:21:02,458
+where it really should be telling you
+
+732
+00:21:02,458 --> 00:21:03,416
+price doesn't exist.
+
+733
+00:21:03,416 --> 00:21:03,875
+But inside is
+
+734
+00:21:03,875 --> 00:21:05,458
+just like the dot is invalid
+
+735
+00:21:05,458 --> 00:21:07,750
+because it doesn't know how to descend.
+
+736
+00:21:07,750 --> 00:21:09,000
+I was going to say
+
+737
+00:21:09,000 --> 00:21:10,375
+I would expect a different error
+
+738
+00:21:10,375 --> 00:21:11,666
+if it wasn't a valid.
+
+739
+00:21:11,666 --> 00:21:12,833
+Yeah yeah yeah yeah.
+
+740
+00:21:12,833 --> 00:21:14,666
+So that I mean that's just conjecture.
+
+741
+00:21:14,666 --> 00:21:16,041
+I don't know for sure,
+
+742
+00:21:16,041 --> 00:21:18,166
+but I like this because it actually
+
+743
+00:21:19,291 --> 00:21:20,333
+we'll see whether it's able
+
+744
+00:21:20,333 --> 00:21:22,375
+to call that format price
+
+745
+00:21:22,375 --> 00:21:24,083
+method properly.
+
+746
+00:21:24,083 --> 00:21:25,333
+So we'll know whether it's actually
+
+747
+00:21:25,333 --> 00:21:27,083
+getting through the template.
+
+748
+00:21:27,083 --> 00:21:28,000
+Let's saying,
+
+749
+00:21:28,000 --> 00:21:30,583
+you know this is my first time using Vue
+
+750
+00:21:30,583 --> 00:21:31,166
+as well.
+
+751
+00:21:31,166 --> 00:21:32,333
+I, I have not touched
+
+752
+00:21:32,333 --> 00:21:33,375
+feeling a little while,
+
+753
+00:21:33,375 --> 00:21:36,500
+which seems like it's, it's yeah.
+
+754
+00:21:36,500 --> 00:21:38,250
+Persisting.
+
+755
+00:21:38,250 --> 00:21:40,000
+can you click on into the main
+
+756
+00:21:40,000 --> 00:21:41,000
+JS line one.
+
+757
+00:21:41,000 --> 00:21:42,291
+Yeah. That's a good.
+
+758
+00:21:42,291 --> 00:21:44,083
+Yeah. It's the same one thing.
+
+759
+00:21:44,083 --> 00:21:45,541
+One. It's not clear in the cache.
+
+760
+00:21:45,541 --> 00:21:47,125
+That's our whole problem.
+
+761
+00:21:47,125 --> 00:21:50,541
+And this is, this is where the I'm
+
+762
+00:21:51,583 --> 00:21:53,125
+is they don't have full awareness
+
+763
+00:21:53,125 --> 00:21:54,333
+of what's going on.
+
+764
+00:21:54,333 --> 00:21:58,000
+We still have to think, I don't know.
+
+765
+00:21:58,541 --> 00:21:59,833
+We can just ask it.
+
+766
+00:21:59,833 --> 00:22:00,791
+We can just say, like,
+
+767
+00:22:00,791 --> 00:22:02,416
+it looks like the browser's
+
+768
+00:22:02,416 --> 00:22:04,333
+and clearing the cache. Yeah.
+
+769
+00:22:04,333 --> 00:22:06,083
+Oh, you want me to ask it?
+
+770
+00:22:06,083 --> 00:22:06,416
+Yeah.
+
+771
+00:22:06,416 --> 00:22:07,708
+I just want to see because, like,
+
+772
+00:22:07,708 --> 00:22:08,916
+okay, in case
+
+773
+00:22:08,916 --> 00:22:10,583
+developers haven't used this before,
+
+774
+00:22:10,583 --> 00:22:14,083
+if you're in dev mode in Chrome,
+
+775
+00:22:14,083 --> 00:22:16,291
+if you are here, console open right
+
+776
+00:22:16,291 --> 00:22:17,916
+then when you control
+
+777
+00:22:17,916 --> 00:22:19,333
+hold down that refresh button.
+
+778
+00:22:19,333 --> 00:22:22,666
+What what you just showed
+
+779
+00:22:22,666 --> 00:22:25,208
+is that refresh button on Chrome
+
+780
+00:22:25,208 --> 00:22:26,500
+has extra options.
+
+781
+00:22:26,500 --> 00:22:28,958
+It's got the extra empty relived.
+
+782
+00:22:28,958 --> 00:22:30,333
+But can we get
+
+783
+00:22:30,333 --> 00:22:31,625
+can we get them all to know that
+
+784
+00:22:31,625 --> 00:22:32,208
+that's true
+
+785
+00:22:32,208 --> 00:22:34,250
+and to let's see let's find out.
+
+786
+00:22:34,250 --> 00:22:34,791
+So what do you
+
+787
+00:22:34,791 --> 00:22:37,375
+what do you suggest I put here.
+
+788
+00:22:37,375 --> 00:22:38,541
+Something like
+
+789
+00:22:38,541 --> 00:22:41,458
+it looks like the pages and changing.
+
+790
+00:22:41,458 --> 00:22:43,708
+Even though we've saved it,
+
+791
+00:22:43,708 --> 00:22:46,625
+the browser still has the old template
+
+792
+00:22:46,625 --> 00:22:47,500
+or something like that.
+
+793
+00:22:58,541 --> 00:22:59,875
+Let's see.
+
+794
+00:22:59,875 --> 00:23:02,875
+I wonder if you're thinking,
+
+795
+00:23:07,541 --> 00:23:08,250
+Think for me.
+
+796
+00:23:08,250 --> 00:23:10,291
+Glad you know what?
+
+797
+00:23:10,291 --> 00:23:13,000
+I'm going to say the same thing in mind.
+
+798
+00:23:13,000 --> 00:23:13,750
+Okay,
+
+799
+00:23:13,750 --> 00:23:14,375
+so that was
+
+800
+00:23:14,375 --> 00:23:17,375
+I was going to say, I want to say, yeah.
+
+801
+00:23:17,875 --> 00:23:20,291
+So let's see, who should I do this with?
+
+802
+00:23:20,291 --> 00:23:23,375
+Let's go into ask mode and I'll pick.
+
+803
+00:23:24,750 --> 00:23:25,208
+You know what?
+
+804
+00:23:25,208 --> 00:23:27,333
+Let's go with Copilot Base right now
+
+805
+00:23:27,333 --> 00:23:29,833
+in case in case
+
+806
+00:23:29,833 --> 00:23:30,750
+we're playing around
+
+807
+00:23:30,750 --> 00:23:32,500
+with naming conventions and stuff.
+
+808
+00:23:32,500 --> 00:23:35,291
+This is internal only I think right now
+
+809
+00:23:35,291 --> 00:23:38,291
+copilot base goes to like, or one
+
+810
+00:23:38,291 --> 00:23:41,166
+I think 4.1. Yeah. Yeah. Okay.
+
+811
+00:23:41,166 --> 00:23:42,791
+So this is really for one responding
+
+812
+00:23:42,791 --> 00:23:45,458
+just so viewers now it's fine
+
+813
+00:23:45,458 --> 00:23:48,458
+for template.
+
+814
+00:23:55,125 --> 00:23:56,916
+But you know, this is
+
+815
+00:23:56,916 --> 00:23:58,583
+this is also proving that,
+
+816
+00:23:58,583 --> 00:24:01,125
+you know, when you take time to think
+
+817
+00:24:01,125 --> 00:24:03,375
+through your process logically,
+
+818
+00:24:03,375 --> 00:24:04,416
+write down all your steps
+
+819
+00:24:04,416 --> 00:24:05,416
+of what you're going to do,
+
+820
+00:24:05,416 --> 00:24:07,333
+you'll get better results. Right?
+
+821
+00:24:07,333 --> 00:24:09,583
+Because Gemini 2.5
+
+822
+00:24:09,583 --> 00:24:11,416
+went into thinking, planning
+
+823
+00:24:11,416 --> 00:24:12,875
+and then started coding.
+
+824
+00:24:13,958 --> 00:24:16,416
+Club 3.5 said yes,
+
+825
+00:24:16,416 --> 00:24:18,791
+okay, I'm gonna do it here. Go.
+
+826
+00:24:18,791 --> 00:24:20,291
+Right. Yeah.
+
+827
+00:24:20,291 --> 00:24:21,458
+It was it's interesting.
+
+828
+00:24:21,458 --> 00:24:22,208
+And you know,
+
+829
+00:24:22,208 --> 00:24:23,291
+I don't get me wrong,
+
+830
+00:24:23,291 --> 00:24:26,208
+I've had great success with cloud 3.5.
+
+831
+00:24:26,208 --> 00:24:28,333
+Yes, it is more limited.
+
+832
+00:24:28,333 --> 00:24:30,000
+It doesn't go as deep.
+
+833
+00:24:30,000 --> 00:24:30,583
+It doesn't give
+
+834
+00:24:30,583 --> 00:24:32,000
+as much of a reasoning step
+
+835
+00:24:32,000 --> 00:24:33,083
+ahead of time.
+
+836
+00:24:33,083 --> 00:24:34,333
+And it sometimes
+
+837
+00:24:34,333 --> 00:24:36,416
+feels like for very complex cases,
+
+838
+00:24:36,416 --> 00:24:38,166
+I still need a bigger model.
+
+839
+00:24:38,166 --> 00:24:40,833
+all right okay.
+
+840
+00:24:40,833 --> 00:24:41,666
+So you got some results.
+
+841
+00:24:41,666 --> 00:24:42,458
+I've got some results.
+
+842
+00:24:42,458 --> 00:24:45,083
+Good.
+
+843
+00:24:45,083 --> 00:24:46,125
+Then refresh the browser.
+
+844
+00:24:46,125 --> 00:24:47,625
+See the changes aren't showing up
+
+845
+00:24:47,625 --> 00:24:50,625
+because you modified the source file.
+
+846
+00:24:50,625 --> 00:24:51,083
+Okay.
+
+847
+00:24:51,083 --> 00:24:51,958
+And then what's your step
+
+848
+00:24:51,958 --> 00:24:53,666
+by step solution.
+
+849
+00:24:53,666 --> 00:24:55,583
+Okay. This change looks identical.
+
+850
+00:24:55,583 --> 00:24:56,041
+This is great.
+
+851
+00:24:56,041 --> 00:24:58,958
+So boom 437 I'm looking in GPG for one.
+
+852
+00:24:58,958 --> 00:25:00,458
+They both said okay.
+
+853
+00:25:00,458 --> 00:25:02,250
+First make sure that the changes
+
+854
+00:25:02,250 --> 00:25:03,000
+are actually there
+
+855
+00:25:03,000 --> 00:25:04,125
+and copy
+
+856
+00:25:04,125 --> 00:25:05,666
+your your main JS file
+
+857
+00:25:05,666 --> 00:25:08,625
+into the static directory. Yeah.
+
+858
+00:25:08,625 --> 00:25:09,875
+And then does
+
+859
+00:25:09,875 --> 00:25:12,041
+your give us the commands to copy
+
+860
+00:25:12,041 --> 00:25:13,833
+for Windows and Mac.
+
+861
+00:25:13,833 --> 00:25:16,291
+Very very good. Okay.
+
+862
+00:25:17,500 --> 00:25:18,500
+Then it says refresh
+
+863
+00:25:18,500 --> 00:25:20,541
+your browser browser.
+
+864
+00:25:20,541 --> 00:25:20,916
+Yeah.
+
+865
+00:25:20,916 --> 00:25:23,166
+And in mine it gives me a hard refresh.
+
+866
+00:25:23,166 --> 00:25:23,875
+You know.
+
+867
+00:25:23,875 --> 00:25:24,541
+Oh nice.
+
+868
+00:25:27,666 --> 00:25:28,416
+Okay. Yours does.
+
+869
+00:25:28,416 --> 00:25:29,708
+And then it gives me,
+
+870
+00:25:29,708 --> 00:25:30,666
+give me some like, you know,
+
+871
+00:25:30,666 --> 00:25:33,333
+you can set up a file watcher.
+
+872
+00:25:33,333 --> 00:25:33,625
+All right.
+
+873
+00:25:33,625 --> 00:25:36,041
+So let's clear cache and see.
+
+874
+00:25:36,041 --> 00:25:39,541
+But that was good that so three
+
+875
+00:25:39,541 --> 00:25:42,541
+seven did not say clear cache
+
+876
+00:25:43,291 --> 00:25:43,625
+okay.
+
+877
+00:25:43,625 --> 00:25:44,291
+But maybe it's
+
+878
+00:25:44,291 --> 00:25:46,500
+maybe that earlier step is the right one
+
+879
+00:25:46,500 --> 00:25:47,458
+that maybe the
+
+880
+00:25:47,458 --> 00:25:49,000
+the copying it into the static.
+
+881
+00:25:49,000 --> 00:25:50,291
+Maybe that's not
+
+882
+00:25:50,291 --> 00:25:51,458
+actually maybe that's
+
+883
+00:25:51,458 --> 00:25:53,333
+not a bad suggestion.
+
+884
+00:25:53,333 --> 00:25:55,541
+So which I could see because,
+
+885
+00:25:55,541 --> 00:25:56,041
+you know, again,
+
+886
+00:25:56,041 --> 00:25:57,208
+we're not really running this
+
+887
+00:25:57,208 --> 00:25:57,708
+the right way.
+
+888
+00:25:57,708 --> 00:25:58,666
+We're not running with the build
+
+889
+00:25:58,666 --> 00:26:00,333
+step on the front end. Yeah.
+
+890
+00:26:00,333 --> 00:26:01,416
+This is why it's using the
+
+891
+00:26:01,416 --> 00:26:02,583
+static directory. I think.
+
+892
+00:26:06,208 --> 00:26:09,208
+So copied.
+
+893
+00:26:11,000 --> 00:26:13,708
+There we go.
+
+894
+00:26:13,708 --> 00:26:15,875
+Oh, yeah.
+
+895
+00:26:15,875 --> 00:26:17,875
+Oh, right. Okay.
+
+896
+00:26:17,875 --> 00:26:20,083
+So we don't know which step
+
+897
+00:26:20,083 --> 00:26:21,208
+which was the right.
+
+898
+00:26:21,208 --> 00:26:23,541
+I think it was somewhere in there.
+
+899
+00:26:23,541 --> 00:26:24,833
+I think it was the copy
+
+900
+00:26:24,833 --> 00:26:27,083
+because when I didn't copy
+
+901
+00:26:27,083 --> 00:26:28,250
+and I was just like okay,
+
+902
+00:26:28,250 --> 00:26:29,416
+you didn't tell me to.
+
+903
+00:26:29,416 --> 00:26:30,458
+You didn't tell me to clear cache.
+
+904
+00:26:30,458 --> 00:26:32,250
+Let me just clear the cache.
+
+905
+00:26:32,250 --> 00:26:33,833
+Clear in the cache did not work.
+
+906
+00:26:33,833 --> 00:26:34,458
+It's after
+
+907
+00:26:34,458 --> 00:26:35,208
+I copied
+
+908
+00:26:35,208 --> 00:26:37,916
+and clear the cache that it worked.
+
+909
+00:26:37,916 --> 00:26:40,916
+So it actually solve the issue.
+
+910
+00:26:42,750 --> 00:26:43,875
+It did solve the issue.
+
+911
+00:26:43,875 --> 00:26:44,583
+That's awesome.
+
+912
+00:26:44,583 --> 00:26:48,333
+And, it's advice on, like,
+
+913
+00:26:48,333 --> 00:26:49,916
+how to clear the cache.
+
+914
+00:26:49,916 --> 00:26:51,250
+Yes, how to fix it
+
+915
+00:26:51,250 --> 00:26:53,083
+turns out to both have been right.
+
+916
+00:26:53,083 --> 00:26:54,291
+Turns out to both have been right.
+
+917
+00:26:54,291 --> 00:26:55,750
+So thank you.
+
+918
+00:26:55,750 --> 00:26:57,250
+So,
+
+919
+00:26:57,250 --> 00:26:58,208
+by the way, that you were asking
+
+920
+00:26:58,208 --> 00:26:59,208
+about debugging, right.
+
+921
+00:26:59,208 --> 00:27:00,041
+And it did
+
+922
+00:27:00,041 --> 00:27:01,208
+a good answer to said, okay,
+
+923
+00:27:01,208 --> 00:27:01,833
+you can set flask
+
+924
+00:27:01,833 --> 00:27:04,166
+debug in your env file, which.
+
+925
+00:27:04,166 --> 00:27:05,750
+Right.
+
+926
+00:27:05,750 --> 00:27:07,041
+So I'm just asking it,
+
+927
+00:27:07,041 --> 00:27:07,375
+can I do it
+
+928
+00:27:07,375 --> 00:27:08,875
+without setting anything in the file?
+
+929
+00:27:08,875 --> 00:27:10,625
+And those results suck.
+
+930
+00:27:10,625 --> 00:27:11,833
+So if there is a
+
+931
+00:27:11,833 --> 00:27:15,333
+dash up on the command on the actual same
+
+932
+00:27:15,333 --> 00:27:16,333
+line, it it doesn't know.
+
+933
+00:27:18,250 --> 00:27:18,875
+All right.
+
+934
+00:27:18,875 --> 00:27:20,541
+Okay. So we both have a working app.
+
+935
+00:27:20,541 --> 00:27:22,666
+Awesome. Awesome.
+
+936
+00:27:22,666 --> 00:27:23,750
+they actually look really,
+
+937
+00:27:23,750 --> 00:27:25,041
+really similar, right?
+
+938
+00:27:25,041 --> 00:27:26,375
+They actually do slightly
+
+939
+00:27:26,375 --> 00:27:28,791
+different data assumptions, but whatever.
+
+940
+00:27:28,791 --> 00:27:30,375
+And I assume a lot of that's
+
+941
+00:27:30,375 --> 00:27:32,041
+just because it's like basic tailwind
+
+942
+00:27:32,041 --> 00:27:33,125
+styling, right?
+
+943
+00:27:33,125 --> 00:27:33,875
+Yeah.
+
+944
+00:27:33,875 --> 00:27:36,375
+And look, I have some price here.
+
+945
+00:27:36,375 --> 00:27:36,875
+Oh yeah.
+
+946
+00:27:36,875 --> 00:27:39,875
+Very interesting.
+
+947
+00:27:39,916 --> 00:27:41,916
+So let's see room.
+
+948
+00:27:41,916 --> 00:27:44,041
+Let's see if we can book anything.
+
+949
+00:27:44,041 --> 00:27:45,541
+Yeah.
+
+950
+00:27:45,541 --> 00:27:46,708
+The date picker.
+
+951
+00:27:46,708 --> 00:27:48,708
+Does it work? Okay.
+
+952
+00:27:48,708 --> 00:27:50,333
+I mean, just using like the same.
+
+953
+00:27:50,333 --> 00:27:51,166
+Yeah. The same. Yeah.
+
+954
+00:27:51,166 --> 00:27:53,125
+It's the same style. Yeah.
+
+955
+00:27:53,125 --> 00:27:54,375
+Which is good because.
+
+956
+00:27:54,375 --> 00:27:57,083
+Oh, reservation created successfully.
+
+957
+00:27:57,083 --> 00:27:58,958
+Yay. All right. Yep.
+
+958
+00:27:58,958 --> 00:28:00,500
+Did it for me.
+
+959
+00:28:00,500 --> 00:28:02,791
+Weird that it's using the numbers
+
+960
+00:28:02,791 --> 00:28:07,000
+for the results, but, Oh, interesting.
+
+961
+00:28:07,000 --> 00:28:08,291
+also interesting that the ID
+
+962
+00:28:08,291 --> 00:28:11,208
+is showing up on the UI, right.
+
+963
+00:28:11,208 --> 00:28:13,166
+Which like, it should be.
+
+964
+00:28:13,166 --> 00:28:14,333
+Okay. So let's let's do it.
+
+965
+00:28:14,333 --> 00:28:15,333
+Let's let's fix it up.
+
+966
+00:28:15,333 --> 00:28:15,875
+Because,
+
+967
+00:28:15,875 --> 00:28:17,166
+you know, what we've shown here
+
+968
+00:28:17,166 --> 00:28:18,666
+is actually a fairly unusual case.
+
+969
+00:28:18,666 --> 00:28:20,708
+Like most developers,
+
+970
+00:28:20,708 --> 00:28:22,083
+they're they're working on brownfield,
+
+971
+00:28:22,083 --> 00:28:23,916
+the recount stuff that's already there,
+
+972
+00:28:23,916 --> 00:28:25,000
+not Greenfield
+
+973
+00:28:25,000 --> 00:28:27,000
+building an app from scratch. True.
+
+974
+00:28:27,000 --> 00:28:28,666
+You only do that once in theory,
+
+975
+00:28:28,666 --> 00:28:30,083
+in the lifetime of an app.
+
+976
+00:28:30,083 --> 00:28:32,333
+So I like this idea
+
+977
+00:28:32,333 --> 00:28:33,750
+of now we should refine it. Right.
+
+978
+00:28:33,750 --> 00:28:34,958
+So I could say something like, hey,
+
+979
+00:28:34,958 --> 00:28:37,500
+the IDs aren't shouldn't be showing.
+
+980
+00:28:37,500 --> 00:28:40,083
+And then I like the ear shows price,
+
+981
+00:28:40,083 --> 00:28:42,416
+so I'll ask it that too.
+
+982
+00:28:42,416 --> 00:28:42,750
+Okay.
+
+983
+00:28:45,291 --> 00:28:45,833
+You know what?
+
+984
+00:28:45,833 --> 00:28:47,208
+Let let's try out.
+
+985
+00:28:47,208 --> 00:28:49,291
+Let's try, copilot based GPT for one.
+
+986
+00:28:49,291 --> 00:28:49,750
+It did so
+
+987
+00:28:49,750 --> 00:28:51,958
+well on the first step,
+
+988
+00:28:51,958 --> 00:28:53,791
+I'm going to go into edit mode.
+
+989
+00:28:53,791 --> 00:28:55,291
+I think it's what I'm going to do.
+
+990
+00:28:55,291 --> 00:28:55,666
+All right
+
+991
+00:28:55,666 --> 00:28:57,750
+I'll follow your then edit mode.
+
+992
+00:28:57,750 --> 00:28:58,000
+Oh.
+
+993
+00:28:58,000 --> 00:28:59,000
+If I go to edit mode
+
+994
+00:28:59,000 --> 00:29:02,583
+let me hit done edit mode okay.
+
+995
+00:29:02,833 --> 00:29:04,833
+What are we doing. What are we doing.
+
+996
+00:29:04,833 --> 00:29:06,458
+So I'm going to I'm going to ask it
+
+997
+00:29:06,458 --> 00:29:09,000
+to remove the IDs okay.
+
+998
+00:29:09,000 --> 00:29:11,083
+Add the price okay.
+
+999
+00:29:11,083 --> 00:29:12,166
+Go ahead okay.
+
+1000
+00:29:12,166 --> 00:29:12,458
+All right.
+
+1001
+00:29:12,458 --> 00:29:13,750
+So I'm going to I'm going to grab
+
+1002
+00:29:13,750 --> 00:29:15,291
+basically just
+
+1003
+00:29:15,291 --> 00:29:15,875
+everything I think
+
+1004
+00:29:15,875 --> 00:29:16,750
+is going to be relevant.
+
+1005
+00:29:16,750 --> 00:29:17,208
+Like I don't think
+
+1006
+00:29:17,208 --> 00:29:18,666
+the env matters for this,
+
+1007
+00:29:18,666 --> 00:29:20,625
+but probably the static
+
+1008
+00:29:20,625 --> 00:29:22,416
+the templates are going to be important
+
+1009
+00:29:22,416 --> 00:29:23,958
+that the change log obviously
+
+1010
+00:29:23,958 --> 00:29:25,750
+while the data makes it
+
+1011
+00:29:25,750 --> 00:29:26,916
+I don't know if it has price in there.
+
+1012
+00:29:28,791 --> 00:29:29,916
+And I
+
+1013
+00:29:29,916 --> 00:29:31,000
+wonder if I include the readme,
+
+1014
+00:29:31,000 --> 00:29:32,916
+I wonder if it'll adjust the read me.
+
+1015
+00:29:32,916 --> 00:29:36,000
+So okay, all of those into my context.
+
+1016
+00:29:36,375 --> 00:29:38,916
+So I before you keep going,
+
+1017
+00:29:38,916 --> 00:29:39,666
+I want to call this out.
+
+1018
+00:29:39,666 --> 00:29:42,125
+So with eight with with edit mode,
+
+1019
+00:29:42,125 --> 00:29:42,750
+it's important
+
+1020
+00:29:42,750 --> 00:29:44,041
+to drag your files
+
+1021
+00:29:44,041 --> 00:29:46,333
+into the context window.
+
+1022
+00:29:46,333 --> 00:29:47,750
+Edit mode is going to iterate
+
+1023
+00:29:47,750 --> 00:29:48,625
+through anything.
+
+1024
+00:29:48,625 --> 00:29:52,125
+I've given it as context, but unlike
+
+1025
+00:29:52,125 --> 00:29:53,250
+agent mode
+
+1026
+00:29:53,250 --> 00:29:55,208
+which like will automatically expand
+
+1027
+00:29:55,208 --> 00:29:56,000
+the context, right?
+
+1028
+00:29:56,000 --> 00:29:57,875
+I don't think edit mode
+
+1029
+00:29:57,875 --> 00:29:59,333
+auto expands context.
+
+1030
+00:29:59,333 --> 00:30:00,541
+I think that's
+
+1031
+00:30:00,541 --> 00:30:00,791
+yeah,
+
+1032
+00:30:00,791 --> 00:30:02,208
+I think that's why I'm calling it out.
+
+1033
+00:30:02,208 --> 00:30:03,875
+So I just want, you know,
+
+1034
+00:30:03,875 --> 00:30:05,041
+if you're when you're watching this,
+
+1035
+00:30:05,041 --> 00:30:05,666
+I want you to know
+
+1036
+00:30:05,666 --> 00:30:07,500
+that when you're using edit mode,
+
+1037
+00:30:07,500 --> 00:30:08,833
+you have to give it access
+
+1038
+00:30:08,833 --> 00:30:09,625
+to those files
+
+1039
+00:30:09,625 --> 00:30:10,500
+and folders
+
+1040
+00:30:10,500 --> 00:30:12,916
+that you wanted to be able to edit.
+
+1041
+00:30:12,916 --> 00:30:15,541
+Otherwise, I don't think it finds it
+
+1042
+00:30:15,541 --> 00:30:17,416
+automagically. Right?
+
+1043
+00:30:17,416 --> 00:30:18,333
+I don't think so.
+
+1044
+00:30:18,333 --> 00:30:19,375
+Yeah, I don't think so.
+
+1045
+00:30:19,375 --> 00:30:20,375
+And that's intentional.
+
+1046
+00:30:21,333 --> 00:30:22,000
+Okay.
+
+1047
+00:30:22,000 --> 00:30:24,041
+Cool. So yeah, that context matters.
+
+1048
+00:30:24,041 --> 00:30:24,875
+There we go.
+
+1049
+00:30:24,875 --> 00:30:27,875
+I should
+
+1050
+00:30:28,041 --> 00:30:28,333
+yeah.
+
+1051
+00:30:28,333 --> 00:30:29,958
+And also at workspace
+
+1052
+00:30:29,958 --> 00:30:30,833
+doesn't work, right.
+
+1053
+00:30:30,833 --> 00:30:33,333
+We can show that in in ask mode,
+
+1054
+00:30:33,333 --> 00:30:34,625
+but in ask mode,
+
+1055
+00:30:34,625 --> 00:30:35,583
+if you just want to include
+
+1056
+00:30:35,583 --> 00:30:37,833
+everything you can say at workspace.
+
+1057
+00:30:37,833 --> 00:30:38,333
+And it's
+
+1058
+00:30:38,333 --> 00:30:39,166
+basically give it access
+
+1059
+00:30:39,166 --> 00:30:39,875
+to all the files
+
+1060
+00:30:39,875 --> 00:30:42,250
+inside the VS code workspace.
+
+1061
+00:30:42,250 --> 00:30:43,583
+Edit mode that's not available.
+
+1062
+00:30:43,583 --> 00:30:45,208
+It's explicit addition
+
+1063
+00:30:45,208 --> 00:30:47,750
+as you said of the file. Okay.
+
+1064
+00:30:47,750 --> 00:30:49,500
+So I'm just going to tell to do things
+
+1065
+00:30:49,500 --> 00:30:51,458
+like let's
+
+1066
+00:30:51,458 --> 00:30:54,458
+improve this up
+
+1067
+00:30:55,625 --> 00:30:56,333
+one.
+
+1068
+00:30:56,333 --> 00:30:59,666
+Remove the reservation
+
+1069
+00:31:00,833 --> 00:31:03,833
+IDs.
+
+1070
+00:31:03,833 --> 00:31:06,833
+The front end.
+
+1071
+00:31:09,750 --> 00:31:11,208
+Just and say page
+
+1072
+00:31:11,208 --> 00:31:13,416
+and let me be explicit
+
+1073
+00:31:13,416 --> 00:31:15,458
+and say the visible IDs
+
+1074
+00:31:15,458 --> 00:31:16,458
+like I don't want to do anything
+
+1075
+00:31:16,458 --> 00:31:17,250
+like remove
+
+1076
+00:31:17,250 --> 00:31:19,750
+the IDs and I have to infer what they
+
+1077
+00:31:19,750 --> 00:31:21,458
+are on the back end. Right,
+
+1078
+00:31:22,416 --> 00:31:23,000
+right.
+
+1079
+00:31:23,000 --> 00:31:24,708
+It's just from the front end page.
+
+1080
+00:31:24,708 --> 00:31:27,000
+Yeah. Exactly. Right.
+
+1081
+00:31:27,000 --> 00:31:32,166
+To, price to the room
+
+1082
+00:31:33,500 --> 00:31:35,625
+lists,
+
+1083
+00:31:35,625 --> 00:31:38,625
+available to the room types.
+
+1084
+00:31:42,541 --> 00:31:43,375
+Again.
+
+1085
+00:31:43,375 --> 00:31:44,208
+Okay.
+
+1086
+00:31:44,208 --> 00:31:47,208
+Let's see what it does.
+
+1087
+00:31:49,750 --> 00:31:50,500
+So I can
+
+1088
+00:31:50,500 --> 00:31:51,250
+we can actually start
+
+1089
+00:31:51,250 --> 00:31:52,458
+to see what it's doing here. Right.
+
+1090
+00:31:52,458 --> 00:31:54,208
+Like it has a whole bunch of directories
+
+1091
+00:31:54,208 --> 00:31:55,458
+available as well as specific files.
+
+1092
+00:31:55,458 --> 00:31:55,958
+So you can see it's
+
+1093
+00:31:55,958 --> 00:31:58,000
+even searching for explicitly
+
+1094
+00:31:58,000 --> 00:31:59,958
+like where it reservations,
+
+1095
+00:31:59,958 --> 00:32:02,041
+where the residents of those
+
+1096
+00:32:02,041 --> 00:32:02,291
+and then
+
+1097
+00:32:02,291 --> 00:32:03,541
+including only those
+
+1098
+00:32:03,541 --> 00:32:05,500
+matching files in the context.
+
+1099
+00:32:05,500 --> 00:32:07,125
+Yeah, kind of cool.
+
+1100
+00:32:07,125 --> 00:32:07,958
+All right.
+
+1101
+00:32:07,958 --> 00:32:08,708
+So I'm really glad
+
+1102
+00:32:08,708 --> 00:32:10,791
+I dropped in my data Json.
+
+1103
+00:32:10,791 --> 00:32:13,875
+We had told it in the read me for now,
+
+1104
+00:32:13,875 --> 00:32:15,125
+we're not using a database,
+
+1105
+00:32:15,125 --> 00:32:16,208
+we're just using a Json file
+
+1106
+00:32:16,208 --> 00:32:17,791
+because it's simple and easy. Right?
+
+1107
+00:32:17,791 --> 00:32:19,375
+And we gave it some mock data
+
+1108
+00:32:19,375 --> 00:32:19,791
+and I,
+
+1109
+00:32:19,791 --> 00:32:20,791
+I in the read
+
+1110
+00:32:20,791 --> 00:32:23,791
+me maybe I didn't actually include price
+
+1111
+00:32:24,250 --> 00:32:26,583
+in there and just see.
+
+1112
+00:32:26,583 --> 00:32:27,000
+Yeah.
+
+1113
+00:32:27,000 --> 00:32:30,416
+So so it like your model inferred it.
+
+1114
+00:32:30,416 --> 00:32:32,250
+But mine decided not to add that
+
+1115
+00:32:32,250 --> 00:32:32,916
+because I didn't see it
+
+1116
+00:32:32,916 --> 00:32:33,541
+initially in there.
+
+1117
+00:32:33,541 --> 00:32:35,041
+So now it's actually adding it to that
+
+1118
+00:32:35,041 --> 00:32:36,458
+Json structure.
+
+1119
+00:32:36,458 --> 00:32:37,583
+Nice.
+
+1120
+00:32:37,583 --> 00:32:40,375
+It's helpfully added a changelog entry
+
+1121
+00:32:40,375 --> 00:32:42,500
+as we asked it too. Nice.
+
+1122
+00:32:42,500 --> 00:32:44,666
+Oh yeah, the changelog.
+
+1123
+00:32:44,666 --> 00:32:49,208
+It's putting the price into the the HTML
+
+1124
+00:32:49,208 --> 00:32:51,125
+right there. Great.
+
+1125
+00:32:51,125 --> 00:32:54,375
+And it's updated the JavaScript.
+
+1126
+00:32:55,125 --> 00:32:55,750
+I don't actually see
+
+1127
+00:32:55,750 --> 00:32:57,125
+any changes in there.
+
+1128
+00:32:57,125 --> 00:32:57,791
+That's interesting
+
+1129
+00:32:57,791 --> 00:32:59,333
+because I think there would be well,
+
+1130
+00:32:59,333 --> 00:33:01,500
+there isn't a full ORM here,
+
+1131
+00:33:01,500 --> 00:33:02,416
+but I wonder if we're gonna
+
+1132
+00:33:02,416 --> 00:33:05,208
+run into a problem. Where is price? Not?
+
+1133
+00:33:06,541 --> 00:33:07,416
+We may have to come back
+
+1134
+00:33:07,416 --> 00:33:08,416
+and do something manually.
+
+1135
+00:33:08,416 --> 00:33:08,916
+I don't know,
+
+1136
+00:33:08,916 --> 00:33:13,416
+I see, I'll keep this and just reload
+
+1137
+00:33:13,416 --> 00:33:16,416
+there.
+
+1138
+00:33:17,250 --> 00:33:17,583
+Okay.
+
+1139
+00:33:17,583 --> 00:33:18,416
+No. It's good.
+
+1140
+00:33:18,416 --> 00:33:22,166
+So we got a price, for both of them.
+
+1141
+00:33:22,166 --> 00:33:24,083
+And the IDs are gone.
+
+1142
+00:33:24,083 --> 00:33:25,250
+Perfect. Exactly. What?
+
+1143
+00:33:25,250 --> 00:33:25,958
+Yeah,
+
+1144
+00:33:25,958 --> 00:33:26,500
+I actually
+
+1145
+00:33:26,500 --> 00:33:30,041
+like how your UI is styled better,
+
+1146
+00:33:30,333 --> 00:33:31,750
+because I would much rather
+
+1147
+00:33:31,750 --> 00:33:32,708
+this cancel button
+
+1148
+00:33:32,708 --> 00:33:34,833
+to be on the side over here.
+
+1149
+00:33:34,833 --> 00:33:35,875
+I think that's pretty
+
+1150
+00:33:35,875 --> 00:33:37,625
+standard in industry.
+
+1151
+00:33:37,625 --> 00:33:39,000
+And I don't know, something
+
+1152
+00:33:39,000 --> 00:33:40,833
+about the space thing.
+
+1153
+00:33:40,833 --> 00:33:42,416
+And
+
+1154
+00:33:42,416 --> 00:33:43,500
+I don't know, there's something
+
+1155
+00:33:43,500 --> 00:33:43,958
+that I'm
+
+1156
+00:33:43,958 --> 00:33:45,708
+I'm vibing with
+
+1157
+00:33:45,708 --> 00:33:47,875
+more on your page than this.
+
+1158
+00:33:47,875 --> 00:33:50,666
+We can try this. Right.
+
+1159
+00:33:50,666 --> 00:33:51,625
+We were talking about
+
+1160
+00:33:51,625 --> 00:33:53,416
+visual inputs, right.
+
+1161
+00:33:53,416 --> 00:33:54,666
+You can see my screen.
+
+1162
+00:33:54,666 --> 00:33:56,375
+Do you want to see us?
+
+1163
+00:33:56,375 --> 00:33:57,958
+And that. All right,
+
+1164
+00:33:59,458 --> 00:34:01,625
+let's see.
+
+1165
+00:34:01,625 --> 00:34:05,166
+Because another call out I had was,
+
+1166
+00:34:06,291 --> 00:34:11,041
+this model did not, I lost a screenshot.
+
+1167
+00:34:11,041 --> 00:34:12,208
+I'll just do it again.
+
+1168
+00:34:12,208 --> 00:34:13,125
+It did not include
+
+1169
+00:34:13,125 --> 00:34:14,708
+anything in the changelog.
+
+1170
+00:34:14,708 --> 00:34:16,291
+It's not doing it.
+
+1171
+00:34:16,291 --> 00:34:19,083
+It did not do it.
+
+1172
+00:34:19,083 --> 00:34:21,750
+That's right.
+
+1173
+00:34:21,750 --> 00:34:25,291
+Now I wonder why should we?
+
+1174
+00:34:25,291 --> 00:34:26,500
+Should we try one other thing
+
+1175
+00:34:26,500 --> 00:34:27,666
+while you're working?
+
+1176
+00:34:27,666 --> 00:34:28,583
+Yeah, sure.
+
+1177
+00:34:28,583 --> 00:34:29,625
+It's actually reading
+
+1178
+00:34:29,625 --> 00:34:30,875
+the copilot instructions.
+
+1179
+00:34:30,875 --> 00:34:32,875
+Right.
+
+1180
+00:34:32,875 --> 00:34:34,166
+We could put something like
+
+1181
+00:34:34,166 --> 00:34:36,291
+talk like a pirate at the top
+
+1182
+00:34:36,291 --> 00:34:38,500
+so that we can actually see the action
+
+1183
+00:34:38,500 --> 00:34:41,500
+that is obeying the copilot instructions.
+
+1184
+00:34:46,958 --> 00:34:48,000
+But it was.
+
+1185
+00:34:48,000 --> 00:34:49,333
+You see the suggestion,
+
+1186
+00:34:49,333 --> 00:34:50,625
+follow the instructions.
+
+1187
+00:34:50,625 --> 00:34:52,416
+Yes,
+
+1188
+00:34:52,416 --> 00:34:54,166
+but with a focus on code quality
+
+1189
+00:34:54,166 --> 00:34:55,083
+and maintainability.
+
+1190
+00:34:55,083 --> 00:34:56,458
+Why not?
+
+1191
+00:34:56,458 --> 00:34:58,833
+Why not?
+
+1192
+00:34:58,833 --> 00:35:00,958
+But, Yeah, let's see
+
+1193
+00:35:00,958 --> 00:35:02,166
+if it's actually doing that.
+
+1194
+00:35:02,166 --> 00:35:04,500
+And hopefully I understand,
+
+1195
+00:35:04,500 --> 00:35:06,416
+the language.
+
+1196
+00:35:08,125 --> 00:35:09,791
+Just a little.
+
+1197
+00:35:09,791 --> 00:35:10,208
+So I'm
+
+1198
+00:35:10,208 --> 00:35:12,041
+going to go to,
+
+1199
+00:35:12,041 --> 00:35:13,625
+I'm just going to go to Agent mode
+
+1200
+00:35:13,625 --> 00:35:16,666
+and I'm gonna screenshot
+
+1201
+00:35:16,750 --> 00:35:19,750
+your UI.
+
+1202
+00:35:20,625 --> 00:35:23,625
+And we're going to pop it in here.
+
+1203
+00:35:23,791 --> 00:35:26,083
+And who do we go with.
+
+1204
+00:35:26,083 --> 00:35:27,875
+Do I go,
+
+1205
+00:35:27,875 --> 00:35:30,625
+well let's see, I know Gemini two flash.
+
+1206
+00:35:30,625 --> 00:35:33,333
+We know Claude 3.5, sonnet and GP2 four.
+
+1207
+00:35:33,333 --> 00:35:36,500
+Oh, well, visual inputs.
+
+1208
+00:35:36,500 --> 00:35:38,916
+So let's try Gemini.
+
+1209
+00:35:38,916 --> 00:35:40,750
+Okay.
+
+1210
+00:35:40,750 --> 00:35:42,333
+And, you know, even Gemini Flash
+
+1211
+00:35:42,333 --> 00:35:45,083
+I think will do. We want to play okay.
+
+1212
+00:35:45,083 --> 00:35:46,375
+Oh, it's not an easy mode.
+
+1213
+00:35:46,375 --> 00:35:48,166
+Of course. Yeah, yeah.
+
+1214
+00:35:48,166 --> 00:35:50,083
+Sorry. My bad.
+
+1215
+00:35:50,083 --> 00:35:50,666
+No no no.
+
+1216
+00:35:50,666 --> 00:35:52,416
+So I want to say like what would I say.
+
+1217
+00:35:52,416 --> 00:35:53,208
+Like I think I would just
+
+1218
+00:35:53,208 --> 00:35:56,500
+update UI to reflect the new design.
+
+1219
+00:35:57,041 --> 00:35:58,500
+I don't know,
+
+1220
+00:35:58,500 --> 00:35:59,375
+it's not that new,
+
+1221
+00:35:59,375 --> 00:36:00,958
+but that's all I would say.
+
+1222
+00:36:00,958 --> 00:36:01,750
+What would you say?
+
+1223
+00:36:03,333 --> 00:36:05,833
+No, I think that's perfect.
+
+1224
+00:36:05,833 --> 00:36:08,833
+Yeah, but it.
+
+1225
+00:36:08,833 --> 00:36:09,666
+So let's see if it talks
+
+1226
+00:36:09,666 --> 00:36:10,708
+like a parrot to see
+
+1227
+00:36:10,708 --> 00:36:13,083
+if it's actually you see the reference.
+
+1228
+00:36:13,083 --> 00:36:15,333
+It's saying here.
+
+1229
+00:36:15,333 --> 00:36:16,458
+Yes. I mean right.
+
+1230
+00:36:16,458 --> 00:36:18,250
+So it says it's pulling it in.
+
+1231
+00:36:21,250 --> 00:36:23,250
+So how many changes do you have in your,
+
+1232
+00:36:23,250 --> 00:36:25,583
+changelog? I'm curious.
+
+1233
+00:36:25,583 --> 00:36:26,833
+Great question.
+
+1234
+00:36:26,833 --> 00:36:28,625
+It
+
+1235
+00:36:28,625 --> 00:36:29,166
+it looks like
+
+1236
+00:36:29,166 --> 00:36:30,375
+it's been pretty good about it.
+
+1237
+00:36:30,375 --> 00:36:33,375
+Like I've got my initial commit.
+
+1238
+00:36:33,375 --> 00:36:35,666
+I, I wow. Yeah.
+
+1239
+00:36:35,666 --> 00:36:37,750
+Fixing the ginger problem.
+
+1240
+00:36:37,750 --> 00:36:39,916
+I've got, Whoops.
+
+1241
+00:36:39,916 --> 00:36:41,166
+Sorry.
+
+1242
+00:36:41,166 --> 00:36:44,166
+I've got.
+
+1243
+00:36:45,250 --> 00:36:46,833
+Input validation.
+
+1244
+00:36:46,833 --> 00:36:47,791
+The template change.
+
+1245
+00:36:47,791 --> 00:36:48,000
+Yeah.
+
+1246
+00:36:48,000 --> 00:36:49,958
+Now it looks it looks complete to me.
+
+1247
+00:36:49,958 --> 00:36:50,916
+Amazing.
+
+1248
+00:36:50,916 --> 00:36:52,000
+So again,
+
+1249
+00:36:52,000 --> 00:36:52,500
+I'm not sure
+
+1250
+00:36:52,500 --> 00:36:55,166
+why it's not updating the changelog here,
+
+1251
+00:36:55,166 --> 00:36:57,583
+but it is talking like a pirate.
+
+1252
+00:36:57,583 --> 00:36:58,291
+Ahoy there.
+
+1253
+00:36:58,291 --> 00:36:59,833
+But I see
+
+1254
+00:36:59,833 --> 00:37:01,375
+you want the UI
+
+1255
+00:37:01,375 --> 00:37:03,833
+to match the design you've shared.
+
+1256
+00:37:03,833 --> 00:37:04,750
+You've shared.
+
+1257
+00:37:06,833 --> 00:37:07,625
+Okay, so it is
+
+1258
+00:37:07,625 --> 00:37:10,625
+doing it good.
+
+1259
+00:37:10,791 --> 00:37:11,750
+Now this is interesting.
+
+1260
+00:37:11,750 --> 00:37:12,375
+You asked for a
+
+1261
+00:37:12,375 --> 00:37:13,958
+UI change,
+
+1262
+00:37:13,958 --> 00:37:16,958
+but it's changing the data structure.
+
+1263
+00:37:17,541 --> 00:37:19,708
+Whoa.
+
+1264
+00:37:19,708 --> 00:37:20,791
+It's going above and beyond,
+
+1265
+00:37:20,791 --> 00:37:22,333
+but not necessarily in a good way.
+
+1266
+00:37:22,333 --> 00:37:24,833
+Unless you know what it did,
+
+1267
+00:37:24,833 --> 00:37:26,583
+it's pulling the data out of the
+
+1268
+00:37:26,583 --> 00:37:29,208
+the design as well as the layout.
+
+1269
+00:37:29,208 --> 00:37:31,791
+Oh, right.
+
+1270
+00:37:31,791 --> 00:37:32,416
+I wonder,
+
+1271
+00:37:32,416 --> 00:37:33,375
+so we could go with this
+
+1272
+00:37:33,375 --> 00:37:34,333
+and roll with it,
+
+1273
+00:37:34,333 --> 00:37:35,541
+or we could cancel
+
+1274
+00:37:35,541 --> 00:37:36,625
+this run, undo
+
+1275
+00:37:36,625 --> 00:37:38,666
+everything that it's about to change,
+
+1276
+00:37:38,666 --> 00:37:41,208
+and then say, just change the design,
+
+1277
+00:37:41,208 --> 00:37:42,625
+but not the data.
+
+1278
+00:37:42,625 --> 00:37:44,625
+See if that will be a little bit more.
+
+1279
+00:37:44,625 --> 00:37:46,708
+I mean, it's doing cool.
+
+1280
+00:37:46,708 --> 00:37:49,583
+I mean, Gemini 2.5 uses a lot of tokens.
+
+1281
+00:37:49,583 --> 00:37:52,125
+Look at this. Yeah.
+
+1282
+00:37:52,125 --> 00:37:53,625
+Which is something to be aware of right.
+
+1283
+00:37:53,625 --> 00:37:54,666
+Like
+
+1284
+00:37:54,666 --> 00:37:56,375
+and while I don't know
+
+1285
+00:37:56,375 --> 00:37:58,291
+if there's a specific chart for it,
+
+1286
+00:37:58,291 --> 00:38:00,083
+I know we have certain models marked
+
+1287
+00:38:00,083 --> 00:38:02,791
+as like premium or using more tokens, but
+
+1288
+00:38:02,791 --> 00:38:05,791
+I always feel like a good easy proxy for
+
+1289
+00:38:05,791 --> 00:38:06,916
+it is just
+
+1290
+00:38:06,916 --> 00:38:08,625
+how much output does it give me
+
+1291
+00:38:08,625 --> 00:38:10,458
+and how slow is it?
+
+1292
+00:38:10,458 --> 00:38:11,333
+Yeah, kind of
+
+1293
+00:38:11,333 --> 00:38:14,125
+why that something's taking more energy.
+
+1294
+00:38:14,125 --> 00:38:14,583
+Yes.
+
+1295
+00:38:14,583 --> 00:38:15,958
+It's something just always go
+
+1296
+00:38:15,958 --> 00:38:17,208
+with the highest power model.
+
+1297
+00:38:17,208 --> 00:38:18,125
+But hey,
+
+1298
+00:38:18,125 --> 00:38:20,625
+it was just Earth Day recently, right?
+
+1299
+00:38:20,625 --> 00:38:23,625
+So I guess we should add in here
+
+1300
+00:38:23,916 --> 00:38:26,208
+one way that you can be a little more
+
+1301
+00:38:26,208 --> 00:38:29,041
+eco conscious is go with the lighter
+
+1302
+00:38:29,041 --> 00:38:29,875
+weight models.
+
+1303
+00:38:29,875 --> 00:38:30,625
+When you know that
+
+1304
+00:38:30,625 --> 00:38:32,500
+they're going to be sufficient.
+
+1305
+00:38:32,500 --> 00:38:33,583
+And the side benefit of that
+
+1306
+00:38:33,583 --> 00:38:35,708
+is that they're faster. Right.
+
+1307
+00:38:35,708 --> 00:38:37,625
+And then only going forward
+
+1308
+00:38:37,625 --> 00:38:39,250
+to those heavier models
+
+1309
+00:38:39,250 --> 00:38:42,250
+like 2.5 Pro, for example, or three seven
+
+1310
+00:38:42,458 --> 00:38:43,541
+and Claude,
+
+1311
+00:38:43,541 --> 00:38:45,750
+when you really need that horsepower.
+
+1312
+00:38:48,583 --> 00:38:51,041
+Good call out.
+
+1313
+00:38:51,041 --> 00:38:51,750
+So now I
+
+1314
+00:38:51,750 --> 00:38:52,708
+have to update the UI
+
+1315
+00:38:52,708 --> 00:38:53,708
+to reflect that new design.
+
+1316
+00:38:53,708 --> 00:38:54,833
+Do not change the content,
+
+1317
+00:38:54,833 --> 00:38:56,500
+just the UI styling.
+
+1318
+00:38:56,500 --> 00:38:58,291
+Is that sufficient?
+
+1319
+00:38:58,291 --> 00:39:00,250
+Let's see here.
+
+1320
+00:39:00,250 --> 00:39:02,083
+Ahoy there matey.
+
+1321
+00:39:02,083 --> 00:39:03,250
+And I missed it while I was talking.
+
+1322
+00:39:03,250 --> 00:39:03,708
+Did you?
+
+1323
+00:39:03,708 --> 00:39:05,375
+You hit undo right on.
+
+1324
+00:39:05,375 --> 00:39:07,250
+Yeah, yeah, yeah, I even cancel it.
+
+1325
+00:39:07,250 --> 00:39:08,291
+I stopped and cancel
+
+1326
+00:39:08,291 --> 00:39:09,000
+and just removed it
+
+1327
+00:39:09,000 --> 00:39:10,500
+from the context window.
+
+1328
+00:39:10,500 --> 00:39:13,500
+When you hit cancel, does it auto undo?
+
+1329
+00:39:13,541 --> 00:39:15,750
+No, no, it just stops.
+
+1330
+00:39:15,750 --> 00:39:18,000
+It stops a generation.
+
+1331
+00:39:18,000 --> 00:39:20,375
+And then I went up and just,
+
+1332
+00:39:20,375 --> 00:39:23,375
+hit the click on this button to remove
+
+1333
+00:39:24,166 --> 00:39:25,666
+the last request.
+
+1334
+00:39:25,666 --> 00:39:28,416
+I guess. Okay.
+
+1335
+00:39:28,416 --> 00:39:28,833
+That's something
+
+1336
+00:39:28,833 --> 00:39:30,500
+I don't really mess around with much too.
+
+1337
+00:39:30,500 --> 00:39:31,833
+But good, good call out.
+
+1338
+00:39:31,833 --> 00:39:32,125
+Right?
+
+1339
+00:39:32,125 --> 00:39:33,041
+That like
+
+1340
+00:39:33,041 --> 00:39:35,583
+when I'm doing things in a session,
+
+1341
+00:39:37,291 --> 00:39:37,708
+keeping the
+
+1342
+00:39:37,708 --> 00:39:38,708
+full history and
+
+1343
+00:39:38,708 --> 00:39:39,875
+it might, you know, that's my
+
+1344
+00:39:39,875 --> 00:39:40,833
+this session gets long enough.
+
+1345
+00:39:40,833 --> 00:39:41,833
+It might eventually start
+
+1346
+00:39:41,833 --> 00:39:43,416
+forgetting some of the older stuff.
+
+1347
+00:39:43,416 --> 00:39:45,208
+But you can go and you can
+
+1348
+00:39:45,208 --> 00:39:48,333
+manually, manually remove elements
+
+1349
+00:39:48,333 --> 00:39:51,000
+from history by just axing them out.
+
+1350
+00:39:51,000 --> 00:39:52,250
+Exactly.
+
+1351
+00:39:52,250 --> 00:39:54,750
+And it's also a really good way to remove
+
+1352
+00:39:54,750 --> 00:39:57,375
+any changes that you don't want.
+
+1353
+00:39:57,375 --> 00:39:58,583
+Because then when you,
+
+1354
+00:39:58,583 --> 00:39:59,833
+when you remove that request,
+
+1355
+00:39:59,833 --> 00:40:00,500
+it removes
+
+1356
+00:40:00,500 --> 00:40:03,500
+all the changes that are adjusted to the.
+
+1357
+00:40:03,625 --> 00:40:05,125
+It's pretty good.
+
+1358
+00:40:05,125 --> 00:40:08,125
+Okay.
+
+1359
+00:40:08,833 --> 00:40:09,875
+Look these changes.
+
+1360
+00:40:09,875 --> 00:40:12,875
+Oh.
+
+1361
+00:40:13,000 --> 00:40:14,083
+It finally did it.
+
+1362
+00:40:14,083 --> 00:40:15,541
+It's
+
+1363
+00:40:15,541 --> 00:40:18,000
+it finally did it here.
+
+1364
+00:40:18,000 --> 00:40:19,875
+All right, all right.
+
+1365
+00:40:19,875 --> 00:40:21,458
+So what do we got? Okay, good.
+
+1366
+00:40:21,458 --> 00:40:22,541
+That's file names.
+
+1367
+00:40:22,541 --> 00:40:24,125
+We got the main JS change
+
+1368
+00:40:24,125 --> 00:40:26,625
+and we updated the changelog. Yep.
+
+1369
+00:40:26,625 --> 00:40:29,166
+But it didn't touch the JS.
+
+1370
+00:40:29,166 --> 00:40:30,666
+Here we go. All right.
+
+1371
+00:40:31,958 --> 00:40:32,541
+Yes I
+
+1372
+00:40:32,541 --> 00:40:35,375
+only got it to notice the changelog.
+
+1373
+00:40:35,375 --> 00:40:37,791
+I have no idea.
+
+1374
+00:40:37,791 --> 00:40:40,333
+Oh, of.
+
+1375
+00:40:40,333 --> 00:40:41,416
+We swear
+
+1376
+00:40:41,416 --> 00:40:43,375
+it's it's not passively listening
+
+1377
+00:40:43,375 --> 00:40:44,625
+when you talk about things
+
+1378
+00:40:44,625 --> 00:40:47,625
+unless you press that microphone.
+
+1379
+00:40:49,500 --> 00:40:50,125
+this UI
+
+1380
+00:40:50,125 --> 00:40:51,125
+does not look like yours
+
+1381
+00:40:51,125 --> 00:40:53,458
+because this is not blue.
+
+1382
+00:40:53,458 --> 00:40:56,458
+This is not blue.
+
+1383
+00:40:56,833 --> 00:40:57,666
+Oh, it's not page.
+
+1384
+00:40:57,666 --> 00:41:01,375
+It did put the button here okay.
+
+1385
+00:41:01,791 --> 00:41:03,916
+Oh yeah. And it did update like here.
+
+1386
+00:41:03,916 --> 00:41:05,166
+And I would just as availability
+
+1387
+00:41:05,166 --> 00:41:08,166
+and price like yours okay.
+
+1388
+00:41:09,333 --> 00:41:11,291
+I want to do something I'm going to add
+
+1389
+00:41:11,291 --> 00:41:12,458
+a color palette.
+
+1390
+00:41:12,458 --> 00:41:14,166
+You just gave me such a good idea.
+
+1391
+00:41:14,166 --> 00:41:16,625
+Oh, I'm going to follow two second.
+
+1392
+00:41:16,625 --> 00:41:19,625
+Will I find one?
+
+1393
+00:41:20,041 --> 00:41:22,250
+Hello, finder.
+
+1394
+00:41:22,250 --> 00:41:23,833
+Yeah. Are.
+
+1395
+00:41:23,833 --> 00:41:26,041
+I do love this tip though, John,
+
+1396
+00:41:26,041 --> 00:41:27,500
+of using of having it
+
+1397
+00:41:27,500 --> 00:41:29,500
+do its own changelog.
+
+1398
+00:41:29,500 --> 00:41:31,500
+So you can kind of go through
+
+1399
+00:41:31,500 --> 00:41:32,375
+and see the history of the
+
+1400
+00:41:32,375 --> 00:41:33,833
+changes made that it made
+
+1401
+00:41:34,958 --> 00:41:35,333
+it.
+
+1402
+00:41:35,333 --> 00:41:37,208
+This has helped me up so much.
+
+1403
+00:41:37,208 --> 00:41:38,666
+Yeah, I love that
+
+1404
+00:41:38,666 --> 00:41:40,666
+you have a long editing session
+
+1405
+00:41:40,666 --> 00:41:43,458
+and it just flies out of your head.
+
+1406
+00:41:43,458 --> 00:41:44,333
+All right.
+
+1407
+00:41:44,333 --> 00:41:47,500
+I'm going to stick in edit mode.
+
+1408
+00:41:48,000 --> 00:41:49,916
+I think the context I used
+
+1409
+00:41:49,916 --> 00:41:52,416
+last time is actually pretty good.
+
+1410
+00:41:52,416 --> 00:41:55,375
+I'm going to switch though, to
+
+1411
+00:41:55,375 --> 00:41:56,291
+Gemini Flash,
+
+1412
+00:41:56,291 --> 00:41:58,083
+which is available in edit mode,
+
+1413
+00:41:58,083 --> 00:42:00,750
+and I'm going to say Apply green.
+
+1414
+00:42:00,750 --> 00:42:03,750
+This color palette.
+
+1415
+00:42:04,750 --> 00:42:07,750
+And then I'm going to give it this.
+
+1416
+00:42:07,750 --> 00:42:08,583
+This is going to be ugly
+
+1417
+00:42:08,583 --> 00:42:09,125
+as I'll get out
+
+1418
+00:42:09,125 --> 00:42:11,166
+because I haven't like explicitly
+
+1419
+00:42:11,166 --> 00:42:12,541
+picked this palette for this purpose.
+
+1420
+00:42:12,541 --> 00:42:14,375
+I just grabbed an image I had.
+
+1421
+00:42:14,375 --> 00:42:16,291
+But I've got this color palette file,
+
+1422
+00:42:16,291 --> 00:42:16,666
+okay.
+
+1423
+00:42:16,666 --> 00:42:19,125
+Which has like some more stuff in it.
+
+1424
+00:42:19,125 --> 00:42:19,958
+Oh, nice.
+
+1425
+00:42:21,333 --> 00:42:23,583
+Okay.
+
+1426
+00:42:23,583 --> 00:42:24,541
+All right okay.
+
+1427
+00:42:24,541 --> 00:42:25,625
+No flash.
+
+1428
+00:42:25,625 --> 00:42:27,208
+Yes 2.0 flash.
+
+1429
+00:42:27,208 --> 00:42:28,000
+And it's it's
+
+1430
+00:42:28,000 --> 00:42:29,458
+it seems like it's cranking along
+
+1431
+00:42:29,458 --> 00:42:32,291
+like it gave me responses pretty quick.
+
+1432
+00:42:32,291 --> 00:42:33,583
+And it's doing what
+
+1433
+00:42:33,583 --> 00:42:36,250
+I would expect it to do.
+
+1434
+00:42:36,250 --> 00:42:37,541
+Oh I love this.
+
+1435
+00:42:37,541 --> 00:42:38,583
+So it's,
+
+1436
+00:42:38,583 --> 00:42:40,833
+it's it's not even just defaulting
+
+1437
+00:42:40,833 --> 00:42:42,333
+to hex colors.
+
+1438
+00:42:42,333 --> 00:42:45,250
+It's actually using these named colors,
+
+1439
+00:42:45,250 --> 00:42:47,541
+as the style.
+
+1440
+00:42:47,541 --> 00:42:49,750
+So I wonder, is that part of tailwind
+
+1441
+00:42:49,750 --> 00:42:52,291
+or is that is creating a separate CSS
+
+1442
+00:42:52,291 --> 00:42:53,791
+that has these named colors in it?
+
+1443
+00:42:53,791 --> 00:42:56,833
+I do believe I do believe it's a tailwind
+
+1444
+00:42:57,458 --> 00:42:58,583
+telling thing. Okay.
+
+1445
+00:42:58,583 --> 00:42:58,916
+Yeah.
+
+1446
+00:42:58,916 --> 00:42:59,375
+You know,
+
+1447
+00:42:59,375 --> 00:43:00,291
+I'm, I'm
+
+1448
+00:43:00,291 --> 00:43:01,583
+I'm so old I just
+
+1449
+00:43:01,583 --> 00:43:03,666
+I still default to bootstrap.
+
+1450
+00:43:03,666 --> 00:43:04,000
+No.
+
+1451
+00:43:04,000 --> 00:43:05,166
+Let's to
+
+1452
+00:43:05,166 --> 00:43:07,458
+the thing is we use the tech that we know
+
+1453
+00:43:07,458 --> 00:43:08,166
+and that we're used to.
+
+1454
+00:43:08,166 --> 00:43:09,958
+You know what I'm saying, right?
+
+1455
+00:43:09,958 --> 00:43:10,750
+Yeah.
+
+1456
+00:43:10,750 --> 00:43:13,625
+It's like I was doing the same.
+
+1457
+00:43:13,625 --> 00:43:15,041
+I did a stream earlier today
+
+1458
+00:43:15,041 --> 00:43:16,041
+and somebody was telling
+
+1459
+00:43:16,041 --> 00:43:18,541
+me to stop using. Whoa.
+
+1460
+00:43:20,416 --> 00:43:20,958
+It's ugly,
+
+1461
+00:43:20,958 --> 00:43:23,958
+but it's right.
+
+1462
+00:43:24,083 --> 00:43:24,666
+To stop
+
+1463
+00:43:24,666 --> 00:43:28,541
+using npm and instead use p and p m.
+
+1464
+00:43:28,541 --> 00:43:30,250
+And I was like, you know, you know,
+
+1465
+00:43:30,250 --> 00:43:31,541
+I but
+
+1466
+00:43:31,541 --> 00:43:34,750
+I'm just doing what I'm used to, right?
+
+1467
+00:43:34,750 --> 00:43:34,958
+Yeah.
+
+1468
+00:43:34,958 --> 00:43:36,250
+We, we get these other
+
+1469
+00:43:36,250 --> 00:43:38,625
+like that's, that's a great call out to.
+
+1470
+00:43:38,625 --> 00:43:38,958
+Okay.
+
+1471
+00:43:38,958 --> 00:43:39,958
+So you're giving me all kinds
+
+1472
+00:43:39,958 --> 00:43:41,291
+of great ideas right.
+
+1473
+00:43:41,291 --> 00:43:42,666
+Like okay.
+
+1474
+00:43:42,666 --> 00:43:45,041
+Now I'm because I've used Pip forever.
+
+1475
+00:43:45,041 --> 00:43:47,333
+Right. But I know there's other options.
+
+1476
+00:43:47,333 --> 00:43:51,083
+So let's ask I so I use two, right.
+
+1477
+00:43:51,166 --> 00:43:53,166
+Yeah. I just I mean it's forever right.
+
+1478
+00:43:53,166 --> 00:43:53,375
+All right
+
+1479
+00:43:53,375 --> 00:43:54,666
+I'm going to go for a fast
+
+1480
+00:43:54,666 --> 00:43:57,125
+one like oh for mini.
+
+1481
+00:43:57,125 --> 00:43:57,875
+So for mini.
+
+1482
+00:43:57,875 --> 00:44:00,125
+No. There it is. Yes. Okay.
+
+1483
+00:44:00,125 --> 00:44:04,000
+And I'm going to ask it, well, should
+
+1484
+00:44:04,000 --> 00:44:04,708
+I use
+
+1485
+00:44:06,375 --> 00:44:08,375
+instead of Pip
+
+1486
+00:44:08,375 --> 00:44:09,125
+because I know
+
+1487
+00:44:09,125 --> 00:44:10,708
+there's other module managers out there.
+
+1488
+00:44:10,708 --> 00:44:13,208
+I just haven't gotten used to them.
+
+1489
+00:44:13,208 --> 00:44:13,791
+Guess what?
+
+1490
+00:44:13,791 --> 00:44:15,250
+We've been making all these changes.
+
+1491
+00:44:15,250 --> 00:44:16,833
+We should we should do a comment.
+
+1492
+00:44:16,833 --> 00:44:19,833
+You know? Oh, my gosh.
+
+1493
+00:44:20,458 --> 00:44:21,458
+No way.
+
+1494
+00:44:21,458 --> 00:44:21,833
+Okay,
+
+1495
+00:44:21,833 --> 00:44:22,458
+since
+
+1496
+00:44:22,458 --> 00:44:23,541
+we're both working at the same code
+
+1497
+00:44:23,541 --> 00:44:25,166
+base, let's make two different branches.
+
+1498
+00:44:25,166 --> 00:44:27,375
+What do you think? Oh, yeah. Okay.
+
+1499
+00:44:27,375 --> 00:44:28,250
+All right,
+
+1500
+00:44:28,250 --> 00:44:31,250
+so I'm just going to make a new branch
+
+1501
+00:44:31,833 --> 00:44:33,375
+and I'm going to call this one
+
+1502
+00:44:33,375 --> 00:44:35,583
+package on.
+
+1503
+00:44:35,583 --> 00:44:36,333
+And what did I use?
+
+1504
+00:44:36,333 --> 00:44:40,958
+I used, Gemini to recur.
+
+1505
+00:44:41,291 --> 00:44:44,500
+And this is like clod 3.5
+
+1506
+00:44:46,500 --> 00:44:49,208
+plus plus.
+
+1507
+00:44:49,208 --> 00:44:50,291
+And this is a great
+
+1508
+00:44:50,291 --> 00:44:53,750
+to show off of this button to exactly
+
+1509
+00:44:53,791 --> 00:44:56,791
+buy auto generate.
+
+1510
+00:44:57,041 --> 00:45:00,041
+Here we go.
+
+1511
+00:45:00,500 --> 00:45:03,875
+The one thing about this auto generating
+
+1512
+00:45:03,875 --> 00:45:05,666
+comment commit situation though,
+
+1513
+00:45:05,666 --> 00:45:07,791
+there's so long sometimes.
+
+1514
+00:45:07,791 --> 00:45:09,458
+And for me I'm like,
+
+1515
+00:45:09,458 --> 00:45:10,625
+I would never write so much
+
+1516
+00:45:10,625 --> 00:45:11,791
+in a commit message.
+
+1517
+00:45:11,791 --> 00:45:13,208
+But these very long
+
+1518
+00:45:13,208 --> 00:45:14,583
+commit messages have saved me
+
+1519
+00:45:14,583 --> 00:45:16,208
+so many times
+
+1520
+00:45:16,208 --> 00:45:17,833
+when trying to figure out issues.
+
+1521
+00:45:18,791 --> 00:45:19,583
+Mine for
+
+1522
+00:45:19,583 --> 00:45:22,666
+some reason, is not actually generating.
+
+1523
+00:45:22,666 --> 00:45:24,458
+I've never had this happen before.
+
+1524
+00:45:24,458 --> 00:45:27,041
+Are things staged?
+
+1525
+00:45:27,041 --> 00:45:29,250
+We call that a plus.
+
+1526
+00:45:29,250 --> 00:45:30,791
+I could yeah, just add.
+
+1527
+00:45:30,791 --> 00:45:32,333
+Oh, man. This. Well. Oh.
+
+1528
+00:45:32,333 --> 00:45:34,833
+Well, this,
+
+1529
+00:45:34,833 --> 00:45:38,166
+Yeah, this is, Yeah, I get it.
+
+1530
+00:45:38,166 --> 00:45:38,500
+No.
+
+1531
+00:45:38,500 --> 00:45:41,500
+Yeah, yeah.
+
+1532
+00:45:42,083 --> 00:45:43,250
+Okay.
+
+1533
+00:45:43,250 --> 00:45:46,250
+Mac specific.
+
+1534
+00:45:46,958 --> 00:45:49,125
+Oh, right.
+
+1535
+00:45:49,125 --> 00:45:52,125
+Yeah.
+
+1536
+00:45:52,916 --> 00:45:55,416
+Bad coding,
+
+1537
+00:45:55,416 --> 00:45:56,416
+code and everything.
+
+1538
+00:45:56,416 --> 00:45:59,416
+Even your even your get configs.
+
+1539
+00:46:05,666 --> 00:46:07,375
+Weird is I thought I had not.
+
+1540
+00:46:07,375 --> 00:46:07,708
+There we go.
+
+1541
+00:46:07,708 --> 00:46:10,708
+Okay.
+
+1542
+00:46:11,375 --> 00:46:12,750
+It is in there.
+
+1543
+00:46:12,750 --> 00:46:13,291
+Why is it.
+
+1544
+00:46:13,291 --> 00:46:15,458
+Oh
+
+1545
+00:46:15,458 --> 00:46:18,208
+I'm just saying that it.
+
+1546
+00:46:18,208 --> 00:46:18,458
+All right.
+
+1547
+00:46:18,458 --> 00:46:19,083
+I'm not gonna
+
+1548
+00:46:19,083 --> 00:46:19,708
+I'm not going to bother
+
+1549
+00:46:19,708 --> 00:46:21,000
+debugging this right now. I'm just.
+
+1550
+00:46:21,000 --> 00:46:22,375
+Yeah, it's not worth it.
+
+1551
+00:46:22,375 --> 00:46:25,375
+Honestly.
+
+1552
+00:46:25,916 --> 00:46:27,666
+But I mean, that said,
+
+1553
+00:46:27,666 --> 00:46:29,125
+the answer gave is correct.
+
+1554
+00:46:29,125 --> 00:46:31,208
+Of course. But.
+
+1555
+00:46:31,208 --> 00:46:32,041
+All right, there we go.
+
+1556
+00:46:32,041 --> 00:46:33,541
+I've got I've got a commit message here.
+
+1557
+00:46:33,541 --> 00:46:34,625
+This is pretty nice, actually.
+
+1558
+00:46:34,625 --> 00:46:36,458
+It says like it is too long.
+
+1559
+00:46:36,458 --> 00:46:37,833
+Yes, but,
+
+1560
+00:46:37,833 --> 00:46:39,041
+it's telling me
+
+1561
+00:46:39,041 --> 00:46:40,041
+that it's implementing it.
+
+1562
+00:46:40,041 --> 00:46:41,750
+It says it out of the back backend API.
+
+1563
+00:46:41,750 --> 00:46:42,666
+It create the front end.
+
+1564
+00:46:42,666 --> 00:46:44,583
+Oh, wow. Is like,
+
+1565
+00:46:44,583 --> 00:46:46,291
+this is a really nice detailed
+
+1566
+00:46:46,291 --> 00:46:47,208
+commit message.
+
+1567
+00:46:47,208 --> 00:46:49,166
+It's very long, very detailed.
+
+1568
+00:46:49,166 --> 00:46:50,916
+It is very long though. Yes.
+
+1569
+00:46:52,625 --> 00:46:53,166
+Okay.
+
+1570
+00:46:53,166 --> 00:46:56,166
+And I'm just going to think that.
+
+1571
+00:46:57,541 --> 00:46:58,666
+I'm going to
+
+1572
+00:46:58,666 --> 00:47:00,875
+or I didn't get a great answer.
+
+1573
+00:47:00,875 --> 00:47:01,375
+And I think it's
+
+1574
+00:47:01,375 --> 00:47:02,291
+because I wasn't detailed enough.
+
+1575
+00:47:02,291 --> 00:47:04,041
+I said, what should I use instead of pep?
+
+1576
+00:47:04,041 --> 00:47:06,375
+And then it just says, well, you can use
+
+1577
+00:47:06,375 --> 00:47:07,500
+and this is true.
+
+1578
+00:47:07,500 --> 00:47:08,750
+Like if you don't have
+
+1579
+00:47:08,750 --> 00:47:11,125
+Pip itself installed, but you do have
+
+1580
+00:47:11,125 --> 00:47:12,666
+Python module Pep,
+
+1581
+00:47:12,666 --> 00:47:14,000
+you can call Python three
+
+1582
+00:47:14,000 --> 00:47:15,750
+and just say execute this module Pep.
+
+1583
+00:47:15,750 --> 00:47:17,541
+But that's not really what I meant.
+
+1584
+00:47:17,541 --> 00:47:20,541
+Can I use
+
+1585
+00:47:21,541 --> 00:47:23,500
+a different
+
+1586
+00:47:23,500 --> 00:47:25,750
+Python
+
+1587
+00:47:25,750 --> 00:47:28,708
+module manager
+
+1588
+00:47:28,708 --> 00:47:31,708
+other than Pep?
+
+1589
+00:47:32,916 --> 00:47:34,083
+What are the pros
+
+1590
+00:47:34,083 --> 00:47:37,083
+and cons of each?
+
+1591
+00:47:39,666 --> 00:47:41,291
+Okay,
+
+1592
+00:47:41,291 --> 00:47:42,291
+and I love how we are going
+
+1593
+00:47:42,291 --> 00:47:43,625
+between agent edit
+
+1594
+00:47:43,625 --> 00:47:47,708
+and ask to kind of show how you can use
+
+1595
+00:47:47,708 --> 00:47:49,875
+these three different modes. Right.
+
+1596
+00:47:49,875 --> 00:47:52,875
+So ask is really good at figuring out
+
+1597
+00:47:52,875 --> 00:47:53,625
+what can I use
+
+1598
+00:47:53,625 --> 00:47:55,916
+rather than pep figuring out, oh,
+
+1599
+00:47:55,916 --> 00:47:57,541
+how can I improve this
+
+1600
+00:47:57,541 --> 00:47:59,083
+particular function?
+
+1601
+00:47:59,083 --> 00:48:00,875
+Oh, do you have any ideas on that?
+
+1602
+00:48:00,875 --> 00:48:01,500
+You know what I mean.
+
+1603
+00:48:01,500 --> 00:48:03,000
+Just like kind of talking
+
+1604
+00:48:03,000 --> 00:48:04,833
+through changes that you want to do.
+
+1605
+00:48:04,833 --> 00:48:05,916
+Edit mode is for those
+
+1606
+00:48:05,916 --> 00:48:08,041
+specific changes that you want.
+
+1607
+00:48:08,041 --> 00:48:09,833
+So you add the specific context.
+
+1608
+00:48:09,833 --> 00:48:10,875
+You ask you what you want
+
+1609
+00:48:10,875 --> 00:48:12,416
+and then it goes ahead and do it.
+
+1610
+00:48:12,416 --> 00:48:13,625
+And then agent mode
+
+1611
+00:48:13,625 --> 00:48:15,291
+is when you just want to vibe, you know,
+
+1612
+00:48:15,291 --> 00:48:17,583
+you just want you just want things done.
+
+1613
+00:48:17,583 --> 00:48:18,750
+So you just use Agent Mode
+
+1614
+00:48:18,750 --> 00:48:20,291
+to get it done for you.
+
+1615
+00:48:20,291 --> 00:48:21,875
+And we tend to use like flow.
+
+1616
+00:48:21,875 --> 00:48:23,083
+I mean, we've seen this today, right?
+
+1617
+00:48:23,083 --> 00:48:24,166
+We tend to just kind of flow
+
+1618
+00:48:24,166 --> 00:48:25,833
+between them.
+
+1619
+00:48:25,833 --> 00:48:26,375
+You can kind of
+
+1620
+00:48:26,375 --> 00:48:28,583
+think I do it any given time, right?
+
+1621
+00:48:28,583 --> 00:48:28,833
+Yeah.
+
+1622
+00:48:29,791 --> 00:48:31,083
+Yeah okay.
+
+1623
+00:48:31,083 --> 00:48:31,541
+This is great.
+
+1624
+00:48:31,541 --> 00:48:33,125
+Now it's giving me
+
+1625
+00:48:33,125 --> 00:48:35,000
+some good complete
+
+1626
+00:48:35,000 --> 00:48:37,083
+now, now that I've prompted it
+
+1627
+00:48:37,083 --> 00:48:37,583
+the right way
+
+1628
+00:48:37,583 --> 00:48:38,166
+and really told it
+
+1629
+00:48:38,166 --> 00:48:42,791
+what I was trying to do and, and poetry,
+
+1630
+00:48:42,791 --> 00:48:45,333
+I have heard of poetry and I have not,
+
+1631
+00:48:45,333 --> 00:48:46,750
+made use of that yet.
+
+1632
+00:48:46,750 --> 00:48:49,708
+Sadly, I'm told it has some times faster.
+
+1633
+00:48:49,708 --> 00:48:51,500
+Yeah. Which they call out here too.
+
+1634
+00:48:51,500 --> 00:48:53,958
+And does this Pi project more files?
+
+1635
+00:48:53,958 --> 00:48:56,208
+So,
+
+1636
+00:48:56,208 --> 00:48:58,291
+specific and well-defined
+
+1637
+00:48:58,291 --> 00:48:58,833
+for what you're going
+
+1638
+00:48:58,833 --> 00:49:01,083
+to want to have for packages.
+
+1639
+00:49:01,083 --> 00:49:03,750
+Wow. So many options.
+
+1640
+00:49:03,750 --> 00:49:04,791
+It's too many of these things
+
+1641
+00:49:04,791 --> 00:49:06,541
+essentially just stick with Pip,
+
+1642
+00:49:06,541 --> 00:49:07,333
+you know.
+
+1643
+00:49:07,333 --> 00:49:08,375
+No, I don't
+
+1644
+00:49:08,375 --> 00:49:11,375
+I probably will I say I'll change, but I
+
+1645
+00:49:12,125 --> 00:49:13,208
+so you
+
+1646
+00:49:13,208 --> 00:49:14,583
+you updated your UI,
+
+1647
+00:49:14,583 --> 00:49:16,000
+which gave me the idea
+
+1648
+00:49:16,000 --> 00:49:20,291
+to take a screenshot and ask
+
+1649
+00:49:20,708 --> 00:49:24,250
+ask copilot how can I, update
+
+1650
+00:49:24,250 --> 00:49:27,541
+this UI like any suggestions?
+
+1651
+00:49:28,041 --> 00:49:28,625
+Yeah.
+
+1652
+00:49:29,875 --> 00:49:31,916
+And you're using a screenshot.
+
+1653
+00:49:31,916 --> 00:49:33,291
+So,
+
+1654
+00:49:33,291 --> 00:49:34,416
+that means that you don't
+
+1655
+00:49:34,416 --> 00:49:35,041
+even have to have it
+
+1656
+00:49:35,041 --> 00:49:37,625
+inspect the code itself,
+
+1657
+00:49:37,625 --> 00:49:39,125
+which should make them
+
+1658
+00:49:39,125 --> 00:49:39,541
+a little bit
+
+1659
+00:49:39,541 --> 00:49:40,375
+more lightweight
+
+1660
+00:49:40,375 --> 00:49:41,916
+and easier for it to process.
+
+1661
+00:49:41,916 --> 00:49:43,000
+Right. Exactly.
+
+1662
+00:49:43,000 --> 00:49:45,916
+So I'm going to just go to ask mode.
+
+1663
+00:49:45,916 --> 00:49:48,916
+And oh three many doesn't have vision
+
+1664
+00:49:50,583 --> 00:49:50,916
+okay.
+
+1665
+00:49:50,916 --> 00:49:53,250
+For oh has vision or.
+
+1666
+00:49:53,250 --> 00:49:54,958
+Oh yeah oh one preview
+
+1667
+00:49:54,958 --> 00:49:55,750
+or one preview does.
+
+1668
+00:49:55,750 --> 00:49:58,291
+So these smaller ones don't have vision.
+
+1669
+00:49:58,291 --> 00:50:01,125
+So let's use let's use for oh okay.
+
+1670
+00:50:01,125 --> 00:50:04,791
+They're 4.504.5 is a newer one okay.
+
+1671
+00:50:04,791 --> 00:50:07,250
+That doesn't have visual on.
+
+1672
+00:50:07,250 --> 00:50:10,250
+Let's just use for oh so many models.
+
+1673
+00:50:10,583 --> 00:50:13,208
+I mean I can't keep them on my head.
+
+1674
+00:50:13,208 --> 00:50:14,583
+Yes.
+
+1675
+00:50:14,583 --> 00:50:16,416
+How can I improve this UI?
+
+1676
+00:50:16,416 --> 00:50:19,416
+That's all I'm going to say.
+
+1677
+00:50:20,833 --> 00:50:21,250
+Again,
+
+1678
+00:50:21,250 --> 00:50:23,208
+these type of abstract questions
+
+1679
+00:50:23,208 --> 00:50:25,541
+we can ask chat I love it.
+
+1680
+00:50:28,458 --> 00:50:30,000
+So accessibility
+
+1681
+00:50:30,000 --> 00:50:34,291
+enhancements, form validation, feedback.
+
+1682
+00:50:34,333 --> 00:50:36,291
+That's you
+
+1683
+00:50:36,291 --> 00:50:40,541
+responsive design load indicators.
+
+1684
+00:50:40,958 --> 00:50:42,875
+How do you know there's a load indicator
+
+1685
+00:50:42,875 --> 00:50:43,916
+I know right.
+
+1686
+00:50:43,916 --> 00:50:45,333
+Like it's just kind of a it's
+
+1687
+00:50:45,333 --> 00:50:46,750
+it's putting in some great
+
+1688
+00:50:46,750 --> 00:50:48,375
+generic suggestions
+
+1689
+00:50:48,375 --> 00:50:49,125
+even though it doesn't
+
+1690
+00:50:49,125 --> 00:50:50,291
+actually have the information
+
+1691
+00:50:50,291 --> 00:50:51,583
+as to whether this one there or not.
+
+1692
+00:50:51,583 --> 00:50:53,916
+It can't from the static screenshot,
+
+1693
+00:50:53,916 --> 00:50:55,625
+improve visual hierarchy.
+
+1694
+00:50:55,625 --> 00:50:57,166
+Okay.
+
+1695
+00:50:57,166 --> 00:51:00,041
+User feedback on actions and hands
+
+1696
+00:51:00,041 --> 00:51:03,041
+room cards,
+
+1697
+00:51:03,083 --> 00:51:04,541
+security improvements.
+
+1698
+00:51:04,541 --> 00:51:06,166
+Is it going through the code? What?
+
+1699
+00:51:06,166 --> 00:51:07,083
+What did reference?
+
+1700
+00:51:07,083 --> 00:51:07,500
+No.
+
+1701
+00:51:07,500 --> 00:51:09,208
+See, I wonder if some of this is because
+
+1702
+00:51:09,208 --> 00:51:10,458
+of the copilot instructions.
+
+1703
+00:51:10,458 --> 00:51:11,583
+Because I actually said
+
+1704
+00:51:11,583 --> 00:51:13,041
+in the instructions
+
+1705
+00:51:13,041 --> 00:51:15,000
+do a security pass on everything.
+
+1706
+00:51:15,000 --> 00:51:16,541
+There we go. He's not.
+
+1707
+00:51:16,541 --> 00:51:17,583
+So even though it's
+
+1708
+00:51:17,583 --> 00:51:18,750
+just doing the visual thing
+
+1709
+00:51:18,750 --> 00:51:20,541
+here, it's still reminding us. So that's
+
+1710
+00:51:21,625 --> 00:51:22,291
+that's interesting.
+
+1711
+00:51:22,291 --> 00:51:23,541
+We might actually want to go.
+
+1712
+00:51:23,541 --> 00:51:24,458
+I mean, we could leave it,
+
+1713
+00:51:24,458 --> 00:51:26,583
+but we this would imply to me
+
+1714
+00:51:26,583 --> 00:51:28,000
+too, that I should
+
+1715
+00:51:28,000 --> 00:51:29,166
+improve my standard
+
+1716
+00:51:29,166 --> 00:51:30,458
+copilot instructions file,
+
+1717
+00:51:30,458 --> 00:51:32,291
+and I should put a caveat in there.
+
+1718
+00:51:32,291 --> 00:51:32,833
+You know, that
+
+1719
+00:51:32,833 --> 00:51:35,291
+like if when you're giving advice
+
+1720
+00:51:35,291 --> 00:51:36,625
+about the code itself,
+
+1721
+00:51:36,625 --> 00:51:38,166
+then talk about the security.
+
+1722
+00:51:38,166 --> 00:51:39,250
+If you're doing
+
+1723
+00:51:39,250 --> 00:51:40,916
+nine step or something, don't.
+
+1724
+00:51:40,916 --> 00:51:43,541
+So I could improve that.
+
+1725
+00:51:43,541 --> 00:51:45,333
+But also see I error
+
+1726
+00:51:45,333 --> 00:51:46,708
+that would be a really good addition
+
+1727
+00:51:46,708 --> 00:51:48,333
+to the instructions.
+
+1728
+00:51:48,333 --> 00:51:49,833
+So reference the instructions.
+
+1729
+00:51:49,833 --> 00:51:50,583
+The screenshot.
+
+1730
+00:51:50,583 --> 00:51:53,791
+And I forgot that I had the index.html
+
+1731
+00:51:53,791 --> 00:51:54,333
+file open.
+
+1732
+00:51:54,333 --> 00:51:55,416
+So that's
+
+1733
+00:51:55,416 --> 00:51:56,041
+that's where it's
+
+1734
+00:51:56,041 --> 00:51:58,750
+getting the validation feedback.
+
+1735
+00:51:58,750 --> 00:52:01,291
+Accessibility. The loading indicators.
+
+1736
+00:52:01,291 --> 00:52:02,500
+So that's how it knows
+
+1737
+00:52:02,500 --> 00:52:04,416
+that it's not there okay.
+
+1738
+00:52:04,416 --> 00:52:05,958
+So it's not just like randomly.
+
+1739
+00:52:05,958 --> 00:52:08,166
+Yeah I was like wait how do you do that.
+
+1740
+00:52:08,166 --> 00:52:09,500
+Because the file is open
+
+1741
+00:52:11,208 --> 00:52:11,791
+right?
+
+1742
+00:52:11,791 --> 00:52:12,708
+Right. Which is a good thing.
+
+1743
+00:52:12,708 --> 00:52:13,916
+Which is a good thing to think about.
+
+1744
+00:52:13,916 --> 00:52:15,375
+And you could remove it.
+
+1745
+00:52:15,375 --> 00:52:15,791
+Yes.
+
+1746
+00:52:15,791 --> 00:52:16,541
+But,
+
+1747
+00:52:16,541 --> 00:52:18,041
+you're in fact,
+
+1748
+00:52:18,041 --> 00:52:18,833
+we should call out this little
+
+1749
+00:52:18,833 --> 00:52:19,958
+UI thing, right?
+
+1750
+00:52:19,958 --> 00:52:21,458
+Because as you said,
+
+1751
+00:52:21,458 --> 00:52:22,833
+you were in edit mode.
+
+1752
+00:52:22,833 --> 00:52:23,708
+You dragged in.
+
+1753
+00:52:23,708 --> 00:52:24,458
+Oh, you weren't asked mode,
+
+1754
+00:52:24,458 --> 00:52:26,166
+but you dragged in certain files.
+
+1755
+00:52:26,166 --> 00:52:27,541
+But it also always pays
+
+1756
+00:52:27,541 --> 00:52:28,250
+attention to the file
+
+1757
+00:52:28,250 --> 00:52:29,208
+you currently have open
+
+1758
+00:52:29,208 --> 00:52:30,875
+and focused in your editor pane.
+
+1759
+00:52:30,875 --> 00:52:33,041
+Unless you hit that little
+
+1760
+00:52:33,041 --> 00:52:34,833
+this little icon here.
+
+1761
+00:52:34,833 --> 00:52:36,958
+So you could have
+
+1762
+00:52:36,958 --> 00:52:38,625
+if we'd know this question.
+
+1763
+00:52:38,625 --> 00:52:40,291
+Yeah, yeah. Okay.
+
+1764
+00:52:40,291 --> 00:52:42,125
+But these are honestly
+
+1765
+00:52:42,125 --> 00:52:44,625
+very good suggestions.
+
+1766
+00:52:44,625 --> 00:52:45,916
+I love it.
+
+1767
+00:52:45,916 --> 00:52:47,000
+You know,
+
+1768
+00:52:47,000 --> 00:52:48,958
+so one thing we haven't talked about,
+
+1769
+00:52:48,958 --> 00:52:49,541
+because you got me thinking
+
+1770
+00:52:49,541 --> 00:52:50,458
+about security
+
+1771
+00:52:50,458 --> 00:52:51,125
+is we haven't thought
+
+1772
+00:52:51,125 --> 00:52:52,458
+talked about the
+
+1773
+00:52:52,458 --> 00:52:53,541
+all the other adjacent
+
+1774
+00:52:53,541 --> 00:52:55,666
+like other than just producing code
+
+1775
+00:52:55,666 --> 00:52:58,000
+and talking about code and config.
+
+1776
+00:52:58,000 --> 00:52:59,375
+What are the other things
+
+1777
+00:52:59,375 --> 00:53:01,083
+that we tend to use Copilot for, right.
+
+1778
+00:53:01,083 --> 00:53:02,750
+So security's one of them.
+
+1779
+00:53:02,750 --> 00:53:04,000
+Security
+
+1780
+00:53:04,000 --> 00:53:05,125
+I might say something
+
+1781
+00:53:05,125 --> 00:53:06,166
+in, in ask
+
+1782
+00:53:06,166 --> 00:53:07,166
+mode like,
+
+1783
+00:53:07,166 --> 00:53:08,708
+you know, at workspace again
+
+1784
+00:53:08,708 --> 00:53:09,333
+I just want you to look
+
+1785
+00:53:09,333 --> 00:53:10,958
+at everything now. Right.
+
+1786
+00:53:10,958 --> 00:53:13,916
+How can I make this app more secure.
+
+1787
+00:53:13,916 --> 00:53:15,500
+And I'm going to pop it here to.
+
+1788
+00:53:15,500 --> 00:53:18,291
+You're using for preview.
+
+1789
+00:53:18,291 --> 00:53:19,625
+I can.
+
+1790
+00:53:19,625 --> 00:53:21,791
+Well, yeah. Oh, for many even.
+
+1791
+00:53:21,791 --> 00:53:23,916
+Oh for many, yeah.
+
+1792
+00:53:23,916 --> 00:53:25,500
+Oh through many then.
+
+1793
+00:53:25,500 --> 00:53:27,750
+Okay. Oh, this'll be fun.
+
+1794
+00:53:27,750 --> 00:53:28,125
+All right.
+
+1795
+00:53:32,500 --> 00:53:33,250
+I should have waited to
+
+1796
+00:53:33,250 --> 00:53:34,208
+hit enter until you did.
+
+1797
+00:53:34,208 --> 00:53:36,583
+Then we could have done so. Here.
+
+1798
+00:53:36,583 --> 00:53:38,125
+But in order to answer that.
+
+1799
+00:53:38,125 --> 00:53:40,166
+Oh, it's still talking like a pirate.
+
+1800
+00:53:40,166 --> 00:53:43,083
+I may need to stop and
+
+1801
+00:53:43,083 --> 00:53:44,166
+what we're seeing right now. Two.
+
+1802
+00:53:44,166 --> 00:53:44,916
+You're on. Oh, three.
+
+1803
+00:53:44,916 --> 00:53:46,000
+Many. I'm on oh four.
+
+1804
+00:53:46,000 --> 00:53:47,208
+Even though I hit enter
+
+1805
+00:53:47,208 --> 00:53:50,208
+first, you're getting responses.
+
+1806
+00:53:51,000 --> 00:53:52,750
+That's true.
+
+1807
+00:53:52,750 --> 00:53:53,041
+Okay.
+
+1808
+00:53:53,041 --> 00:53:56,041
+And I'm just going to remove that pilot.
+
+1809
+00:53:56,333 --> 00:53:59,333
+Oh, I thought it had flavor.
+
+1810
+00:53:59,333 --> 00:54:01,291
+I just, you know, Ahoy there.
+
+1811
+00:54:01,291 --> 00:54:04,291
+Maybe so.
+
+1812
+00:54:05,458 --> 00:54:07,541
+Now much like space information.
+
+1813
+00:54:07,541 --> 00:54:08,291
+So I wonder
+
+1814
+00:54:08,291 --> 00:54:10,250
+if I've actually stalled out here.
+
+1815
+00:54:10,250 --> 00:54:13,250
+I'm just going to stop testing request.
+
+1816
+00:54:13,708 --> 00:54:14,291
+Oh.
+
+1817
+00:54:14,291 --> 00:54:15,333
+Something I was just going to
+
+1818
+00:54:15,333 --> 00:54:16,666
+say was so to
+
+1819
+00:54:16,666 --> 00:54:18,125
+and kind of answer that question
+
+1820
+00:54:18,125 --> 00:54:18,541
+that I,
+
+1821
+00:54:18,541 --> 00:54:19,250
+that we've been seeing
+
+1822
+00:54:19,250 --> 00:54:20,791
+floating around of like,
+
+1823
+00:54:20,791 --> 00:54:22,250
+what model do I use?
+
+1824
+00:54:22,250 --> 00:54:24,375
+How do I know what model to use.
+
+1825
+00:54:24,375 --> 00:54:25,458
+It's it's
+
+1826
+00:54:25,458 --> 00:54:28,291
+just it's a matter of trying the model.
+
+1827
+00:54:28,291 --> 00:54:30,250
+If you get the output you like,
+
+1828
+00:54:30,250 --> 00:54:31,166
+you know, you keep it.
+
+1829
+00:54:31,166 --> 00:54:32,125
+But if you don't,
+
+1830
+00:54:32,125 --> 00:54:33,125
+you remove the output
+
+1831
+00:54:33,125 --> 00:54:34,083
+from the context window
+
+1832
+00:54:34,083 --> 00:54:34,958
+or the generation
+
+1833
+00:54:34,958 --> 00:54:36,041
+from the context window.
+
+1834
+00:54:36,041 --> 00:54:37,625
+Try a different model.
+
+1835
+00:54:37,625 --> 00:54:38,375
+You know what I mean?
+
+1836
+00:54:38,375 --> 00:54:39,916
+If you want to go back and forth,
+
+1837
+00:54:39,916 --> 00:54:41,458
+think in thinking mode.
+
+1838
+00:54:41,458 --> 00:54:43,250
+Use a reasoning model.
+
+1839
+00:54:43,250 --> 00:54:44,375
+If you want to,
+
+1840
+00:54:44,375 --> 00:54:45,250
+you know, not use up
+
+1841
+00:54:45,250 --> 00:54:46,750
+your tokens too much.
+
+1842
+00:54:46,750 --> 00:54:49,291
+You know code 3.5 is a really good one.
+
+1843
+00:54:49,291 --> 00:54:50,958
+I think, even GPT
+
+1844
+00:54:50,958 --> 00:54:52,291
+four is a good one too.
+
+1845
+00:54:52,291 --> 00:54:53,583
+Or like Copilot base
+
+1846
+00:54:53,583 --> 00:54:56,583
+or for four one is a good option.
+
+1847
+00:54:56,958 --> 00:54:58,083
+So let's look at our
+
+1848
+00:54:58,083 --> 00:54:59,958
+security recommendations.
+
+1849
+00:55:01,041 --> 00:55:02,375
+I mean, I'm liking them.
+
+1850
+00:55:02,375 --> 00:55:04,208
+They're they're solid, right?
+
+1851
+00:55:04,208 --> 00:55:04,750
+Like, okay, let's
+
+1852
+00:55:04,750 --> 00:55:06,291
+keep going in debug mode.
+
+1853
+00:55:06,291 --> 00:55:09,291
+Of course, I don't have any Https.
+
+1854
+00:55:09,333 --> 00:55:10,625
+I don't have any SRF.
+
+1855
+00:55:10,625 --> 00:55:11,541
+I mean, of course,
+
+1856
+00:55:11,541 --> 00:55:12,166
+like all the things
+
+1857
+00:55:12,166 --> 00:55:13,375
+you'd expect for like,
+
+1858
+00:55:13,375 --> 00:55:16,375
+hey, I'm just blasting out this project
+
+1859
+00:55:16,750 --> 00:55:19,750
+vibe coding by coding, then,
+
+1860
+00:55:20,333 --> 00:55:20,666
+I just,
+
+1861
+00:55:20,666 --> 00:55:21,791
+I think that's one of those things.
+
+1862
+00:55:21,791 --> 00:55:23,791
+It's like so important too.
+
+1863
+00:55:23,791 --> 00:55:25,208
+Is that
+
+1864
+00:55:25,208 --> 00:55:26,125
+there's a big difference
+
+1865
+00:55:26,125 --> 00:55:27,916
+between making an app that works
+
+1866
+00:55:27,916 --> 00:55:28,708
+and making an app
+
+1867
+00:55:28,708 --> 00:55:30,125
+that's production ready
+
+1868
+00:55:30,125 --> 00:55:32,041
+and can really go out there, right?
+
+1869
+00:55:32,041 --> 00:55:35,375
+Yeah, probably the most important thing.
+
+1870
+00:55:35,375 --> 00:55:36,333
+So nothing else.
+
+1871
+00:55:36,333 --> 00:55:37,875
+Like all y'all vibe
+
+1872
+00:55:37,875 --> 00:55:38,500
+coders out there,
+
+1873
+00:55:38,500 --> 00:55:40,333
+you're building awesome stuff.
+
+1874
+00:55:40,333 --> 00:55:41,375
+Once you figured out
+
+1875
+00:55:41,375 --> 00:55:42,666
+how to not just make it work
+
+1876
+00:55:42,666 --> 00:55:45,500
+on localhost, your next step,
+
+1877
+00:55:45,500 --> 00:55:47,833
+make sure you ask copilot,
+
+1878
+00:55:47,833 --> 00:55:49,416
+how can I make this more secure?
+
+1879
+00:55:49,416 --> 00:55:50,833
+What's wrong with it?
+
+1880
+00:55:50,833 --> 00:55:52,208
+And go through and just follow
+
+1881
+00:55:52,208 --> 00:55:53,083
+all those recommendations?
+
+1882
+00:55:53,083 --> 00:55:53,875
+Because yes,
+
+1883
+00:55:53,875 --> 00:55:55,541
+I want to put something out there
+
+1884
+00:55:55,541 --> 00:55:56,541
+and then the next day
+
+1885
+00:55:56,541 --> 00:55:58,625
+have someone worm their way in and just,
+
+1886
+00:55:58,625 --> 00:56:01,166
+I know it was all your keys,
+
+1887
+00:56:01,166 --> 00:56:02,625
+and that's what's been happening.
+
+1888
+00:56:02,625 --> 00:56:04,541
+That's that's what's been happening
+
+1889
+00:56:04,541 --> 00:56:06,125
+and it's been painful.
+
+1890
+00:56:06,125 --> 00:56:07,125
+But yeah,
+
+1891
+00:56:07,125 --> 00:56:09,250
+these are actually very solid suggestions
+
+1892
+00:56:09,250 --> 00:56:11,833
+from both. Both models. Yeah. Yeah
+
+1893
+00:56:12,791 --> 00:56:13,291
+I love it.
+
+1894
+00:56:13,291 --> 00:56:13,875
+I'll have to I
+
+1895
+00:56:13,875 --> 00:56:16,208
+have to go figure out what flask WTF.
+
+1896
+00:56:16,208 --> 00:56:17,000
+That's I've never heard of that
+
+1897
+00:56:17,000 --> 00:56:18,000
+I know I've never
+
+1898
+00:56:18,000 --> 00:56:20,750
+I've never heard of that.
+
+1899
+00:56:20,750 --> 00:56:21,250
+All right. Cool.
+
+1900
+00:56:21,250 --> 00:56:22,541
+So what's another thing
+
+1901
+00:56:22,541 --> 00:56:24,166
+that, that we always want to do.
+
+1902
+00:56:24,166 --> 00:56:27,166
+Besides just security passes,
+
+1903
+00:56:27,250 --> 00:56:30,250
+security passes,
+
+1904
+00:56:31,125 --> 00:56:33,625
+accessibility pass
+
+1905
+00:56:33,625 --> 00:56:35,708
+accessibility I love it.
+
+1906
+00:56:35,708 --> 00:56:36,000
+All right,
+
+1907
+00:56:36,000 --> 00:56:36,875
+let's let's grab
+
+1908
+00:56:36,875 --> 00:56:39,875
+another I'm going to go this time with
+
+1909
+00:56:40,500 --> 00:56:43,333
+what haven't we played with here?
+
+1910
+00:56:43,333 --> 00:56:46,333
+I don't think I've done 4.5, actually.
+
+1911
+00:56:46,416 --> 00:56:50,416
+I, either okay together or space.
+
+1912
+00:56:50,541 --> 00:56:52,083
+So like space.
+
+1913
+00:56:52,083 --> 00:56:55,958
+How can I share this?
+
+1914
+00:56:56,166 --> 00:56:59,166
+Is.
+
+1915
+00:57:00,041 --> 00:57:03,041
+Is,
+
+1916
+00:57:03,125 --> 00:57:04,916
+it's accessible.
+
+1917
+00:57:04,916 --> 00:57:07,375
+Okay.
+
+1918
+00:57:07,375 --> 00:57:09,000
+Now we're both using the same model here,
+
+1919
+00:57:09,000 --> 00:57:11,958
+but we use,
+
+1920
+00:57:11,958 --> 00:57:12,833
+We're getting some
+
+1921
+00:57:12,833 --> 00:57:15,833
+some slightly different, Awesome.
+
+1922
+00:57:16,500 --> 00:57:18,708
+So like, see, the content is the same
+
+1923
+00:57:18,708 --> 00:57:19,625
+but the format is very
+
+1924
+00:57:19,625 --> 00:57:21,041
+the format is different. Yeah.
+
+1925
+00:57:24,416 --> 00:57:25,000
+I love that they
+
+1926
+00:57:25,000 --> 00:57:26,458
+both give us, like,
+
+1927
+00:57:26,458 --> 00:57:27,583
+okay, here's what you have
+
+1928
+00:57:27,583 --> 00:57:28,875
+and here's how you can improve it.
+
+1929
+00:57:28,875 --> 00:57:30,666
+Type thing.
+
+1930
+00:57:30,666 --> 00:57:31,000
+Yeah.
+
+1931
+00:57:31,000 --> 00:57:33,875
+Just this example changes kind of stuff.
+
+1932
+00:57:33,875 --> 00:57:35,583
+Yes. Oh and then yours.
+
+1933
+00:57:35,583 --> 00:57:36,458
+This is great.
+
+1934
+00:57:36,458 --> 00:57:38,750
+Yours is going on to even like
+
+1935
+00:57:38,750 --> 00:57:41,291
+more detailed color contrast keyboard.
+
+1936
+00:57:41,291 --> 00:57:43,958
+Now with navigation you
+
+1937
+00:57:43,958 --> 00:57:46,958
+yes page title and headings.
+
+1938
+00:57:47,083 --> 00:57:48,875
+These are really really good
+
+1939
+00:57:48,875 --> 00:57:51,375
+solid suggestions.
+
+1940
+00:57:51,375 --> 00:57:51,916
+Yeah.
+
+1941
+00:57:51,916 --> 00:57:53,208
+For anyone who doesn't who hasn't
+
+1942
+00:57:53,208 --> 00:57:53,833
+come across the term
+
+1943
+00:57:53,833 --> 00:57:55,458
+accessibility before.
+
+1944
+00:57:55,458 --> 00:57:57,041
+What we mean here
+
+1945
+00:57:57,041 --> 00:57:59,000
+is things like making this available
+
+1946
+00:57:59,000 --> 00:58:02,083
+to people who are colorblind and, or
+
+1947
+00:58:02,083 --> 00:58:03,041
+have low vision
+
+1948
+00:58:03,041 --> 00:58:05,291
+capabilities or even blind.
+
+1949
+00:58:05,291 --> 00:58:08,250
+And there's other subtle things too.
+
+1950
+00:58:08,250 --> 00:58:09,458
+But this is all about making sure
+
+1951
+00:58:09,458 --> 00:58:12,458
+that your site is usable by someone,
+
+1952
+00:58:12,875 --> 00:58:14,458
+regardless of their personal differences
+
+1953
+00:58:14,458 --> 00:58:15,083
+and experiences.
+
+1954
+00:58:15,083 --> 00:58:18,083
+It's too easy to assume that, hey,
+
+1955
+00:58:18,125 --> 00:58:18,750
+you know,
+
+1956
+00:58:18,750 --> 00:58:20,416
+I experienced the site a certain way,
+
+1957
+00:58:20,416 --> 00:58:21,791
+so everybody else does,
+
+1958
+00:58:21,791 --> 00:58:23,333
+but there's really simple things
+
+1959
+00:58:23,333 --> 00:58:24,250
+that can trip people up.
+
+1960
+00:58:24,250 --> 00:58:25,416
+Like if two colors,
+
+1961
+00:58:25,416 --> 00:58:26,833
+it's hard to see the difference.
+
+1962
+00:58:26,833 --> 00:58:27,375
+If you have certain
+
+1963
+00:58:27,375 --> 00:58:29,166
+kinds of colorblindness,
+
+1964
+00:58:29,166 --> 00:58:30,333
+then you're not going to know
+
+1965
+00:58:30,333 --> 00:58:31,625
+that those are two different buttons,
+
+1966
+00:58:31,625 --> 00:58:32,291
+or they need to do
+
+1967
+00:58:32,291 --> 00:58:34,500
+two different things, right.
+
+1968
+00:58:34,500 --> 00:58:36,041
+So this is a really good pass.
+
+1969
+00:58:36,041 --> 00:58:37,125
+Just make sure it's it's
+
+1970
+00:58:37,125 --> 00:58:38,416
+available for everyone.
+
+1971
+00:58:38,416 --> 00:58:40,375
+And also worth noting,
+
+1972
+00:58:40,375 --> 00:58:42,541
+if you're working for certain
+
+1973
+00:58:42,541 --> 00:58:43,833
+government agencies
+
+1974
+00:58:43,833 --> 00:58:45,958
+or certain government funded agencies,
+
+1975
+00:58:45,958 --> 00:58:47,833
+you're actually required in certain
+
+1976
+00:58:47,833 --> 00:58:48,583
+cases
+
+1977
+00:58:48,583 --> 00:58:50,041
+to make sure
+
+1978
+00:58:50,041 --> 00:58:51,708
+that your interfaces are accessible.
+
+1979
+00:58:51,708 --> 00:58:52,916
+So it's not just a good idea
+
+1980
+00:58:52,916 --> 00:58:54,041
+to legal requirement.
+
+1981
+00:58:54,041 --> 00:58:56,458
+We just did an accessibility pass.
+
+1982
+00:58:56,458 --> 00:58:59,458
+What about, testing?
+
+1983
+00:59:00,000 --> 00:59:01,333
+Testing?
+
+1984
+00:59:01,333 --> 00:59:04,166
+What good is an app without testing?
+
+1985
+00:59:04,166 --> 00:59:05,041
+I'm going to call out something
+
+1986
+00:59:05,041 --> 00:59:05,666
+specific here
+
+1987
+00:59:05,666 --> 00:59:07,916
+to do in my copilot instructions, because
+
+1988
+00:59:07,916 --> 00:59:08,875
+I did okay about this.
+
+1989
+00:59:11,000 --> 00:59:12,791
+A testing requirements, right?
+
+1990
+00:59:12,791 --> 00:59:15,541
+Include unit tests for new functionality,
+
+1991
+00:59:15,541 --> 00:59:17,666
+minimum code coverage percentage.
+
+1992
+00:59:17,666 --> 00:59:18,291
+Like. Right.
+
+1993
+00:59:18,291 --> 00:59:18,958
+How much of my code
+
+1994
+00:59:18,958 --> 00:59:20,875
+is actually touched by tests,
+
+1995
+00:59:20,875 --> 00:59:22,708
+integration tests for API endpoints.
+
+1996
+00:59:22,708 --> 00:59:23,916
+Obviously we can expand this,
+
+1997
+00:59:23,916 --> 00:59:26,916
+but okay, I'm going to go with oh form.
+
+1998
+00:59:27,916 --> 00:59:30,375
+Oh no.
+
+1999
+00:59:30,375 --> 00:59:31,750
+Oh three mini.
+
+2000
+00:59:31,750 --> 00:59:33,583
+Oh. You want to do a 3 or 4 again okay.
+
+2001
+00:59:33,583 --> 00:59:33,875
+All right.
+
+2002
+00:59:33,875 --> 00:59:35,458
+That's cool, that's cool.
+
+2003
+00:59:35,458 --> 00:59:38,458
+And we're in asked mode.
+
+2004
+00:59:38,541 --> 00:59:39,416
+Yeah I'm just going to
+
+2005
+00:59:39,416 --> 00:59:40,166
+workspace it again.
+
+2006
+00:59:40,166 --> 00:59:42,708
+I think it's a lot of work workspace.
+
+2007
+00:59:42,708 --> 00:59:42,833
+It's
+
+2008
+00:59:42,833 --> 00:59:44,958
+not it's not such a big application yet.
+
+2009
+00:59:44,958 --> 00:59:46,791
+If we had let's.
+
+2010
+00:59:46,791 --> 00:59:47,458
+I was going to say
+
+2011
+00:59:47,458 --> 00:59:48,875
+like I'd hesitate to use
+
+2012
+00:59:48,875 --> 00:59:51,875
+at workspace in a larger project,
+
+2013
+00:59:51,958 --> 00:59:53,416
+because it would just be too much.
+
+2014
+00:59:53,416 --> 00:59:54,916
+But here it's only going to include,
+
+2015
+00:59:54,916 --> 00:59:57,791
+like 20 files maybe, or so. Yeah.
+
+2016
+00:59:57,791 --> 00:59:59,875
+So we also have a slash command
+
+2017
+00:59:59,875 --> 01:00:00,958
+slash test
+
+2018
+01:00:00,958 --> 01:00:03,541
+which is slash tests at workspace
+
+2019
+01:00:03,541 --> 01:00:04,958
+slash tests as well.
+
+2020
+01:00:06,125 --> 01:00:06,708
+We can just do
+
+2021
+01:00:06,708 --> 01:00:09,708
+that directly.
+
+2022
+01:00:10,875 --> 01:00:12,041
+The one thing here
+
+2023
+01:00:12,041 --> 01:00:15,041
+I'll say is,
+
+2024
+01:00:15,583 --> 01:00:17,583
+The, the the idea of generating tests,
+
+2025
+01:00:17,583 --> 01:00:19,875
+it sounds like we can add to this. Right.
+
+2026
+01:00:19,875 --> 01:00:22,250
+So aside from just saying slash tests,
+
+2027
+01:00:22,250 --> 01:00:25,833
+I might say something like he make
+
+2028
+01:00:25,833 --> 01:00:29,250
+tests and use.
+
+2029
+01:00:29,250 --> 01:00:29,583
+And here
+
+2030
+01:00:29,583 --> 01:00:32,208
+I'm going to call it a specific file.
+
+2031
+01:00:32,208 --> 01:00:33,708
+And I'm going to
+
+2032
+01:00:33,708 --> 01:00:36,708
+that data file data dot Json
+
+2033
+01:00:37,083 --> 01:00:40,083
+or data validation.
+
+2034
+01:00:41,291 --> 01:00:42,875
+So that it won't just be like okay.
+
+2035
+01:00:42,875 --> 01:00:43,208
+Yeah.
+
+2036
+01:00:43,208 --> 01:00:43,750
+You got a
+
+2037
+01:00:43,750 --> 01:00:45,791
+you got a 200 okay on a page,
+
+2038
+01:00:45,791 --> 01:00:47,000
+but it'll actually look at what
+
+2039
+01:00:47,000 --> 01:00:48,458
+it should be returning
+
+2040
+01:00:48,458 --> 01:00:51,041
+from our data source. Nice.
+
+2041
+01:00:51,041 --> 01:00:52,666
+That's that's a great tip.
+
+2042
+01:00:52,666 --> 01:00:54,250
+Right.
+
+2043
+01:00:54,250 --> 01:00:55,583
+So it.
+
+2044
+01:00:55,583 --> 01:00:57,125
+Oh. Ooh.
+
+2045
+01:00:57,125 --> 01:00:58,125
+So the first thing
+
+2046
+01:00:58,125 --> 01:01:01,125
+oh three minute okay okay.
+
+2047
+01:01:02,375 --> 01:01:04,416
+Oh I need a Python interpreter.
+
+2048
+01:01:04,416 --> 01:01:06,041
+When did my interpreter.
+
+2049
+01:01:06,041 --> 01:01:07,333
+Why do I keep getting it.
+
+2050
+01:01:07,333 --> 01:01:09,166
+No I mean yeah
+
+2051
+01:01:09,166 --> 01:01:10,791
+it should automatically pick your
+
+2052
+01:01:10,791 --> 01:01:11,541
+you think but.
+
+2053
+01:01:12,666 --> 01:01:13,875
+Oh well
+
+2054
+01:01:13,875 --> 01:01:17,083
+Oh I tell I test versus test.
+
+2055
+01:01:17,083 --> 01:01:18,125
+I'm going to go with pi test.
+
+2056
+01:01:18,125 --> 01:01:19,083
+I think
+
+2057
+01:01:19,083 --> 01:01:21,750
+I'll have to redo this one second.
+
+2058
+01:01:21,750 --> 01:01:22,500
+Is it. Yeah.
+
+2059
+01:01:22,500 --> 01:01:23,750
+It's stalled out on that.
+
+2060
+01:01:23,750 --> 01:01:26,625
+Sure.
+
+2061
+01:01:26,625 --> 01:01:27,708
+No.
+
+2062
+01:01:27,708 --> 01:01:30,708
+Make tests.
+
+2063
+01:01:34,083 --> 01:01:36,000
+Can type because I'm rushing.
+
+2064
+01:01:36,000 --> 01:01:38,791
+Yeah, I have this.
+
+2065
+01:01:38,791 --> 01:01:39,583
+Most of the time.
+
+2066
+01:01:39,583 --> 01:01:41,000
+This thing I see like, the faster
+
+2067
+01:01:41,000 --> 01:01:42,125
+you go, the slower you go.
+
+2068
+01:01:42,125 --> 01:01:45,125
+And it's it's consistently so true.
+
+2069
+01:01:45,541 --> 01:01:46,416
+I wonder if we should use
+
+2070
+01:01:46,416 --> 01:01:49,416
+station mode for this.
+
+2071
+01:01:49,416 --> 01:01:52,416
+Oh, because we are in chat.
+
+2072
+01:01:52,458 --> 01:01:53,500
+Yeah,
+
+2073
+01:01:53,500 --> 01:01:54,541
+but it's actually doing more
+
+2074
+01:01:54,541 --> 01:01:57,541
+than I would expect in in ask mode.
+
+2075
+01:02:01,000 --> 01:02:03,333
+Right.
+
+2076
+01:02:03,333 --> 01:02:03,875
+Oh, okay.
+
+2077
+01:02:03,875 --> 01:02:06,583
+Go.
+
+2078
+01:02:06,583 --> 01:02:07,291
+Select.
+
+2079
+01:02:07,291 --> 01:02:08,791
+Yes. Okay.
+
+2080
+01:02:08,791 --> 01:02:09,333
+That's sweet.
+
+2081
+01:02:09,333 --> 01:02:10,416
+So this is one of these
+
+2082
+01:02:10,416 --> 01:02:11,083
+cool things right.
+
+2083
+01:02:11,083 --> 01:02:15,250
+I, we get used to certain ideas and
+
+2084
+01:02:16,500 --> 01:02:18,916
+copilot will work in VS code.
+
+2085
+01:02:18,916 --> 01:02:20,875
+It'll work in the JetBrains
+
+2086
+01:02:20,875 --> 01:02:22,541
+series of IDE is
+
+2087
+01:02:22,541 --> 01:02:25,208
+we've got a chat in eclipse now,
+
+2088
+01:02:25,208 --> 01:02:26,708
+which is really cool.
+
+2089
+01:02:26,708 --> 01:02:29,041
+And then we've got code completion
+
+2090
+01:02:29,041 --> 01:02:30,000
+but not full chat
+
+2091
+01:02:30,000 --> 01:02:33,000
+and a few other ideas like,
+
+2092
+01:02:33,083 --> 01:02:34,500
+Tim.
+
+2093
+01:02:34,500 --> 01:02:37,208
+But I will say, like,
+
+2094
+01:02:37,208 --> 01:02:39,833
+even though I used to use idea
+
+2095
+01:02:39,833 --> 01:02:40,791
+JetBrains stuff
+
+2096
+01:02:40,791 --> 01:02:43,208
+a lot, like that's kind of most
+
+2097
+01:02:43,208 --> 01:02:44,583
+nowadays
+
+2098
+01:02:44,583 --> 01:02:46,083
+the integration between
+
+2099
+01:02:46,083 --> 01:02:47,583
+Copilot and VS code,
+
+2100
+01:02:47,583 --> 01:02:48,333
+where it can do
+
+2101
+01:02:48,333 --> 01:02:50,250
+things like it can automatically fire
+
+2102
+01:02:50,250 --> 01:02:52,416
+off these separate panels,
+
+2103
+01:02:52,416 --> 01:02:53,583
+tell vs code
+
+2104
+01:02:53,583 --> 01:02:55,125
+how to attach the test frameworks,
+
+2105
+01:02:55,125 --> 01:02:57,333
+that kind of stuff. To me that's huge.
+
+2106
+01:02:57,333 --> 01:02:58,750
+That's part of what really keeps
+
+2107
+01:02:58,750 --> 01:03:01,083
+me using it in this environment.
+
+2108
+01:03:01,083 --> 01:03:03,041
+Yeah,
+
+2109
+01:03:03,041 --> 01:03:04,666
+huge.
+
+2110
+01:03:04,666 --> 01:03:07,666
+So oh for many responded
+
+2111
+01:03:07,958 --> 01:03:08,708
+and you know
+
+2112
+01:03:08,708 --> 01:03:10,750
+you have all these steps and stuff.
+
+2113
+01:03:10,750 --> 01:03:11,791
+Oh three mini
+
+2114
+01:03:11,791 --> 01:03:13,083
+just told me here's
+
+2115
+01:03:13,083 --> 01:03:13,791
+a step by step
+
+2116
+01:03:13,791 --> 01:03:16,250
+overview of what tests will be created.
+
+2117
+01:03:16,250 --> 01:03:17,708
+And then that's it.
+
+2118
+01:03:19,416 --> 01:03:20,291
+Stopped it.
+
+2119
+01:03:20,291 --> 01:03:22,458
+So did change the import Json.
+
+2120
+01:03:22,458 --> 01:03:25,041
+But then it didn't go beyond that.
+
+2121
+01:03:25,041 --> 01:03:27,541
+Okay, I wonder if if you keep that.
+
+2122
+01:03:27,541 --> 01:03:28,875
+Oh actually I didn't
+
+2123
+01:03:28,875 --> 01:03:31,000
+I didn't notice this right here.
+
+2124
+01:03:31,000 --> 01:03:33,791
+I keep forgetting I keep oh no no.
+
+2125
+01:03:33,791 --> 01:03:35,708
+You you sorry. Yes.
+
+2126
+01:03:35,708 --> 01:03:36,750
+Yeah I keep forgetting
+
+2127
+01:03:36,750 --> 01:03:38,041
+this new UI where like,
+
+2128
+01:03:38,041 --> 01:03:40,625
+you can see the files that were changed
+
+2129
+01:03:40,625 --> 01:03:42,375
+right in the context window.
+
+2130
+01:03:42,375 --> 01:03:44,541
+So that's a good color
+
+2131
+01:03:44,541 --> 01:03:46,291
+because I was ready to say, like it
+
+2132
+01:03:46,291 --> 01:03:48,833
+didn't do it. Right. Right.
+
+2133
+01:03:48,833 --> 01:03:50,875
+But it did. Actually.
+
+2134
+01:03:50,875 --> 01:03:53,291
+Oh, yours. Do your tests pass?
+
+2135
+01:03:53,291 --> 01:03:55,250
+I mean it did it did do it.
+
+2136
+01:03:55,250 --> 01:03:58,250
+It went through it made it my tests.
+
+2137
+01:03:58,541 --> 01:03:59,833
+Now that said,
+
+2138
+01:03:59,833 --> 01:04:01,500
+this is the entirety of the test,
+
+2139
+01:04:01,500 --> 01:04:03,791
+so I'm not super happy with that.
+
+2140
+01:04:03,791 --> 01:04:04,791
+And you know how you said,
+
+2141
+01:04:04,791 --> 01:04:06,083
+hey, we should commit?
+
+2142
+01:04:06,083 --> 01:04:07,583
+You're absolutely right.
+
+2143
+01:04:07,583 --> 01:04:07,750
+Yeah.
+
+2144
+01:04:07,750 --> 01:04:11,250
+Because I cannot undo all this.
+
+2145
+01:04:12,166 --> 01:04:13,125
+And we're going to always
+
+2146
+01:04:13,125 --> 01:04:14,500
+commit as you go.
+
+2147
+01:04:15,500 --> 01:04:17,166
+would say it's not like making it test.
+
+2148
+01:04:17,166 --> 01:04:17,791
+So now that I know why
+
+2149
+01:04:17,791 --> 01:04:21,583
+I should using pi test, why not?
+
+2150
+01:04:22,250 --> 01:04:24,541
+Okay.
+
+2151
+01:04:24,541 --> 01:04:26,125
+surprisingly, all the tests
+
+2152
+01:04:26,125 --> 01:04:29,125
+passed.
+
+2153
+01:04:29,291 --> 01:04:30,416
+So let's take a quick look through.
+
+2154
+01:04:30,416 --> 01:04:30,625
+Okay.
+
+2155
+01:04:30,625 --> 01:04:31,125
+It's it's
+
+2156
+01:04:31,125 --> 01:04:32,208
+it's got it's embedded
+
+2157
+01:04:32,208 --> 01:04:34,375
+the data in Python,
+
+2158
+01:04:34,375 --> 01:04:35,875
+which is maybe not the way I would do it,
+
+2159
+01:04:35,875 --> 01:04:37,583
+but I get I get it.
+
+2160
+01:04:37,583 --> 01:04:38,958
+Okay.
+
+2161
+01:04:38,958 --> 01:04:40,708
+What do we actually have for tests here.
+
+2162
+01:04:40,708 --> 01:04:41,083
+Yeah.
+
+2163
+01:04:41,083 --> 01:04:44,083
+So we have.
+
+2164
+01:04:44,666 --> 01:04:45,000
+Yeah.
+
+2165
+01:04:45,000 --> 01:04:46,125
+Loading up the data.
+
+2166
+01:04:46,125 --> 01:04:49,250
+Keep it all right.
+
+2167
+01:04:51,041 --> 01:04:54,208
+Testing the room, testing for testing.
+
+2168
+01:04:54,208 --> 01:04:56,416
+Get rooms,
+
+2169
+01:04:56,416 --> 01:04:59,416
+testing, reservation suitable.
+
+2170
+01:04:59,833 --> 01:05:01,333
+I would restructure it, but it's.
+
+2171
+01:05:01,333 --> 01:05:03,750
+But it's a good set of tests.
+
+2172
+01:05:03,750 --> 01:05:04,750
+Success checking.
+
+2173
+01:05:04,750 --> 01:05:07,208
+Success checking.
+
+2174
+01:05:07,208 --> 01:05:08,833
+This is really good actually.
+
+2175
+01:05:08,833 --> 01:05:10,291
+And I am very impressed
+
+2176
+01:05:10,291 --> 01:05:11,125
+and surprised that it
+
+2177
+01:05:11,125 --> 01:05:12,500
+ran on the first try. Yeah,
+
+2178
+01:05:13,958 --> 01:05:14,375
+yeah.
+
+2179
+01:05:14,375 --> 01:05:15,458
+Well, one
+
+2180
+01:05:15,458 --> 01:05:15,833
+thing that
+
+2181
+01:05:15,833 --> 01:05:16,541
+strikes me about
+
+2182
+01:05:16,541 --> 01:05:18,833
+this is that these are not item
+
+2183
+01:05:18,833 --> 01:05:19,583
+potent, right?
+
+2184
+01:05:19,583 --> 01:05:20,708
+I mean, it's kind of
+
+2185
+01:05:20,708 --> 01:05:22,166
+after it runs these tests,
+
+2186
+01:05:22,166 --> 01:05:22,666
+I don't think there's
+
+2187
+01:05:22,666 --> 01:05:23,791
+any kind of rollback or anything.
+
+2188
+01:05:23,791 --> 01:05:25,250
+It's just using Json.
+
+2189
+01:05:25,250 --> 01:05:26,166
+So this is going to actually
+
+2190
+01:05:26,166 --> 01:05:29,166
+alter our data for the app.
+
+2191
+01:05:29,875 --> 01:05:31,750
+And I wonder if that's just
+
+2192
+01:05:31,750 --> 01:05:32,208
+you couldn't
+
+2193
+01:05:32,208 --> 01:05:33,291
+figure out how to do it
+
+2194
+01:05:33,291 --> 01:05:35,041
+since we weren't using a real database
+
+2195
+01:05:35,041 --> 01:05:36,833
+with the rollback capability,
+
+2196
+01:05:36,833 --> 01:05:37,291
+or did it
+
+2197
+01:05:37,291 --> 01:05:40,291
+put a mock in there and I didn't notice.
+
+2198
+01:05:40,500 --> 01:05:41,208
+Yeah, it didn't
+
+2199
+01:05:41,208 --> 01:05:44,333
+alter our Json file at all.
+
+2200
+01:05:45,041 --> 01:05:46,041
+Oh, when it ran it okay.
+
+2201
+01:05:46,041 --> 01:05:47,208
+So it must be doing something.
+
+2202
+01:05:47,208 --> 01:05:49,958
+Oh here we go. It's right here.
+
+2203
+01:05:49,958 --> 01:05:52,500
+So it loaded
+
+2204
+01:05:52,500 --> 01:05:55,500
+and it's passing in the original data
+
+2205
+01:05:56,000 --> 01:05:57,916
+load data overrides here.
+
+2206
+01:05:57,916 --> 01:06:00,916
+So I think the data it's using is here.
+
+2207
+01:06:01,666 --> 01:06:02,000
+Right?
+
+2208
+01:06:02,000 --> 01:06:04,666
+I think that's why it created this.
+
+2209
+01:06:05,708 --> 01:06:06,291
+This dummy
+
+2210
+01:06:06,291 --> 01:06:07,750
+data sort of situation
+
+2211
+01:06:07,750 --> 01:06:09,625
+so that it wouldn't overwrite the data.
+
+2212
+01:06:09,625 --> 01:06:11,333
+Dot Json. Interesting.
+
+2213
+01:06:11,333 --> 01:06:13,541
+That's a funky workaround.
+
+2214
+01:06:13,541 --> 01:06:15,083
+I would not have thought of.
+
+2215
+01:06:15,083 --> 01:06:17,541
+Creates temporary data. Yeah, yeah.
+
+2216
+01:06:17,541 --> 01:06:19,458
+Okay. Okay. All right.
+
+2217
+01:06:19,458 --> 01:06:22,458
+That's an interesting pattern.
+
+2218
+01:06:23,125 --> 01:06:25,791
+Like it?
+
+2219
+01:06:25,791 --> 01:06:26,875
+All right,
+
+2220
+01:06:26,875 --> 01:06:27,666
+there's one more thing
+
+2221
+01:06:27,666 --> 01:06:28,666
+I'd love to do
+
+2222
+01:06:28,666 --> 01:06:30,791
+before we run out of time today.
+
+2223
+01:06:30,791 --> 01:06:31,583
+Okay?
+
+2224
+01:06:31,583 --> 01:06:34,541
+Is I would love to talk about
+
+2225
+01:06:34,541 --> 01:06:37,375
+document patient.
+
+2226
+01:06:37,375 --> 01:06:39,458
+Good old docs.
+
+2227
+01:06:39,458 --> 01:06:40,250
+Good old docs.
+
+2228
+01:06:40,250 --> 01:06:42,458
+So how do we think that it's good
+
+2229
+01:06:42,458 --> 01:06:43,791
+for us to go about doing?
+
+2230
+01:06:43,791 --> 01:06:46,791
+I have an idea in my head, but how would
+
+2231
+01:06:47,041 --> 01:06:49,208
+I think I would approach it by?
+
+2232
+01:06:49,208 --> 01:06:52,208
+What I typically do is I'm just gonna
+
+2233
+01:06:52,708 --> 01:06:55,708
+call some stuff here.
+
+2234
+01:06:56,208 --> 01:06:59,208
+So typically I just have the read me open
+
+2235
+01:06:59,916 --> 01:07:03,000
+and I would do at workspace in chat mode,
+
+2236
+01:07:03,500 --> 01:07:05,416
+I would use ggplot 3.5
+
+2237
+01:07:05,416 --> 01:07:08,000
+because Claude is a very good writer.
+
+2238
+01:07:08,000 --> 01:07:08,416
+Okay.
+
+2239
+01:07:08,416 --> 01:07:09,958
+And I would say
+
+2240
+01:07:09,958 --> 01:07:13,333
+update the read me based on the
+
+2241
+01:07:14,208 --> 01:07:17,375
+the current project structure
+
+2242
+01:07:17,375 --> 01:07:19,083
+or something like that.
+
+2243
+01:07:19,083 --> 01:07:20,583
+Okay, cool.
+
+2244
+01:07:20,583 --> 01:07:21,500
+I'm going to try
+
+2245
+01:07:21,500 --> 01:07:22,333
+a different approach
+
+2246
+01:07:22,333 --> 01:07:23,916
+simultaneously, and I'm going to do this
+
+2247
+01:07:23,916 --> 01:07:26,208
+one using Gemini Flash.
+
+2248
+01:07:26,208 --> 01:07:29,000
+I'm going to do it with edit and I'm
+
+2249
+01:07:30,166 --> 01:07:31,791
+the source code.
+
+2250
+01:07:31,791 --> 01:07:34,791
+The templates
+
+2251
+01:07:34,791 --> 01:07:37,791
+actually yes, it's true,
+
+2252
+01:07:37,916 --> 01:07:38,583
+I would use
+
+2253
+01:07:38,583 --> 01:07:40,458
+edit or agent to do this
+
+2254
+01:07:40,458 --> 01:07:42,833
+because then it actually does it.
+
+2255
+01:07:42,833 --> 01:07:43,791
+I
+
+2256
+01:07:43,791 --> 01:07:44,958
+maybe I you know,
+
+2257
+01:07:44,958 --> 01:07:47,375
+this is a slightly workflow.
+
+2258
+01:07:47,375 --> 01:07:48,750
+I want to try this out.
+
+2259
+01:07:48,750 --> 01:07:49,458
+Okay.
+
+2260
+01:07:49,458 --> 01:07:53,250
+Make documentation for this app.
+
+2261
+01:07:54,375 --> 01:07:57,875
+Give me an exact,
+
+2262
+01:08:00,208 --> 01:08:03,208
+summary.
+
+2263
+01:08:03,208 --> 01:08:04,958
+I docs
+
+2264
+01:08:04,958 --> 01:08:07,791
+and a slash does visual.
+
+2265
+01:08:07,791 --> 01:08:09,625
+Well, it does multimodal input.
+
+2266
+01:08:09,625 --> 01:08:12,625
+But if I ask for a workflow diagram.
+
+2267
+01:08:14,833 --> 01:08:17,416
+Maybe it'll use mermaid or something.
+
+2268
+01:08:17,416 --> 01:08:19,916
+Next let's be and workflow diagrams
+
+2269
+01:08:19,916 --> 01:08:22,916
+using mermaid JS.
+
+2270
+01:08:22,916 --> 01:08:24,791
+Yeah okay.
+
+2271
+01:08:24,791 --> 01:08:26,166
+So I didn't say include a diagram.
+
+2272
+01:08:26,166 --> 01:08:26,833
+And I'm going to use
+
+2273
+01:08:26,833 --> 01:08:28,750
+agent mode and claw 3.5.
+
+2274
+01:08:28,750 --> 01:08:29,583
+That's what I would use
+
+2275
+01:08:29,583 --> 01:08:33,833
+because sometimes when I ask in ask mode
+
+2276
+01:08:34,083 --> 01:08:35,541
+if I say update the read me,
+
+2277
+01:08:35,541 --> 01:08:36,416
+it doesn't,
+
+2278
+01:08:36,416 --> 01:08:40,166
+return the contents of the read me
+
+2279
+01:08:40,166 --> 01:08:42,083
+in that code block format
+
+2280
+01:08:42,083 --> 01:08:43,875
+for me to just apply it.
+
+2281
+01:08:43,875 --> 01:08:47,125
+So that happens sometimes in ask mode.
+
+2282
+01:08:47,416 --> 01:08:48,791
+So actually using edit
+
+2283
+01:08:48,791 --> 01:08:50,416
+or agent is a better move.
+
+2284
+01:08:52,041 --> 01:08:53,875
+So this will be really interesting right.
+
+2285
+01:08:53,875 --> 01:08:55,750
+Because both of these modes
+
+2286
+01:08:55,750 --> 01:09:00,125
+have relative freedom in like being able
+
+2287
+01:09:00,125 --> 01:09:02,416
+to modify and create
+
+2288
+01:09:02,416 --> 01:09:04,250
+a large number of files.
+
+2289
+01:09:04,250 --> 01:09:05,625
+But I wonder
+
+2290
+01:09:05,625 --> 01:09:07,416
+if edit was the wrong approach,
+
+2291
+01:09:07,416 --> 01:09:09,583
+because I see that it's actually
+
+2292
+01:09:09,583 --> 01:09:11,583
+rewriting my files
+
+2293
+01:09:11,583 --> 01:09:13,791
+instead of creating new ones.
+
+2294
+01:09:13,791 --> 01:09:14,916
+Oh, but you said explicitly
+
+2295
+01:09:14,916 --> 01:09:15,625
+update the read me.
+
+2296
+01:09:15,625 --> 01:09:16,666
+Okay, so we might see
+
+2297
+01:09:16,666 --> 01:09:19,666
+we might see very similar.
+
+2298
+01:09:20,458 --> 01:09:22,583
+Yeah, yeah,
+
+2299
+01:09:22,583 --> 01:09:24,500
+I think I think what I'm going to do,
+
+2300
+01:09:24,500 --> 01:09:25,625
+I like this
+
+2301
+01:09:25,625 --> 01:09:27,000
+I like what it gave me for output.
+
+2302
+01:09:27,000 --> 01:09:29,250
+It's telling me the API,
+
+2303
+01:09:29,250 --> 01:09:31,125
+telling me the post, etc..
+
+2304
+01:09:31,125 --> 01:09:35,333
+It's got the workflow diagrams.
+
+2305
+01:09:35,333 --> 01:09:37,041
+It did it in mermaid.
+
+2306
+01:09:37,041 --> 01:09:40,041
+Great.
+
+2307
+01:09:40,333 --> 01:09:41,500
+Let me, let me keep this for
+
+2308
+01:09:41,500 --> 01:09:43,125
+now just so I can preview it
+
+2309
+01:09:43,125 --> 01:09:43,791
+so we can actually
+
+2310
+01:09:43,791 --> 01:09:44,583
+see what it looks like.
+
+2311
+01:09:48,875 --> 01:09:49,375
+There we go.
+
+2312
+01:09:49,375 --> 01:09:50,708
+We have no renderers up.
+
+2313
+01:09:50,708 --> 01:09:50,958
+All right.
+
+2314
+01:09:50,958 --> 01:09:51,708
+So it's got it's
+
+2315
+01:09:51,708 --> 01:09:53,083
+got all the instructions I had in there.
+
+2316
+01:09:53,083 --> 01:09:54,583
+It has existing
+
+2317
+01:09:54,583 --> 01:09:57,291
+set of instructions etc., etc..
+
+2318
+01:09:57,291 --> 01:10:00,666
+And then it's kind of added sections
+
+2319
+01:10:00,666 --> 01:10:01,166
+at the end,
+
+2320
+01:10:01,166 --> 01:10:04,166
+the API endpoints example responses.
+
+2321
+01:10:04,250 --> 01:10:06,166
+Love it.
+
+2322
+01:10:06,166 --> 01:10:09,375
+Post get delete.
+
+2323
+01:10:09,666 --> 01:10:10,791
+Yeah.
+
+2324
+01:10:10,791 --> 01:10:13,708
+And the workflow sequence diagrams.
+
+2325
+01:10:13,708 --> 01:10:14,750
+If I were in a,
+
+2326
+01:10:14,750 --> 01:10:15,458
+if I weren't just
+
+2327
+01:10:15,458 --> 01:10:19,333
+using the native embedded,
+
+2328
+01:10:19,333 --> 01:10:20,458
+markdown renderer
+
+2329
+01:10:20,458 --> 01:10:21,666
+inside VS code,
+
+2330
+01:10:21,666 --> 01:10:23,083
+there's other plugins you could use,
+
+2331
+01:10:23,083 --> 01:10:23,875
+or I could
+
+2332
+01:10:23,875 --> 01:10:25,333
+commit this into the repo
+
+2333
+01:10:25,333 --> 01:10:27,416
+and really see the mermaid diagram.
+
+2334
+01:10:27,416 --> 01:10:30,416
+So actually we do that.
+
+2335
+01:10:30,666 --> 01:10:31,958
+Yeah. On this side.
+
+2336
+01:10:31,958 --> 01:10:33,416
+So it just updated it
+
+2337
+01:10:33,416 --> 01:10:35,791
+maybe because I said update.
+
+2338
+01:10:35,791 --> 01:10:39,000
+So there isn't a lot of changes.
+
+2339
+01:10:39,250 --> 01:10:42,125
+So it updated the stack.
+
+2340
+01:10:42,125 --> 01:10:44,708
+It gave it like let me actually go to the
+
+2341
+01:10:46,125 --> 01:10:47,333
+so we can see this better.
+
+2342
+01:10:47,333 --> 01:10:50,333
+Hold on.
+
+2343
+01:10:50,875 --> 01:10:51,333
+Here we go.
+
+2344
+01:10:51,333 --> 01:10:53,375
+So it updated the
+
+2345
+01:10:53,375 --> 01:10:55,708
+like the about what the app is about.
+
+2346
+01:10:55,708 --> 01:10:56,958
+And actually it removed
+
+2347
+01:10:56,958 --> 01:10:59,041
+tailwind CSS to bootstrap.
+
+2348
+01:10:59,041 --> 01:11:02,041
+Interestingly
+
+2349
+01:11:05,791 --> 01:11:06,375
+it updated
+
+2350
+01:11:06,375 --> 01:11:08,125
+the features
+
+2351
+01:11:08,125 --> 01:11:10,000
+did actually make that change.
+
+2352
+01:11:10,000 --> 01:11:11,041
+Was it just it did.
+
+2353
+01:11:11,041 --> 01:11:14,041
+It's it it bootstrap bootstrap five
+
+2354
+01:11:14,375 --> 01:11:17,083
+instead of tailwind
+
+2355
+01:11:17,083 --> 01:11:19,125
+it added testing.
+
+2356
+01:11:19,125 --> 01:11:22,125
+It updated the project structure.
+
+2357
+01:11:22,458 --> 01:11:25,541
+And then it added a testing instruction
+
+2358
+01:11:25,541 --> 01:11:26,166
+and then it added
+
+2359
+01:11:26,166 --> 01:11:28,500
+like the updated the Json output.
+
+2360
+01:11:28,500 --> 01:11:31,500
+And that's it.
+
+2361
+01:11:31,500 --> 01:11:31,958
+Okay.
+
+2362
+01:11:31,958 --> 01:11:34,500
+So actually I think your prompts
+
+2363
+01:11:34,500 --> 01:11:36,333
+worked a lot better
+
+2364
+01:11:36,333 --> 01:11:39,333
+for updating documentation or
+
+2365
+01:11:40,041 --> 01:11:42,791
+oh or Gemini over Claud.
+
+2366
+01:11:42,791 --> 01:11:44,041
+Oh okay.
+
+2367
+01:11:44,041 --> 01:11:46,375
+So I'm going to
+
+2368
+01:11:46,375 --> 01:11:49,375
+just undo and and do it again
+
+2369
+01:11:49,916 --> 01:11:50,916
+with a different model,
+
+2370
+01:11:50,916 --> 01:11:53,041
+with a different model.
+
+2371
+01:11:53,041 --> 01:11:53,666
+Why not?
+
+2372
+01:11:53,666 --> 01:11:54,541
+Why are you doing that?
+
+2373
+01:11:54,541 --> 01:11:55,291
+I'm going to try
+
+2374
+01:11:55,291 --> 01:11:56,791
+a slightly different approach
+
+2375
+01:11:56,791 --> 01:11:58,916
+here to where I'm going to.
+
+2376
+01:11:58,916 --> 01:12:00,458
+I really want it to make a separate
+
+2377
+01:12:00,458 --> 01:12:02,000
+file for this. This time
+
+2378
+01:12:03,125 --> 01:12:05,791
+I don't think, oh,
+
+2379
+01:12:05,791 --> 01:12:06,791
+yeah.
+
+2380
+01:12:06,791 --> 01:12:09,083
+What if you tell it to
+
+2381
+01:12:09,083 --> 01:12:11,208
+explicitly create a new file
+
+2382
+01:12:11,208 --> 01:12:12,250
+in edit mode?
+
+2383
+01:12:12,250 --> 01:12:15,083
+Yeah. Okay.
+
+2384
+01:12:15,083 --> 01:12:16,125
+Okay. Also I'll do that.
+
+2385
+01:12:16,125 --> 01:12:19,125
+I also have new file doc someday.
+
+2386
+01:12:19,208 --> 01:12:20,458
+Yeah.
+
+2387
+01:12:20,458 --> 01:12:22,041
+I've got all the same in context
+
+2388
+01:12:22,041 --> 01:12:25,041
+I had before.
+
+2389
+01:12:25,916 --> 01:12:27,291
+I'm just going to copy,
+
+2390
+01:12:27,291 --> 01:12:30,291
+copy your prompt and see if I can get.
+
+2391
+01:12:33,875 --> 01:12:35,333
+Maybe not all of it.
+
+2392
+01:12:35,333 --> 01:12:36,666
+Oh, okay.
+
+2393
+01:12:36,666 --> 01:12:39,666
+Okay. Yes, it did. It
+
+2394
+01:12:39,958 --> 01:12:42,958
+nice.
+
+2395
+01:12:43,125 --> 01:12:46,291
+And so here we have Gemini
+
+2396
+01:12:46,291 --> 01:12:48,125
+updating the read me
+
+2397
+01:12:48,125 --> 01:12:50,166
+in the context window
+
+2398
+01:12:50,166 --> 01:12:53,916
+instead of in the Readme file.
+
+2399
+01:12:54,541 --> 01:12:57,541
+This is something I noticed with Gemini
+
+2400
+01:12:57,833 --> 01:12:58,666
+a lot of times
+
+2401
+01:12:58,666 --> 01:13:01,666
+where it won't actually do the thing,
+
+2402
+01:13:02,000 --> 01:13:03,333
+it will say okay,
+
+2403
+01:13:03,333 --> 01:13:04,625
+it will do it in the window
+
+2404
+01:13:04,625 --> 01:13:06,125
+and like I have to apply it.
+
+2405
+01:13:07,625 --> 01:13:08,541
+That interesting.
+
+2406
+01:13:08,541 --> 01:13:09,000
+So like
+
+2407
+01:13:09,000 --> 01:13:11,041
+here is the entire updated read me,
+
+2408
+01:13:11,041 --> 01:13:13,083
+which actually looks beautiful.
+
+2409
+01:13:13,083 --> 01:13:14,583
+So Gemini is a Gemini
+
+2410
+01:13:14,583 --> 01:13:17,583
+2.5 Pro is a go for read me.
+
+2411
+01:13:17,875 --> 01:13:22,083
+But it didn't actually apply it.
+
+2412
+01:13:22,416 --> 01:13:24,625
+And because like I said with read Me's
+
+2413
+01:13:24,625 --> 01:13:26,125
+it doesn't return all of it
+
+2414
+01:13:26,125 --> 01:13:27,125
+in that,
+
+2415
+01:13:27,125 --> 01:13:28,166
+like a code block
+
+2416
+01:13:28,166 --> 01:13:30,416
+with in markdown format.
+
+2417
+01:13:30,416 --> 01:13:32,166
+So all of this would have to be like
+
+2418
+01:13:32,166 --> 01:13:35,166
+copy pasted, copy paste it.
+
+2419
+01:13:36,125 --> 01:13:37,458
+But okay, so now I'm going to say
+
+2420
+01:13:37,458 --> 01:13:40,458
+okay I wonder if there's a way to use it.
+
+2421
+01:13:40,500 --> 01:13:42,000
+File. Now.
+
+2422
+01:13:42,000 --> 01:13:42,750
+Yeah I'm going to say
+
+2423
+01:13:42,750 --> 01:13:44,458
+okay update the file now.
+
+2424
+01:13:46,625 --> 01:13:49,250
+And see if that will work.
+
+2425
+01:13:49,250 --> 01:13:50,541
+Sweet.
+
+2426
+01:13:50,541 --> 01:13:52,000
+Meanwhile I actually actually went
+
+2427
+01:13:52,000 --> 01:13:53,125
+and pushed my last,
+
+2428
+01:13:53,125 --> 01:13:54,208
+not the last set of changes,
+
+2429
+01:13:54,208 --> 01:13:54,958
+but the one before
+
+2430
+01:13:54,958 --> 01:13:57,291
+where it put the output into the read me.
+
+2431
+01:13:57,291 --> 01:13:58,666
+I pushed it up to GitHub
+
+2432
+01:13:58,666 --> 01:13:59,500
+just so that
+
+2433
+01:13:59,500 --> 01:14:02,958
+people can see what this must look like.
+
+2434
+01:14:03,416 --> 01:14:04,208
+Yeah.
+
+2435
+01:14:04,208 --> 01:14:06,250
+Oh, that's so nice.
+
+2436
+01:14:06,250 --> 01:14:09,833
+Oh wow. That's nice,
+
+2437
+01:14:11,541 --> 01:14:12,541
+that's nice.
+
+2438
+01:14:12,541 --> 01:14:12,791
+Yeah.
+
+2439
+01:14:12,791 --> 01:14:14,541
+So now I can see the actual interaction
+
+2440
+01:14:14,541 --> 01:14:17,541
+between all my components on every flow.
+
+2441
+01:14:19,000 --> 01:14:22,000
+See, my PM is going to love this.
+
+2442
+01:14:24,458 --> 01:14:25,166
+Do we have anything else
+
+2443
+01:14:25,166 --> 01:14:26,583
+we want to try or.
+
+2444
+01:14:26,583 --> 01:14:28,500
+I think I wrap up, I know I'm right.
+
+2445
+01:14:28,500 --> 01:14:30,041
+We did security.
+
+2446
+01:14:30,041 --> 01:14:32,416
+Security accessible ability.
+
+2447
+01:14:32,416 --> 01:14:33,875
+We did testing.
+
+2448
+01:14:33,875 --> 01:14:35,708
+We did documentation.
+
+2449
+01:14:35,708 --> 01:14:36,958
+I think that's good.
+
+2450
+01:14:36,958 --> 01:14:39,958
+And we played with so many models
+
+2451
+01:14:40,500 --> 01:14:43,083
+for this project.
+
+2452
+01:14:43,083 --> 01:14:45,958
+I think the key, a key takeaway
+
+2453
+01:14:45,958 --> 01:14:48,291
+I have is quote 3.5.
+
+2454
+01:14:48,291 --> 01:14:50,875
+Sonnet is still very good for everyday
+
+2455
+01:14:50,875 --> 01:14:53,000
+coding tasks. Yeah.
+
+2456
+01:14:53,000 --> 01:14:54,833
+And even like oh three and zero
+
+2457
+01:14:54,833 --> 01:14:56,708
+for many as well.
+
+2458
+01:14:56,708 --> 01:14:58,250
+Those, those also did really well
+
+2459
+01:14:58,250 --> 01:14:59,833
+in they're fast.
+
+2460
+01:14:59,833 --> 01:15:00,250
+Yeah.
+
+2461
+01:15:00,250 --> 01:15:01,041
+Especially for just like
+
+2462
+01:15:01,041 --> 01:15:02,208
+pure like fairly
+
+2463
+01:15:02,208 --> 01:15:04,208
+contained code generation.
+
+2464
+01:15:04,208 --> 01:15:06,041
+Those performed beautifully.
+
+2465
+01:15:06,041 --> 01:15:07,500
+And then Claude three five
+
+2466
+01:15:07,500 --> 01:15:08,750
+was really good in agent
+
+2467
+01:15:08,750 --> 01:15:10,041
+mode for that large building.
+
+2468
+01:15:11,083 --> 01:15:13,041
+both Claude three five and
+
+2469
+01:15:13,041 --> 01:15:15,125
+Gemini two five Pro
+
+2470
+01:15:15,125 --> 01:15:16,916
+did a great job with that.
+
+2471
+01:15:16,916 --> 01:15:17,458
+A gentle
+
+2472
+01:15:17,458 --> 01:15:18,125
+quirk of
+
+2473
+01:15:18,125 --> 01:15:20,500
+just like completely build something.
+
+2474
+01:15:20,500 --> 01:15:22,125
+Greenfield for us.
+
+2475
+01:15:22,125 --> 01:15:23,416
+Agreed.
+
+2476
+01:15:23,416 --> 01:15:27,250
+And I, I really love the way that Gemini
+
+2477
+01:15:27,250 --> 01:15:29,000
+two a flash did documentation.
+
+2478
+01:15:29,000 --> 01:15:30,375
+I think that was really super solid.
+
+2479
+01:15:30,375 --> 01:15:33,083
+Yes, I actually agree.
+
+2480
+01:15:33,083 --> 01:15:36,041
+And that's why I ended up switching
+
+2481
+01:15:36,041 --> 01:15:37,541
+to Gemini two Pro,
+
+2482
+01:15:37,541 --> 01:15:39,791
+because it's it's really good
+
+2483
+01:15:39,791 --> 01:15:41,541
+at technical documentation
+
+2484
+01:15:41,541 --> 01:15:42,541
+because I'm just scrolling
+
+2485
+01:15:42,541 --> 01:15:43,541
+through what it did right now
+
+2486
+01:15:43,541 --> 01:15:44,291
+and I'm just like,
+
+2487
+01:15:44,291 --> 01:15:47,041
+yeah, this looks really good, I love it.
+
+2488
+01:15:47,041 --> 01:15:49,541
+So key takeaway in terms of
+
+2489
+01:15:49,541 --> 01:15:52,541
+what's the best model to use.
+
+2490
+01:15:52,666 --> 01:15:55,666
+It depends.
+
+2491
+01:15:56,375 --> 01:15:56,708
+You know
+
+2492
+01:15:56,708 --> 01:15:59,708
+those the smaller, faster models.
+
+2493
+01:15:59,791 --> 01:16:02,791
+You know some of the, the GPT minis
+
+2494
+01:16:03,375 --> 01:16:04,291
+certainly.
+
+2495
+01:16:04,291 --> 01:16:07,041
+You know, the flash models,
+
+2496
+01:16:07,041 --> 01:16:09,208
+good for quick generation,
+
+2497
+01:16:09,208 --> 01:16:12,583
+the reasoning models, really good
+
+2498
+01:16:12,583 --> 01:16:14,125
+for talking through
+
+2499
+01:16:14,125 --> 01:16:15,875
+and also for building documentation
+
+2500
+01:16:15,875 --> 01:16:17,000
+because they're just verbose
+
+2501
+01:16:17,000 --> 01:16:18,208
+and they have all the right stuff.
+
+2502
+01:16:19,583 --> 01:16:20,541
+We saw benefits
+
+2503
+01:16:20,541 --> 01:16:23,541
+of using the visual inputs.
+
+2504
+01:16:23,625 --> 01:16:24,916
+Oh, yeah.
+
+2505
+01:16:24,916 --> 01:16:25,750
+Gemini.
+
+2506
+01:16:25,750 --> 01:16:28,375
+And on GPT four. Oh,
+
+2507
+01:16:28,375 --> 01:16:30,791
+for fixing up the UI the way we want.
+
+2508
+01:16:30,791 --> 01:16:32,083
+And I'm sure there's lots of other things
+
+2509
+01:16:32,083 --> 01:16:34,500
+we could do with them.
+
+2510
+01:16:34,500 --> 01:16:37,333
+So all in all, try the models.
+
+2511
+01:16:37,333 --> 01:16:39,000
+You have access to them,
+
+2512
+01:16:39,000 --> 01:16:41,750
+not just in, copilot in VS code,
+
+2513
+01:16:41,750 --> 01:16:43,416
+but also on GitHub models.
+
+2514
+01:16:43,416 --> 01:16:43,708
+You know,
+
+2515
+01:16:43,708 --> 01:16:44,333
+you can
+
+2516
+01:16:44,333 --> 01:16:46,250
+test out so many models on
+
+2517
+01:16:46,250 --> 01:16:48,458
+github.com using GitHub models.
+
+2518
+01:16:48,458 --> 01:16:49,875
+So go forth and play.
+
+2519
+01:16:49,875 --> 01:16:51,666
+Have fun, have fun.
+
+2520
+01:16:51,666 --> 01:16:53,375
+Don't be so serious.
+
+2521
+01:16:53,375 --> 01:16:55,583
+Have fun.
+
+2522
+01:16:55,583 --> 01:16:57,583
+That's what it's all about.
+
+2523
+01:16:57,583 --> 01:16:57,833
+Yeah.
+
+2524
+01:16:57,833 --> 01:16:59,541
+It's been awesome working with you today.
+
+2525
+01:16:59,541 --> 01:17:00,791
+Thank you so much.
+
+2526
+01:17:00,791 --> 01:17:01,958
+This has been really,
+
+2527
+01:17:01,958 --> 01:17:04,833
+really good, really, really fun. Wicked.
+
+2528
+01:17:04,833 --> 01:17:06,875
+All right, I'll see you. Yeah. Hi.
