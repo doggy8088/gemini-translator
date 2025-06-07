@@ -12,13 +12,15 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 function parseArgs() {
     return yargs(process.argv.slice(2))
-        .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
-        .option('input', { alias: 'i', demandOption: true, describe: '輸入 SRT 檔案路徑', type: 'string' })
-        .option('output', { alias: 'o', describe: '輸出 SRT 檔案路徑，預設為 <inputFilename>.zh.srt', type: 'string' })
+        .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--type <type>] [--model <model>] [--autofix]')
+        .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑', type: 'string' })
+        .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生', type: 'string' })
+        .option('type', { alias: 't', describe: '字幕檔案格式', type: 'string', choices: ['srt', 'webvtt', 'ass'], default: 'srt' })
         .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })
-        .option('autofix', { describe: '自動修正字幕序號不連續問題', type: 'boolean', default: false })
+        .option('autofix', { describe: '自動修正字幕序號不連續問題 (僅適用於 SRT)', type: 'boolean', default: false })
         .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
-        .example('npx @willh/gemini-srt-translator -i input.srt -o output.srt', '自訂輸出檔案名稱')
+        .example('npx @willh/gemini-srt-translator -i input.vtt -t webvtt', '翻譯 WebVTT 檔案')
+        .example('npx @willh/gemini-srt-translator -i input.ass -t ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正字幕序號不連續問題')
         .help('h')
         .alias('h', 'help')
@@ -46,6 +48,191 @@ function parseSRT(content) {
 
 function serializeSRT(blocks) {
     return blocks.map(b => `${b.index}\n${b.time}\n${b.text}\n`).join('\n');
+}
+
+function parseWebVTT(content) {
+    // 解析 WebVTT，回傳 [{index, time, text}]
+    const lines = content.split(/\r?\n/);
+    const blocks = [];
+    let currentBlock = null;
+    let index = 1;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
+        // Skip WEBVTT header and empty lines
+        if (line === 'WEBVTT' || line === '') {
+            continue;
+        }
+
+        // Check if this is a timestamp line
+        if (line.includes(' --> ')) {
+            if (currentBlock) {
+                // Save previous block
+                blocks.push(currentBlock);
+            }
+            currentBlock = {
+                index: String(index++),
+                time: line,
+                text: ''
+            };
+        } else if (currentBlock) {
+            // This is subtitle text
+            if (currentBlock.text) {
+                currentBlock.text += '\n' + line;
+            } else {
+                currentBlock.text = line;
+            }
+        }
+    }
+
+    // Add the last block
+    if (currentBlock) {
+        blocks.push(currentBlock);
+    }
+
+    return blocks.filter(b => b.text.trim());
+}
+
+function serializeWebVTT(blocks) {
+    let result = 'WEBVTT\n\n';
+    result += blocks.map(b => `${b.time}\n${b.text}\n`).join('\n');
+    return result;
+}
+
+function parseASS(content) {
+    // 解析 ASS，回傳 [{time, text}] (ASS 沒有序號)
+    const lines = content.split(/\r?\n/);
+    const blocks = [];
+    let inEvents = false;
+    let formatLine = null;
+
+    for (const line of lines) {
+        const trimmed = line.trim();
+
+        if (trimmed === '[Events]') {
+            inEvents = true;
+            continue;
+        }
+
+        if (trimmed.startsWith('[') && trimmed !== '[Events]') {
+            inEvents = false;
+            continue;
+        }
+
+        if (inEvents && trimmed.startsWith('Format:')) {
+            formatLine = trimmed.substring(7).trim();
+            continue;
+        }
+
+        if (inEvents && trimmed.startsWith('Dialogue:')) {
+            const dialogueLine = trimmed.substring(9).trim();
+            const parts = dialogueLine.split(',');
+
+            if (parts.length >= 10) {
+                const start = parts[1].trim();
+                const end = parts[2].trim();
+                const text = parts.slice(9).join(',').trim();
+
+                // Remove ASS formatting tags
+                const cleanText = text.replace(/\{[^}]*\}/g, '').replace(/\\N/g, '\n');
+
+                if (cleanText) {
+                    blocks.push({
+                        time: `${start} --> ${end}`,
+                        text: cleanText
+                    });
+                }
+            }
+        }
+    }
+
+    return blocks;
+}
+
+function serializeASS(blocks, originalContent = '') {
+    // Extract header from original content or use default
+    let header = '';
+    if (originalContent) {
+        const lines = originalContent.split(/\r?\n/);
+        let inEvents = false;
+        for (const line of lines) {
+            if (line.trim() === '[Events]') {
+                inEvents = true;
+                header += line + '\n';
+                continue;
+            }
+            if (!inEvents) {
+                header += line + '\n';
+            }
+            if (inEvents && line.trim().startsWith('Format:')) {
+                header += line + '\n';
+                break;
+            }
+        }
+    } else {
+        // Default ASS header
+        header = `[Script Info]
+Title: Translated Subtitles
+ScriptType: v4.00+
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,16,&Hffffff,&Hffffff,&H0,&H0,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+`;
+    }
+
+    const dialogues = blocks.map(b => {
+        const [start, end] = b.time.split(' --> ');
+        const text = b.text.replace(/\n/g, '\\N');
+        return `Dialogue: 0,${start},${end},Default,,0,0,0,,${text}`;
+    });
+      return header + dialogues.join('\n') + '\n';
+}
+
+function parseSubtitle(content, type) {
+    switch (type) {
+        case 'srt':
+            return parseSRT(content);
+        case 'webvtt':
+            return parseWebVTT(content);
+        case 'ass':
+            return parseASS(content);
+        default:
+            throw new Error(`不支援的字幕格式: ${type}`);
+    }
+}
+
+function serializeSubtitle(blocks, type, originalContent = '') {
+    switch (type) {
+        case 'srt':
+            return serializeSRT(blocks);
+        case 'webvtt':
+            return serializeWebVTT(blocks);
+        case 'ass':
+            return serializeASS(blocks, originalContent);
+        default:
+            throw new Error(`不支援的字幕格式: ${type}`);
+    }
+}
+
+function generateOutputPath(inputPath, type) {
+    const ext = path.extname(inputPath);
+    const baseName = inputPath.replace(ext, '');
+
+    switch (type) {
+        case 'srt':
+            return `${baseName}.zh.srt`;
+        case 'webvtt':
+            return `${baseName}.zh.vtt`;
+        case 'ass':
+            return `${baseName}.zh.ass`;
+        default:
+            return `${baseName}.zh${ext}`;
+    }
 }
 
 function checkSequentialTimestamps(blocks) {
@@ -162,7 +349,8 @@ async function translateBatch(texts, apiKey, model) {
 async function main() {
     const argv = parseArgs();
     const inputPath = argv.input;
-    const outputPath = argv.output || inputPath.replace(/\.srt$/i, '.zh.srt');
+    const type = argv.type || 'srt';
+    const outputPath = argv.output || generateOutputPath(inputPath, type);
     const model = argv.model || DEFAULT_MODEL;
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -173,8 +361,8 @@ async function main() {
         console.error('找不到輸入檔案:', inputPath);
         process.exit(1);
     }
-    const srtContent = fs.readFileSync(inputPath, 'utf8');
-    const blocks = parseSRT(srtContent);
+    const subtitleContent = fs.readFileSync(inputPath, 'utf8');
+    const blocks = parseSubtitle(subtitleContent, type);
 
     // 產生摘要以提升翻譯品質
     const allTexts = blocks.map(b => b.text).join('\n');
@@ -208,40 +396,41 @@ async function main() {
     } catch (e) {
         console.warn('產生摘要失敗，將直接進行翻譯。', e.message);
         summary = '';
-    }
-    // 將摘要存入 global 以便後續翻譯任務使用
+    }    // 將摘要存入 global 以便後續翻譯任務使用
     globalThis.translationSummary = summary;
 
-    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正
-    const indices = blocks.map(b => parseInt(b.index, 10));
-    let broken = [];
-    for (let i = 1; i < indices.length; ++i) {
-        if (indices[i] !== indices[i - 1] + 1) {
-            broken.push({
-                missing: indices[i - 1] + 1,
-                prevTime: blocks[i - 1].time,
-                nextTime: blocks[i].time,
-                pos: i
-            });
-        }
-    }
-    if (broken.length > 0) {
-        if (argv.autofix) {
-            console.warn('發現字幕序號不連續，自動修正中...');
-            // 重新編號 blocks
-            for (let i = 0; i < blocks.length; ++i) {
-                blocks[i].index = String(i + 1);
+    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (僅適用於 SRT)
+    if (type === 'srt') {
+        const indices = blocks.map(b => parseInt(b.index, 10));
+        let broken = [];
+        for (let i = 1; i < indices.length; ++i) {
+            if (indices[i] !== indices[i - 1] + 1) {
+                broken.push({
+                    missing: indices[i - 1] + 1,
+                    prevTime: blocks[i - 1].time,
+                    nextTime: blocks[i].time,
+                    pos: i
+                });
             }
-            // 修正後直接覆蓋原檔
-            fs.writeFileSync(inputPath, serializeSRT(blocks), 'utf8');
-            console.log('已自動修正並覆蓋原始檔案，請重新執行本程式。');
-            process.exit(0);
-        } else {
-            console.error('字幕序號不連續，發現缺漏：');
-            broken.forEach(b => {
-                console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
-            });
-            process.exit(1);
+        }
+        if (broken.length > 0) {
+            if (argv.autofix) {
+                console.warn('發現字幕序號不連續，自動修正中...');
+                // 重新編號 blocks
+                for (let i = 0; i < blocks.length; ++i) {
+                    blocks[i].index = String(i + 1);
+                }
+                // 修正後直接覆蓋原檔
+                fs.writeFileSync(inputPath, serializeSRT(blocks), 'utf8');
+                console.log('已自動修正並覆蓋原始檔案，請重新執行本程式。');
+                process.exit(0);
+            } else {
+                console.error('字幕序號不連續，發現缺漏：');
+                broken.forEach(b => {
+                    console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
+                });
+                process.exit(1);
+            }
         }
     }
     let translatedBlocks = [];
@@ -302,9 +491,8 @@ async function main() {
     if (!checkSequentialTimestamps(translatedBlocks)) {
         console.error('時間碼順序錯誤');
         process.exit(1);
-    }
-    console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
-    fs.writeFileSync(outputPath, serializeSRT(translatedBlocks), 'utf8');
+    }    console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
+    fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, type, subtitleContent), 'utf8');
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
 }
 
