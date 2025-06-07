@@ -63,19 +63,15 @@ jobs:
         echo "EOF" >> $GITHUB_OUTPUT
 
     - name: Create Release
-      uses: actions/create-release@v1
+      run: |
+        gh release create v${{ needs.check-version.outputs.new-version }} \
+          --title "Release v${{ needs.check-version.outputs.new-version }}" \
+          --notes "## What's Changed
+        ${{ steps.changelog.outputs.changelog }}
+
+        ## Installation
+        \`\`\`bash
+        npx @willh/gemini-translator@${{ needs.check-version.outputs.new-version }} --help
+        \`\`\`"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ needs.check-version.outputs.new-version }}
-        release_name: Release v${{ needs.check-version.outputs.new-version }}
-        body: |
-          ## What's Changed
-          ${{ steps.changelog.outputs.changelog }}
-
-          ## Installation
-          ```bash
-          npx @willh/gemini-translator@${{ needs.check-version.outputs.new-version }} --help
-          ```
-        draft: false
-        prerelease: false
