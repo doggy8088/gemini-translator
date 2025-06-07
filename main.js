@@ -12,15 +12,14 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 function parseArgs() {
     return yargs(process.argv.slice(2))
-        .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--type <type>] [--model <model>] [--autofix]')
-        .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑', type: 'string' })
+        .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+        .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑 (支援 .srt, .vtt, .ass)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生', type: 'string' })
-        .option('type', { alias: 't', describe: '字幕檔案格式', type: 'string', choices: ['srt', 'webvtt', 'ass'], default: 'srt' })
         .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })
         .option('autofix', { describe: '自動修正字幕序號不連續問題 (僅適用於 SRT)', type: 'boolean', default: false })
         .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
-        .example('npx @willh/gemini-srt-translator -i input.vtt -t webvtt', '翻譯 WebVTT 檔案')
-        .example('npx @willh/gemini-srt-translator -i input.ass -t ass -o output.ass', '翻譯 ASS 檔案')
+        .example('npx @willh/gemini-srt-translator -i input.vtt', '翻譯 WebVTT 檔案')
+        .example('npx @willh/gemini-srt-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正字幕序號不連續問題')
         .help('h')
         .alias('h', 'help')
@@ -235,6 +234,22 @@ function generateOutputPath(inputPath, type) {
     }
 }
 
+function detectSubtitleType(filePath) {
+    const ext = path.extname(filePath).toLowerCase();
+    switch (ext) {
+        case '.srt':
+            return 'srt';
+        case '.vtt':
+        case '.webvtt':
+            return 'webvtt';
+        case '.ass':
+        case '.ssa':
+            return 'ass';
+        default:
+            throw new Error(`不支援的字幕檔案格式: ${ext}。支援的格式: .srt, .vtt, .webvtt, .ass, .ssa`);
+    }
+}
+
 function checkSequentialTimestamps(blocks) {
     let prev = null;
     for (let i = 0; i < blocks.length; ++i) {
@@ -349,7 +364,7 @@ async function translateBatch(texts, apiKey, model) {
 async function main() {
     const argv = parseArgs();
     const inputPath = argv.input;
-    const type = argv.type || 'srt';
+    const type = detectSubtitleType(inputPath);
     const outputPath = argv.output || generateOutputPath(inputPath, type);
     const model = argv.model || DEFAULT_MODEL;
     const apiKey = process.env.GEMINI_API_KEY;
@@ -361,6 +376,9 @@ async function main() {
         console.error('找不到輸入檔案:', inputPath);
         process.exit(1);
     }
+
+    console.log(`檢測到字幕格式: ${type.toUpperCase()}`);
+
     const subtitleContent = fs.readFileSync(inputPath, 'utf8');
     const blocks = parseSubtitle(subtitleContent, type);
 
