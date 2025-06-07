@@ -5,7 +5,7 @@
 [![Code Quality](https://github.com/doggy8088/gemini-translator/actions/workflows/code-quality.yml/badge.svg)](https://github.com/doggy8088/gemini-translator/actions/workflows/code-quality.yml)
 [![npm version](https://badge.fury.io/js/@willh%2Fgemini-translator.svg)](https://badge.fury.io/js/@willh%2Fgemini-translator)
 
-A powerful command-line tool that translates SRT subtitle files from English to Traditional Chinese using Google's Gemini AI API. The tool features intelligent context-aware translation with automatic content summarization for improved translation quality.
+A powerful command-line tool that translates SRT, WebVTT, ASS, Markdown files from English to Traditional Chinese using Google's Gemini AI API. The tool features intelligent context-aware translation with automatic content summarization for improved translation quality.
 
 ## Features
 
