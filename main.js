@@ -12,16 +12,16 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 function parseArgs() {
     return yargs(process.argv.slice(2))
-        .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑 (支援 .srt, .vtt, .ass)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })        .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
-        .example('npx @willh/gemini-srt-translator -i input.vtt', '翻譯 WebVTT 檔案')
-        .example('npx @willh/gemini-srt-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
-        .example('npx @willh/gemini-srt-translator -i input.srt -o output.ass', '將 SRT 翻譯並轉換為 ASS 格式')
-        .example('npx @willh/gemini-srt-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
-        .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
-        .example('npx @willh/gemini-srt-translator -i input.vtt --autofix', '自動修正 WebVTT 字幕序號不連續問題')
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })        .example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
+        .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
+        .example('npx @willh/gemini-translator -i input.srt -o output.ass', '將 SRT 翻譯並轉換為 ASS 格式')
+        .example('npx @willh/gemini-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
+        .example('npx @willh/gemini-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
+        .example('npx @willh/gemini-translator -i input.vtt --autofix', '自動修正 WebVTT 字幕序號不連續問題')
         .help('h')
         .alias('h', 'help')
         .wrap(null)
@@ -457,7 +457,7 @@ async function main() {
                     console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
                 });                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
                 const fileExt = inputType === 'srt' ? 'srt' : 'vtt';
-                console.error(`例如：npx @willh/gemini-srt-translator --input input.${fileExt} --autofix`);
+                console.error(`例如：npx @willh/gemini-translator --input input.${fileExt} --autofix`);
                 process.exit(1);
             }
         }

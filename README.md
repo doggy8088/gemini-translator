@@ -19,19 +19,19 @@ A powerful command-line tool that translates SRT subtitle files from English to 
 No installation required! Run directly with npx:
 
 ```bash
-npx @willh/gemini-srt-translator --input your-subtitle.srt
+npx @willh/gemini-translator --input your-subtitle.srt
 ```
 
 ### Global Installation
 
 ```bash
-npm install -g @willh/gemini-srt-translator
+npm install -g @willh/gemini-translator
 ```
 
 Then run:
 
 ```bash
-gemini-srt-translator --input your-subtitle.srt
+gemini-translator --input your-subtitle.srt
 ```
 
 ## Prerequisites
@@ -75,7 +75,7 @@ node --version
 Translate a subtitle file to Traditional Chinese:
 
 ```bash
-npx @willh/gemini-srt-translator --input movie.srt
+npx @willh/gemini-translator --input movie.srt
 ```
 
 This will create `movie.zh.srt` in the same directory.
@@ -84,16 +84,16 @@ This will create `movie.zh.srt` in the same directory.
 
 ```bash
 # Custom output filename
-npx @willh/gemini-srt-translator --input movie.srt --output movie-chinese.srt
+npx @willh/gemini-translator --input movie.srt --output movie-chinese.srt
 
 # Use specific Gemini model
-npx @willh/gemini-srt-translator --input movie.srt --model gemini-1.5-pro
+npx @willh/gemini-translator --input movie.srt --model gemini-1.5-pro
 
 # Auto-fix subtitle numbering issues
-npx @willh/gemini-srt-translator --input movie.srt --autofix
+npx @willh/gemini-translator --input movie.srt --autofix
 
 # Combine options
-npx @willh/gemini-srt-translator -i movie.srt -o output.srt -m gemini-1.5-pro --autofix
+npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-1.5-pro --autofix
 ```
 
 ## Command Line Options
@@ -137,21 +137,21 @@ The tool includes robust error handling for common issues:
 ### Example 1: Basic Translation
 
 ```bash
-npx @willh/gemini-srt-translator --input "My Movie.srt"
+npx @willh/gemini-translator --input "My Movie.srt"
 # Output: "My Movie.zh.srt"
 ```
 
 ### Example 2: Batch Processing with Auto-fix
 
 ```bash
-npx @willh/gemini-srt-translator -i "Series S01E01.srt" --autofix
+npx @willh/gemini-translator -i "Series S01E01.srt" --autofix
 # Automatically fixes numbering issues and translates
 ```
 
 ### Example 3: High-Quality Translation
 
 ```bash
-npx @willh/gemini-srt-translator -i "Documentary.srt" -m gemini-1.5-pro -o "Documentary-TC.srt"
+npx @willh/gemini-translator -i "Documentary.srt" -m gemini-1.5-pro -o "Documentary-TC.srt"
 # Uses the most advanced model for better accuracy
 ```
 
@@ -187,7 +187,7 @@ npx @willh/gemini-srt-translator -i "Documentary.srt" -m gemini-1.5-pro -o "Docu
 ### Project Structure
 
 ```
-gemini-srt-translator/
+gemini-translator/
 ├── main.js              # Main application logic
 ├── promisePool.js       # Concurrent processing utility
 ├── package.json         # Package configuration
@@ -215,6 +215,7 @@ gemini-srt-translator/
 
 1. **NPM Account**: Create an account at [npmjs.com](https://www.npmjs.com/)
 2. **NPM CLI**: Install and login
+
    ```bash
    npm install -g npm
    npm login
@@ -223,6 +224,7 @@ gemini-srt-translator/
 ### Publishing Steps
 
 1. **Prepare the Package**
+
    ```bash
    # Ensure all files are ready
    npm run test  # If you have tests
@@ -232,6 +234,7 @@ gemini-srt-translator/
    ```
 
 2. **Version Management**
+
    ```bash
    # Update version (patch/minor/major)
    npm version patch  # 1.0.0 -> 1.0.1
@@ -240,8 +243,9 @@ gemini-srt-translator/
    ```
 
 3. **Publish to NPM**
+
    ```bash
-   # For scoped packages (like @willh/gemini-srt-translator)
+   # For scoped packages (like @willh/gemini-translator)
    npm publish --access public
 
    # For regular packages
@@ -249,9 +253,10 @@ gemini-srt-translator/
    ```
 
 4. **Verify Publication**
+
    ```bash
    # Test installation
-   npx @willh/gemini-srt-translator@latest --help
+   npx @willh/gemini-translator@latest --help
    ```
 
 ### Publishing Checklist
@@ -320,7 +325,7 @@ MIT License - see LICENSE file for details.
 
 For issues and questions:
 
-- GitHub Issues: [Repository Issues](https://github.com/willh/gemini-srt-translator/issues)
+- GitHub Issues: [Repository Issues](https://github.com/willh/gemini-translator/issues)
 - Email: \[Your email]
 
 ## Changelog

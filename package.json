@@ -1,9 +1,9 @@
 {
-  "name": "@willh/gemini-srt-translator",
-  "version": "1.0.0",
+  "name": "@willh/gemini-translator",
+  "version": "0.1.0",
   "main": "main.js",
   "bin": {
-    "gemini-srt-translator": "./main.js"
+    "gemini-translator": "./main.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
