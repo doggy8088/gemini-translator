@@ -14,11 +14,12 @@ function parseArgs() {
     return yargs(process.argv.slice(2))
         .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入字幕檔案路徑 (支援 .srt, .vtt, .ass)', type: 'string' })
-        .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })
-        .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .option('output', { alias: 'o', describe: '輸出字幕檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })        .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-srt-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-srt-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
+        .example('npx @willh/gemini-srt-translator -i input.srt -o output.ass', '將 SRT 翻譯並轉換為 ASS 格式')
+        .example('npx @willh/gemini-srt-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
         .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
         .example('npx @willh/gemini-srt-translator -i input.vtt --autofix', '自動修正 WebVTT 字幕序號不連續問題')
         .help('h')
@@ -190,16 +191,20 @@ function serializeASS(blocks, originalContent = '') {
                 header += line + '\n';
                 break;
             }
-        }
-    } else {
+        }    } else {
         // Default ASS header
         header = `[Script Info]
-Title: Translated Subtitles
+Title: Converted from WebVTT
 ScriptType: v4.00+
+WrapStyle: 0
+PlayResX: 1280
+PlayResY: 720
+ScaledBorderAndShadow: yes
 
 [V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Arial,16,&Hffffff,&Hffffff,&H0,&H0,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Default, 微軟正黑體,48,&H0080FFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,1,0,1,2,0,2,1,1,40,1
+Style: Secondary,Helvetica,12,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,2,0,2,1,1,40,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -234,7 +239,9 @@ function serializeSubtitle(blocks, type, originalContent = '') {
         case 'webvtt':
             return serializeWebVTT(blocks);
         case 'ass':
-            return serializeASS(blocks, originalContent);
+            // Only pass originalContent if it's already ASS format
+            const isOriginalASS = originalContent && originalContent.includes('[Script Info]');
+            return serializeASS(blocks, isOriginalASS ? originalContent : '');
         default:
             throw new Error(`不支援的字幕格式: ${type}`);
     }
@@ -386,8 +393,25 @@ async function translateBatch(texts, apiKey, model) {
 async function main() {
     const argv = parseArgs();
     const inputPath = argv.input;
-    const type = detectSubtitleType(inputPath);
-    const outputPath = argv.output || generateOutputPath(inputPath, type);
+    const inputType = detectSubtitleType(inputPath);
+
+    // Determine output type and path
+    let outputType = inputType;
+    let outputPath;
+
+    if (argv.output) {
+        outputPath = argv.output;
+        try {
+            outputType = detectSubtitleType(outputPath);
+        } catch (e) {
+            // If output file extension is not recognized, keep input type
+            outputType = inputType;
+        }
+    } else {
+        outputPath = generateOutputPath(inputPath, inputType);
+        outputType = inputType;
+    }
+
     const model = argv.model || DEFAULT_MODEL;
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -397,13 +421,13 @@ async function main() {
     if (!fs.existsSync(inputPath)) {
         console.error('找不到輸入檔案:', inputPath);
         process.exit(1);
+    }    console.log(`檢測到輸入字幕格式: ${inputType.toUpperCase()}`);
+    if (inputType !== outputType) {
+        console.log(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
     }
-
-    console.log(`檢測到字幕格式: ${type.toUpperCase()}`);    const subtitleContent = fs.readFileSync(inputPath, 'utf8');
-    const blocks = parseSubtitle(subtitleContent, type);
-
-    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
-    if (type === 'srt' || type === 'webvtt') {
+    const subtitleContent = fs.readFileSync(inputPath, 'utf8');
+    const blocks = parseSubtitle(subtitleContent, inputType);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
+    if (inputType === 'srt' || inputType === 'webvtt') {
         const indices = blocks.map(b => parseInt(b.index, 10));
         let broken = [];
         for (let i = 1; i < indices.length; ++i) {
@@ -422,9 +446,8 @@ async function main() {
                 // 重新編號 blocks
                 for (let i = 0; i < blocks.length; ++i) {
                     blocks[i].index = String(i + 1);
-                }
-                // 修正後直接覆蓋原檔，根據格式使用對應的序列化函數
-                const fixedContent = type === 'srt' ? serializeSRT(blocks) : serializeWebVTT(blocks);
+                }                // 修正後直接覆蓋原檔，根據格式使用對應的序列化函數
+                const fixedContent = inputType === 'srt' ? serializeSRT(blocks) : serializeWebVTT(blocks);
                 fs.writeFileSync(inputPath, fixedContent, 'utf8');
                 console.log('已自動修正並覆蓋原始檔案，請重新執行本程式。');
                 process.exit(0);
@@ -432,9 +455,8 @@ async function main() {
                 console.error('字幕序號不連續，發現缺漏：');
                 broken.forEach(b => {
                     console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
-                });
-                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
-                const fileExt = type === 'srt' ? 'srt' : 'vtt';
+                });                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
+                const fileExt = inputType === 'srt' ? 'srt' : 'vtt';
                 console.error(`例如：npx @willh/gemini-srt-translator --input input.${fileExt} --autofix`);
                 process.exit(1);
             }
@@ -528,7 +550,7 @@ async function main() {
         text: flatTranslations[idx] || ''
     }));
     // console.log('翻譯結果合併完成', translatedBlocks);    // 檢查時間碼順序 (僅適用於 SRT 和 WebVTT)
-    if (type !== 'ass') {
+    if (outputType !== 'ass') {
         console.log('檢查時間碼順序...');
         console.log();
         if (!checkSequentialTimestamps(translatedBlocks)) {
@@ -539,7 +561,7 @@ async function main() {
     } else {
         // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
-    fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, type, subtitleContent), 'utf8');
+    fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, outputType, subtitleContent), 'utf8');
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
 }
 
