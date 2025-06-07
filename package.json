@@ -1,14 +1,17 @@
 {
-  "name": "gemini-srt-translator",
+  "name": "@willh/gemini-srt-translator",
   "version": "1.0.0",
   "main": "main.js",
+  "bin": {
+    "gemini-srt-translator": "./main.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["gemini", "srt", "subtitle", "translator", "chinese", "traditional"],
+  "author": "willh",
   "license": "MIT",
-  "description": "",
+  "description": "A tool to translate SRT subtitle files from English to Traditional Chinese using Google Gemini API",
   "dependencies": {
     "axios": "^1.9.0",
     "yargs": "^18.0.0"

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Gemini SRT 英翻中（繁體）翻譯器
 const fs = require('fs');
 const path = require('path');
@@ -11,14 +12,14 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 function parseArgs() {
     return yargs(process.argv.slice(2))
-        .usage('用法: node $0 --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+        .usage('用法: npx @willh/gemini-srt-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入 SRT 檔案路徑', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出 SRT 檔案路徑，預設為 <inputFilename>.zh.srt', type: 'string' })
         .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })
         .option('autofix', { describe: '自動修正字幕序號不連續問題', type: 'boolean', default: false })
-        .example('node $0 --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
-        .example('node $0 -i input.srt -o output.srt', '自訂輸出檔案名稱')
-        .example('node $0 -i input.srt --autofix', '自動修正字幕序號不連續問題')
+        .example('npx @willh/gemini-srt-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .example('npx @willh/gemini-srt-translator -i input.srt -o output.srt', '自訂輸出檔案名稱')
+        .example('npx @willh/gemini-srt-translator -i input.srt --autofix', '自動修正字幕序號不連續問題')
         .help('h')
         .alias('h', 'help')
         .wrap(null)
