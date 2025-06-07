@@ -1,4 +1,4 @@
-# Gemini SRT Translator
+# Gemini Translator
 
 [![CI](https://github.com/doggy8088/gemini-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/doggy8088/gemini-translator/actions/workflows/ci.yml)
 [![Publish to NPM](https://github.com/doggy8088/gemini-translator/actions/workflows/publish.yml/badge.svg)](https://github.com/doggy8088/gemini-translator/actions/workflows/publish.yml)

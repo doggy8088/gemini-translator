@@ -8,7 +8,7 @@ console.log('🔍 Basic validation tests');
 // Test 1: Files exist
 import { spawn } from 'child_process';
 
-console.log('🧪 Running Gemini SRT Translator Tests');
+console.log('🧪 Running Gemini Translator Tests');
 console.log('=====================================');
 
 let testsPassed = 0;

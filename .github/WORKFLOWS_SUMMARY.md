@@ -1,6 +1,6 @@
 # GitHub Actions Workflows Summary
 
-Your Gemini SRT Translator project now has a complete CI/CD pipeline with GitHub Actions! 🎉
+Your Gemini Translator project now has a complete CI/CD pipeline with GitHub Actions! 🎉
 
 ## What Was Added
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Gemini SRT 英翻中（繁體）翻譯器
+// Gemini 英翻中（繁體）翻譯器
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
