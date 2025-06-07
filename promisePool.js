@@ -30,4 +30,4 @@ async function promisePool(tasks, concurrency) {
     });
 }
 
-module.exports = promisePool;
+export default promisePool;

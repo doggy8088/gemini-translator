@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 // Gemini SRT 英翻中（繁體）翻譯器
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const yargs = require('yargs/yargs');
-const promisePool = require('./promisePool');
+import fs from 'fs';
+import path from 'path';
+import axios from 'axios';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import promisePool from './promisePool.js';
 
 const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-flash-preview-05-20';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 
 function parseArgs() {
-    return yargs(process.argv.slice(2))        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+    return yargs(hideBin(process.argv))        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入檔案路徑 (支援 .srt, .vtt, .ass, .md)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
         .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })        .example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
@@ -25,7 +26,7 @@ function parseArgs() {
         .help('h')
         .alias('h', 'help')
         .wrap(null)
-        .argv;
+        .parse();
 }
 
 function parseSRT(content) {
@@ -704,6 +705,12 @@ async function main() {
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
 }
 
-if (require.main === module) {
-    main();
+// Check if this module is being run directly (not imported)
+if (process.argv[1] && import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}`
+    || process.argv[1] && import.meta.url === `file://${process.argv[1]}`
+    || process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1]))) {
+    // Don't run if we're in a test environment
+    if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test') {
+        main();
+    }
 }
