@@ -87,9 +87,9 @@ To fully utilize these workflows, add the following secrets to your GitHub repos
 Add these badges to your README.md to show workflow status:
 
 ```markdown
-[![CI](https://github.com/willh/gemini-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/willh/gemini-translator/actions/workflows/ci.yml)
-[![Publish to NPM](https://github.com/willh/gemini-translator/actions/workflows/publish.yml/badge.svg)](https://github.com/willh/gemini-translator/actions/workflows/publish.yml)
-[![Code Quality](https://github.com/willh/gemini-translator/actions/workflows/code-quality.yml/badge.svg)](https://github.com/willh/gemini-translator/actions/workflows/code-quality.yml)
+[![CI](https://github.com/doggy8088/gemini-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/doggy8088/gemini-translator/actions/workflows/ci.yml)
+[![Publish to NPM](https://github.com/doggy8088/gemini-translator/actions/workflows/publish.yml/badge.svg)](https://github.com/doggy8088/gemini-translator/actions/workflows/publish.yml)
+[![Code Quality](https://github.com/doggy8088/gemini-translator/actions/workflows/code-quality.yml/badge.svg)](https://github.com/doggy8088/gemini-translator/actions/workflows/code-quality.yml)
 ```
 
 ## Testing Locally
