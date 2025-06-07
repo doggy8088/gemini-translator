@@ -43,24 +43,54 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for changelog generation
 
     - name: Generate changelog
       id: changelog
       run: |
-        # Simple changelog generation - you can enhance this
-        # Find the latest tag (if any), otherwise use the initial commit
+        # Generate changelog from commits
+        echo "Generating changelog..."
+        
+        # Find the latest tag (if any)
         LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        
         if [ -n "$LATEST_TAG" ]; then
+          echo "Latest tag found: $LATEST_TAG"
           RANGE="$LATEST_TAG..HEAD"
         else
-          INITIAL_COMMIT=$(git rev-list --max-parents=0 HEAD)
-          RANGE="$INITIAL_COMMIT..HEAD"
+          echo "No tags found, using all commits"
+          # Get all commits since the beginning
+          RANGE="HEAD"
         fi
-
-        CHANGELOG=$(git log --pretty=format:"- %s" $RANGE)
-        echo "changelog<<EOF" >> $GITHUB_OUTPUT
-        echo "$CHANGELOG" >> $GITHUB_OUTPUT
-        echo "EOF" >> $GITHUB_OUTPUT
+        
+        echo "Getting commits in range: $RANGE"
+        
+        # Generate changelog with better formatting
+        if [ -n "$LATEST_TAG" ]; then
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)" $RANGE)
+        else
+          # For first release, get recent commits (last 10)
+          CHANGELOG=$(git log --pretty=format:"- %s (%h)" -10 HEAD)
+        fi
+        
+        # Debug: show what we got
+        echo "Raw changelog:"
+        echo "$CHANGELOG"
+        
+        # Handle empty changelog
+        if [ -z "$CHANGELOG" ]; then
+          CHANGELOG="- Initial release"
+        fi
+        
+        # Set output using proper multiline format
+        {
+          echo "changelog<<EOF"
+          echo "$CHANGELOG"
+          echo "EOF"
+        } >> $GITHUB_OUTPUT
+        
+        echo "Changelog output set successfully"
 
     - name: Create Release
       run: |
