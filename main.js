@@ -947,10 +947,13 @@ async function main() {
         const batch = blocks.slice(i, i + BATCH_SIZE);
         batches.push(batch);
     }
+    // 進度追蹤
+    let completedTasks = 0;
+    const totalTasks = batches.length;
+    
     // 建立任務陣列
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
-        process.stdout.write(`\r翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
         
         // 使用重試機制進行翻譯
         const translations = await withRetry(async () => {
@@ -972,12 +975,19 @@ async function main() {
             return result;
         }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
         
+        // 更新進度
+        completedTasks++;
+        const startIdx = batchIdx * BATCH_SIZE + 1;
+        const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
+        process.stdout.write(`\r翻譯進度: ${completedTasks}/${totalTasks} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
+        
         // 回傳本 batch 的翻譯結果
         return translations;
     });
     console.log('開始平行處理翻譯任務，最多同時執行 20 個任務...');
     // 平行處理，最多 20 個同時執行
     const allTranslations = await promisePool(tasks, 20);
+    process.stdout.write('\n'); // 確保下一行從新行開始
     console.log('所有翻譯任務已完成，開始合併翻譯結果...');
     // 合併所有翻譯結果
     const flatTranslations = allTranslations.flat();
@@ -1016,10 +1026,13 @@ async function main() {
                 if (retryCount < maxRetries) {
                     console.log('正在重新翻譯...');
                     
+                    // 進度追蹤
+                    let completedRetranslations = 0;
+                    const totalRetranslations = batches.length;
+                    
                     // 重新翻譯所有區塊
                     const retranslationTasks = batches.map((batch, batchIdx) => async () => {
                         const texts = batch.map(b => b.text);
-                        process.stdout.write(`\r重新翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
                         
                         const translations = await withRetry(async () => {
                             const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
@@ -1032,6 +1045,12 @@ async function main() {
                             
                             return result;
                         }, MAX_RETRY_ATTEMPTS, `重新翻譯批次 ${batchIdx + 1}`);
+                        
+                        // 更新進度
+                        completedRetranslations++;
+                        const startIdx = batchIdx * BATCH_SIZE + 1;
+                        const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
+                        process.stdout.write(`\r重新翻譯進度: ${completedRetranslations}/${totalRetranslations} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
                         
                         return translations;
                     });
@@ -1046,7 +1065,8 @@ async function main() {
                         text: flatRetranslations[idx] || ''
                     }));
                     
-                    console.log('\n重新翻譯完成，再次檢查格式...');
+                    process.stdout.write('\n'); // 確保下一行從新行開始
+                    console.log('重新翻譯完成，再次檢查格式...');
                 } else {
                     console.error(`已達到最大重試次數 (${maxRetries})，格式檢查仍然失敗`);
                     console.log('將繼續處理，但可能存在格式不一致問題');
