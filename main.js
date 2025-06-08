@@ -10,6 +10,7 @@ import promisePool from './promisePool.js';
 const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-flash-preview-05-20';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
+const MAX_RETRY_ATTEMPTS = 3;
 
 function parseArgs() {
     return yargs(hideBin(process.argv))        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
@@ -238,12 +239,12 @@ function parseMarkdown(content) {
 
             // If adding this line would exceed reasonable chunk size (500 bytes),
             // or we hit a natural break point (empty line after content)
-            if (Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk.trim()) {
+            if (Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk) {
                 // Save current chunk if it has content
-                if (currentChunk.trim()) {
+                if (currentChunk) {
                     chunks.push({
                         index: String(chunkIndex++),
-                        text: currentChunk.trim()
+                        text: currentChunk
                     });
                 }
                 currentChunk = line;
@@ -253,10 +254,10 @@ function parseMarkdown(content) {
         }
 
         // Add the last chunk
-        if (currentChunk.trim()) {
+        if (currentChunk) {
             chunks.push({
                 index: String(chunkIndex),
-                text: currentChunk.trim()
+                text: currentChunk
             });
         }
     } else {
@@ -364,6 +365,298 @@ function checkSequentialTimestamps(blocks) {
     }
     // console.log('[checkSequentialTimestamps] 時間碼順序檢查通過');
     return true;
+}
+
+/**
+ * 檢查原始 Markdown 和翻譯後 Markdown 的格式是否一致
+ * @param {Array} originalBlocks - 原始 Markdown 區塊
+ * @param {Array} translatedBlocks - 翻譯後 Markdown 區塊
+ * @returns {Object} 檢查結果 { isValid: boolean, errors: Array }
+ */
+function checkMarkdownFormat(originalBlocks, translatedBlocks) {
+    const errors = [];
+    
+    // 檢查區塊數量是否一致
+    if (originalBlocks.length !== translatedBlocks.length) {
+        errors.push(`區塊數量不一致: 原始 ${originalBlocks.length} 個，翻譯後 ${translatedBlocks.length} 個`);
+        return { isValid: false, errors };
+    }
+
+    // 逐一檢查每個區塊的格式
+    for (let i = 0; i < originalBlocks.length; i++) {
+        const original = originalBlocks[i].text;
+        const translated = translatedBlocks[i].text;
+        
+        // 檢查標題格式 (# ## ### 等)
+        const originalHeaders = extractMarkdownHeaders(original);
+        const translatedHeaders = extractMarkdownHeaders(translated);
+        
+        if (originalHeaders.length !== translatedHeaders.length) {
+            errors.push(`區塊 ${i + 1}: 標題數量不一致 (原始: ${originalHeaders.length}, 翻譯: ${translatedHeaders.length})`);
+        } else {
+            for (let j = 0; j < originalHeaders.length; j++) {
+                if (originalHeaders[j].level !== translatedHeaders[j].level) {
+                    errors.push(`區塊 ${i + 1}: 標題層級不一致 (位置 ${j + 1}, 原始: ${originalHeaders[j].level}, 翻譯: ${translatedHeaders[j].level})`);
+                }
+            }
+        }
+
+        // 檢查列表格式
+        const originalLists = extractMarkdownLists(original);
+        const translatedLists = extractMarkdownLists(translated);
+        
+        if (originalLists.length !== translatedLists.length) {
+            errors.push(`區塊 ${i + 1}: 列表項目數量不一致 (原始: ${originalLists.length}, 翻譯: ${translatedLists.length})`);
+        } else {
+            for (let j = 0; j < originalLists.length; j++) {
+                if (originalLists[j].type !== translatedLists[j].type) {
+                    errors.push(`區塊 ${i + 1}: 列表類型不一致 (位置 ${j + 1}, 原始: ${originalLists[j].type}, 翻譯: ${translatedLists[j].type})`);
+                }
+                if (originalLists[j].level !== translatedLists[j].level) {
+                    errors.push(`區塊 ${i + 1}: 列表層級不一致 (位置 ${j + 1}, 原始: ${originalLists[j].level}, 翻譯: ${translatedLists[j].level})`);
+                }
+            }
+        }
+
+        // 檢查程式碼區塊
+        const originalCodeBlocks = extractMarkdownCodeBlocks(original);
+        const translatedCodeBlocks = extractMarkdownCodeBlocks(translated);
+        
+        if (originalCodeBlocks.length !== translatedCodeBlocks.length) {
+            errors.push(`區塊 ${i + 1}: 程式碼區塊數量不一致 (原始: ${originalCodeBlocks.length}, 翻譯: ${translatedCodeBlocks.length})`);
+        } else {
+            for (let j = 0; j < originalCodeBlocks.length; j++) {
+                if (originalCodeBlocks[j].language !== translatedCodeBlocks[j].language) {
+                    errors.push(`區塊 ${i + 1}: 程式碼語言不一致 (位置 ${j + 1}, 原始: "${originalCodeBlocks[j].language}", 翻譯: "${translatedCodeBlocks[j].language}")`);
+                }
+                if (originalCodeBlocks[j].type !== translatedCodeBlocks[j].type) {
+                    errors.push(`區塊 ${i + 1}: 程式碼區塊類型不一致 (位置 ${j + 1}, 原始: ${originalCodeBlocks[j].type}, 翻譯: ${translatedCodeBlocks[j].type})`);
+                }
+            }
+        }
+
+        // 檢查連結格式
+        const originalLinks = extractMarkdownLinks(original);
+        const translatedLinks = extractMarkdownLinks(translated);
+        
+        if (originalLinks.length !== translatedLinks.length) {
+            errors.push(`區塊 ${i + 1}: 連結數量不一致 (原始: ${originalLinks.length}, 翻譯: ${translatedLinks.length})`);
+        } else {
+            for (let j = 0; j < originalLinks.length; j++) {
+                if (originalLinks[j].url !== translatedLinks[j].url) {
+                    errors.push(`區塊 ${i + 1}: 連結 URL 不一致 (位置 ${j + 1}, 原始: "${originalLinks[j].url}", 翻譯: "${translatedLinks[j].url}")`);
+                }
+            }
+        }
+
+        // 檢查特殊語法（如 ::: tip 等）
+        const originalSpecial = extractMarkdownSpecialSyntax(original);
+        const translatedSpecial = extractMarkdownSpecialSyntax(translated);
+        
+        if (originalSpecial.length !== translatedSpecial.length) {
+            errors.push(`區塊 ${i + 1}: 特殊語法數量不一致 (原始: ${originalSpecial.length}, 翻譯: ${translatedSpecial.length})`);
+        } else {
+            for (let j = 0; j < originalSpecial.length; j++) {
+                if (originalSpecial[j].type !== translatedSpecial[j].type) {
+                    errors.push(`區塊 ${i + 1}: 特殊語法類型不一致 (位置 ${j + 1}, 原始: "${originalSpecial[j].type}", 翻譯: "${translatedSpecial[j].type}")`);
+                }
+            }
+        }
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors
+    };
+}
+
+/**
+ * 提取 Markdown 標題
+ * @param {string} text - Markdown 文本
+ * @returns {Array} 標題列表，包含層級信息
+ */
+function extractMarkdownHeaders(text) {
+    const headers = [];
+    const lines = text.split('\n');
+    
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('#')) {
+            const match = trimmed.match(/^(#{1,6})\s+/);
+            if (match) {
+                headers.push({
+                    level: match[1].length,
+                    text: trimmed.substring(match[0].length).trim()
+                });
+            }
+        }
+    }
+    
+    return headers;
+}
+
+/**
+ * 提取 Markdown 列表項目
+ * @param {string} text - Markdown 文本
+ * @returns {Array} 列表項目，包含類型和層級信息
+ */
+function extractMarkdownLists(text) {
+    const lists = [];
+    const lines = text.split('\n');
+    
+    for (const line of lines) {
+        const trimmed = line.trim();
+        
+        // 無序列表 (*, -, +)
+        const unorderedMatch = trimmed.match(/^(\s*)([-*+])\s+/);
+        if (unorderedMatch) {
+            lists.push({
+                type: 'unordered',
+                level: Math.floor(unorderedMatch[1].length / 4) + 1, // 假設每 4 個空格為一層
+                marker: unorderedMatch[2]
+            });
+            continue;
+        }
+        
+        // 有序列表 (1., 2., etc.)
+        const orderedMatch = trimmed.match(/^(\s*)(\d+\.)\s+/);
+        if (orderedMatch) {
+            lists.push({
+                type: 'ordered',
+                level: Math.floor(orderedMatch[1].length / 4) + 1,
+                marker: orderedMatch[2]
+            });
+        }
+    }
+    
+    return lists;
+}
+
+/**
+ * 提取 Markdown 程式碼區塊
+ * @param {string} text - Markdown 文本
+ * @returns {Array} 程式碼區塊，包含語言和類型信息
+ */
+function extractMarkdownCodeBlocks(text) {
+    const codeBlocks = [];
+    const lines = text.split('\n');
+    let inCodeBlock = false;
+    let currentBlock = null;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        // 檢查行內程式碼 `code`
+        const inlineCodeMatches = line.match(/`[^`]+`/g);
+        if (inlineCodeMatches) {
+            inlineCodeMatches.forEach(() => {
+                codeBlocks.push({
+                    type: 'inline',
+                    language: '',
+                    content: ''
+                });
+            });
+        }
+        
+        // 檢查程式碼區塊 ```
+        if (line.trim().startsWith('```')) {
+            if (!inCodeBlock) {
+                // 開始程式碼區塊
+                const language = line.trim().substring(3).trim();
+                currentBlock = {
+                    type: 'block',
+                    language: language,
+                    content: ''
+                };
+                inCodeBlock = true;
+            } else {
+                // 結束程式碼區塊
+                if (currentBlock) {
+                    codeBlocks.push(currentBlock);
+                    currentBlock = null;
+                }
+                inCodeBlock = false;
+            }
+        } else if (inCodeBlock && currentBlock) {
+            currentBlock.content += line + '\n';
+        }
+    }
+    
+    return codeBlocks;
+}
+
+/**
+ * 提取 Markdown 連結
+ * @param {string} text - Markdown 文本
+ * @returns {Array} 連結列表，包含 URL 和文本
+ */
+function extractMarkdownLinks(text) {
+    const links = [];
+    
+    // 標準連結格式 [text](url)
+    const linkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
+    let match;
+    
+    while ((match = linkRegex.exec(text)) !== null) {
+        links.push({
+            text: match[1],
+            url: match[2]
+        });
+    }
+    
+    return links;
+}
+
+/**
+ * 提取 Markdown 特殊語法（如 VuePress 的 ::: tip 等）
+ * @param {string} text - Markdown 文本
+ * @returns {Array} 特殊語法列表
+ */
+function extractMarkdownSpecialSyntax(text) {
+    const special = [];
+    const lines = text.split('\n');
+    
+    for (const line of lines) {
+        const trimmed = line.trim();
+        
+        // VuePress 容器語法 ::: type
+        if (trimmed.startsWith(':::')) {
+            const match = trimmed.match(/^:::\s*(\w+)/);
+            if (match) {
+                special.push({
+                    type: match[1],
+                    syntax: 'vuepress-container'
+                });
+            }
+        }
+        
+        // 其他特殊語法可以在這裡添加
+    }
+    
+    return special;
+}
+
+// 重試包裝函數
+async function withRetry(asyncFunction, maxAttempts = MAX_RETRY_ATTEMPTS, description = '操作') {
+    let lastError;
+    
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            return await asyncFunction();
+        } catch (error) {
+            lastError = error;
+            
+            if (attempt < maxAttempts) {
+                console.error(`\n${description}失敗 (第 ${attempt}/${maxAttempts} 次嘗試): ${error.message}`);
+                console.log(`等待 ${attempt} 秒後重試...`);
+                await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+            }
+        }
+    }
+    
+    // 所有重試都失敗，拋出最後一個錯誤
+    console.error(`\n${description}在 ${maxAttempts} 次嘗試後仍然失敗`);
+    throw lastError;
 }
 
 // 修改 translateBatch，於 prompt 加入摘要 context
@@ -601,32 +894,43 @@ async function main() {
 
     // 產生摘要以提升翻譯品質
     const allTexts = blocks.map(b => b.text).join('\n');
-    let summary = '';    try {
+    let summary = '';
+    
+    // 使用重試機制產生摘要
+    try {
         console.log('正在產生內容摘要以提升翻譯品質...');
         const contentType = inputType === 'md' ? '文件' : '字幕';
-        const summaryPrompt = `請閱讀以下英文${contentType}內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
-        const summaryBody = {
-            contents: [
-                { role: 'user', parts: [{ text: summaryPrompt }] },
-            ],
-            generationConfig: {
-                responseMimeType: 'text/plain',
+        
+        summary = await withRetry(async () => {
+            const summaryPrompt = `請閱讀以下英文${contentType}內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
+            const summaryBody = {
+                contents: [
+                    { role: 'user', parts: [{ text: summaryPrompt }] },
+                ],
+                generationConfig: {
+                    responseMimeType: 'text/plain',
+                }
+            };
+            const summaryUrl = `${API_URL}/${model}:generateContent?key=${apiKey}`;
+            const resp = await axios.post(summaryUrl, summaryBody, { headers: { 'Content-Type': 'application/json' } });
+            
+            // 嘗試從 Gemini API 回傳中取得摘要
+            let result = '';
+            if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.parts) {
+                result = resp.data.candidates[0].content.parts.map(p => p.text).join('');
+            } else if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.text) {
+                result = resp.data.candidates[0].content.text;
             }
-        };
-        const summaryUrl = `${API_URL}/${model}:generateContent?key=${apiKey}`;
-        const resp = await axios.post(summaryUrl, summaryBody, { headers: { 'Content-Type': 'application/json' } });
-        // 嘗試從 Gemini API 回傳中取得摘要
-        if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.parts) {
-            summary = resp.data.candidates[0].content.parts.map(p => p.text).join('');
-        } else if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.text) {
-            summary = resp.data.candidates[0].content.text;
-        } else {
-            summary = '';
-        }
+            
+            if (!result || result.trim() === '') {
+                throw new Error('API 未回傳有效的摘要內容');
+            }
+            
+            return result;
+        }, MAX_RETRY_ATTEMPTS, '摘要產生');
+        
         if (summary) {
             // console.log('摘要產生完成：', summary);
-        } else {
-            console.warn('未能成功產生摘要，將直接進行翻譯。');
         }
     } catch (e) {
         console.warn('產生摘要失敗，將直接進行翻譯。', e.message);
@@ -647,34 +951,27 @@ async function main() {
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
         process.stdout.write(`\r翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
-        let translations;        try {
+        
+        // 使用重試機制進行翻譯
+        const translations = await withRetry(async () => {
             // console.error('翻譯內容:', JSON.stringify(texts, null, 2));
             const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
-            translations = await translateBatch(texts, apiKey, model, contentType);
-            // console.error('翻譯結果:', JSON.stringify(translations, null, 2));
+            const result = await translateBatch(texts, apiKey, model, contentType);
+            // console.error('翻譯結果:', JSON.stringify(result, null, 2));
 
-            if (!Array.isArray(translations) || translations.length !== batch.length) {
+            // 檢核翻譯結果
+            if (!Array.isArray(result) || result.length !== batch.length) {
                 const itemType = inputType === 'md' ? '段落' : '字幕';
-                console.error(`\n翻譯失敗: 翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(translations) ? translations.length : 'N/A'})`);
-                if (Array.isArray(translations)) {
-                    console.error('翻譯結果:', JSON.stringify(translations, null, 2));
+                const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                if (Array.isArray(result)) {
+                    console.error('翻譯結果:', JSON.stringify(result, null, 2));
                 }
-                throw new Error(`翻譯數量與原始${itemType}數量不符`);
+                throw error;
             }
-        } catch (e) {
-            const itemType = inputType === 'md' ? '段落' : '字幕';
-            if (!e.message || !e.message.includes(`翻譯數量與原始${itemType}數量不符`)) {
-                console.error(`\n翻譯失敗:`, e.message);
-                throw e;
-            }
-            if (e.response) {
-                console.error('API 回應:', JSON.stringify(e.response.data, null, 2));
-            }
-            if (e.raw) {
-                console.error('API 原始回傳:', JSON.stringify(e.raw, null, 2));
-            }
-            process.exit(1);
-        }
+            
+            return result;
+        }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
+        
         // 回傳本 batch 的翻譯結果
         return translations;
     });
@@ -698,8 +995,21 @@ async function main() {
             process.exit(1);
         }
         console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
+    } else if (inputType === 'md') {
+        // 檢查 Markdown 格式一致性
+        console.log('檢查 Markdown 格式一致性...');
+        console.log();
+        const formatCheck = checkMarkdownFormat(blocks, translatedBlocks);
+        if (!formatCheck.isValid) {
+            console.error('Markdown 格式檢查失敗:');
+            formatCheck.errors.forEach(error => {
+                console.error(`  - ${error}`);
+            });
+            // process.exit(1);
+        }
+        console.log('Markdown 格式檢查通過，準備寫入輸出檔案...');
     } else {
-        // console.log('ASS 和 Markdown 格式無需檢查時間碼順序，準備寫入輸出檔案...');
+        // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
     fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, outputType, subtitleContent), 'utf8');
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
