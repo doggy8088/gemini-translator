@@ -842,6 +842,15 @@ async function main() {
         outputType = inputType;
     }
 
+    // Check if input and output paths are the same (resolve to absolute paths for comparison)
+    const resolvedInputPath = path.resolve(inputPath);
+    const resolvedOutputPath = path.resolve(outputPath);
+    const isOverwriteMode = resolvedInputPath === resolvedOutputPath;
+
+    if (isOverwriteMode) {
+        console.log('偵測到輸入與輸出檔案相同，將自動覆蓋原檔案');
+    }
+
     const model = argv.model || DEFAULT_MODEL;
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {

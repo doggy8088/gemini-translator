@@ -133,6 +133,59 @@ async function runAllTests() {
     });
   });
 
+  // Test 7: Check overwrite detection (input same as output)
+  await runTest('Overwrite detection test', async () => {
+    // Create a temporary test file
+    const testContent = `1
+00:00:01,000 --> 00:00:05,000
+Hello World
+
+2
+00:00:06,000 --> 00:00:10,000
+This is a test subtitle
+`;
+    
+    const tempFile = './temp-test.srt';
+    fs.writeFileSync(tempFile, testContent, 'utf8');
+    
+    try {
+      return new Promise((resolve, reject) => {
+        // Test with same input and output file (should detect overwrite mode)
+        const child = spawn('node', ['main.js', '-i', tempFile, '-o', tempFile], {
+          cwd: process.cwd(),
+          stdio: 'pipe',
+          env: { ...process.env, GEMINI_API_KEY: 'fake-key-for-test' }
+        });
+
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (data) => {
+          stdout += data.toString();
+        });
+
+        child.stderr.on('data', (data) => {
+          stderr += data.toString();
+        });
+
+        child.on('close', (code) => {
+          // We expect this to fail due to fake API key, but it should detect overwrite mode first
+          if (stdout.includes('偵測到輸入與輸出檔案相同，將自動覆蓋原檔案') || 
+              stderr.includes('偵測到輸入與輸出檔案相同，將自動覆蓋原檔案')) {
+            resolve();
+          } else {
+            reject(new Error(`Expected overwrite detection message not found. Stdout: ${stdout}, Stderr: ${stderr}`));
+          }
+        });
+      });
+    } finally {
+      // Clean up temp file
+      if (fs.existsSync(tempFile)) {
+        fs.unlinkSync(tempFile);
+      }
+    }
+  });
+
   // Summary
   console.log('\n📊 Test Summary');
   console.log('===============');
