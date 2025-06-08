@@ -1,1 +1,1 @@
-Use PowerShell 7.5.0 as shell environment.
+Use bash as shell environment.

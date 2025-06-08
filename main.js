@@ -272,7 +272,7 @@ function parseMarkdown(content) {
 
 function serializeMarkdown(blocks) {
     // Reconstruct Markdown content from translated blocks
-    return blocks.map(b => b.text).join('\n\n');
+    return blocks.map(b => b.text).join('\n');
 }
 
 function parseSubtitle(content, type) {
