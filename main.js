@@ -947,10 +947,13 @@ async function main() {
         const batch = blocks.slice(i, i + BATCH_SIZE);
         batches.push(batch);
     }
+    // 進度追蹤
+    let completedTasks = 0;
+    const totalTasks = batches.length;
+    
     // 建立任務陣列
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
-        process.stdout.write(`\r翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
         
         // 使用重試機制進行翻譯
         const translations = await withRetry(async () => {
@@ -972,12 +975,19 @@ async function main() {
             return result;
         }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
         
+        // 更新進度
+        completedTasks++;
+        const startIdx = batchIdx * BATCH_SIZE + 1;
+        const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
+        process.stdout.write(`\r翻譯進度: ${completedTasks}/${totalTasks} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
+        
         // 回傳本 batch 的翻譯結果
         return translations;
     });
     console.log('開始平行處理翻譯任務，最多同時執行 20 個任務...');
     // 平行處理，最多 20 個同時執行
     const allTranslations = await promisePool(tasks, 20);
+    process.stdout.write('\n'); // 確保下一行從新行開始
     console.log('所有翻譯任務已完成，開始合併翻譯結果...');
     // 合併所有翻譯結果
     const flatTranslations = allTranslations.flat();
@@ -996,18 +1006,77 @@ async function main() {
         }
         console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
     } else if (inputType === 'md') {
-        // 檢查 Markdown 格式一致性
-        console.log('檢查 Markdown 格式一致性...');
-        console.log();
-        const formatCheck = checkMarkdownFormat(blocks, translatedBlocks);
-        if (!formatCheck.isValid) {
-            console.error('Markdown 格式檢查失敗:');
-            formatCheck.errors.forEach(error => {
-                console.error(`  - ${error}`);
-            });
-            // process.exit(1);
+        // 檢查 Markdown 格式一致性，如果失敗則重新翻譯
+        let retryCount = 0;
+        const maxRetries = 3;
+        let formatCheckPassed = false;
+        
+        while (!formatCheckPassed && retryCount < maxRetries) {
+            console.log('檢查 Markdown 格式一致性...');
+            console.log();
+            const formatCheck = checkMarkdownFormat(blocks, translatedBlocks);
+            
+            if (!formatCheck.isValid) {
+                retryCount++;
+                console.error(`Markdown 格式檢查失敗 (第 ${retryCount} 次):`);
+                formatCheck.errors.forEach(error => {
+                    console.error(`  - ${error}`);
+                });
+                
+                if (retryCount < maxRetries) {
+                    console.log('正在重新翻譯...');
+                    
+                    // 進度追蹤
+                    let completedRetranslations = 0;
+                    const totalRetranslations = batches.length;
+                    
+                    // 重新翻譯所有區塊
+                    const retranslationTasks = batches.map((batch, batchIdx) => async () => {
+                        const texts = batch.map(b => b.text);
+                        
+                        const translations = await withRetry(async () => {
+                            const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
+                            const result = await translateBatch(texts, apiKey, model, contentType);
+                            
+                            if (!Array.isArray(result) || result.length !== batch.length) {
+                                const error = new Error(`重新翻譯數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                                throw error;
+                            }
+                            
+                            return result;
+                        }, MAX_RETRY_ATTEMPTS, `重新翻譯批次 ${batchIdx + 1}`);
+                        
+                        // 更新進度
+                        completedRetranslations++;
+                        const startIdx = batchIdx * BATCH_SIZE + 1;
+                        const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
+                        process.stdout.write(`\r重新翻譯進度: ${completedRetranslations}/${totalRetranslations} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
+                        
+                        return translations;
+                    });
+                    
+                    // 執行重新翻譯
+                    const allRetranslations = await promisePool(retranslationTasks, 20);
+                    const flatRetranslations = allRetranslations.flat();
+                    
+                    // 更新翻譯結果
+                    translatedBlocks = blocks.map((block, idx) => ({
+                        ...block,
+                        text: flatRetranslations[idx] || ''
+                    }));
+                    
+                    process.stdout.write('\n'); // 確保下一行從新行開始
+                    console.log('重新翻譯完成，再次檢查格式...');
+                } else {
+                    console.error(`已達到最大重試次數 (${maxRetries})，格式檢查仍然失敗`);
+                    console.log('將繼續處理，但可能存在格式不一致問題');
+                    formatCheckPassed = true; // 強制退出迴圈
+                }
+            } else {
+                formatCheckPassed = true;
+                console.log('Markdown 格式檢查通過，準備寫入輸出檔案...');
+            }
         }
-        console.log('Markdown 格式檢查通過，準備寫入輸出檔案...');
     } else {
         // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
