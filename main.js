@@ -705,12 +705,27 @@ async function main() {
     console.log(`\n翻譯完成，已寫入 ${outputPath}`);
 }
 
+// console.log(process.argv)
+// console.log(import.meta.url)
+// console.log(`file:///${process.argv[1].replace(/\\/g, '/')}`)
+// console.log(`file://${process.argv[1]}`)
+// console.log(path.basename(process.argv[1]))
+
 // Check if this module is being run directly (not imported)
-if (process.argv[1] && import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}`
-    || process.argv[1] && import.meta.url === `file://${process.argv[1]}`
-    || process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1]))) {
-    // Don't run if we're in a test environment
-    if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test') {
-        main();
-    }
+// Enhanced check for direct execution, including npx (which may use main.js or the package entry)
+const scriptName = path.basename(process.argv[1] || '');
+const importUrl = import.meta.url;
+// console.log(scriptName)
+// console.log(importUrl)
+
+// Handles cases like: .../bin/gemini-translator, .../bin/gemini-translator.js, .../main.js (npx)
+const isDirectRun =
+    importUrl.endsWith(`/${scriptName}`) ||
+    importUrl.endsWith(`/${scriptName}.js`) ||
+    importUrl.endsWith('/main.js') ||
+    importUrl.endsWith('/main.mjs');
+
+// Don't run if we're in a test environment
+if (isDirectRun && (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test')) {
+    main();
 }
