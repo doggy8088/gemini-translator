@@ -238,12 +238,12 @@ function parseMarkdown(content) {
 
             // If adding this line would exceed reasonable chunk size (500 bytes),
             // or we hit a natural break point (empty line after content)
-            if (Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk.trim()) {
+            if (Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk) {
                 // Save current chunk if it has content
-                if (currentChunk.trim()) {
+                if (currentChunk) {
                     chunks.push({
                         index: String(chunkIndex++),
-                        text: currentChunk.trim()
+                        text: currentChunk
                     });
                 }
                 currentChunk = line;
@@ -253,10 +253,10 @@ function parseMarkdown(content) {
         }
 
         // Add the last chunk
-        if (currentChunk.trim()) {
+        if (currentChunk) {
             chunks.push({
                 index: String(chunkIndex),
-                text: currentChunk.trim()
+                text: currentChunk
             });
         }
     } else {
