@@ -10,6 +10,7 @@ import promisePool from './promisePool.js';
 const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-flash-preview-05-20';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
+const MAX_RETRY_ATTEMPTS = 3;
 
 function parseArgs() {
     return yargs(hideBin(process.argv))        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
@@ -635,6 +636,29 @@ function extractMarkdownSpecialSyntax(text) {
     return special;
 }
 
+// 重試包裝函數
+async function withRetry(asyncFunction, maxAttempts = MAX_RETRY_ATTEMPTS, description = '操作') {
+    let lastError;
+    
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        try {
+            return await asyncFunction();
+        } catch (error) {
+            lastError = error;
+            
+            if (attempt < maxAttempts) {
+                console.error(`\n${description}失敗 (第 ${attempt}/${maxAttempts} 次嘗試): ${error.message}`);
+                console.log(`等待 ${attempt} 秒後重試...`);
+                await new Promise(resolve => setTimeout(resolve, attempt * 1000));
+            }
+        }
+    }
+    
+    // 所有重試都失敗，拋出最後一個錯誤
+    console.error(`\n${description}在 ${maxAttempts} 次嘗試後仍然失敗`);
+    throw lastError;
+}
+
 // 修改 translateBatch，於 prompt 加入摘要 context
 async function translateBatch(texts, apiKey, model, contentType = 'subtitle') {
     // 若有摘要，加入 context 以提升翻譯品質
@@ -870,32 +894,43 @@ async function main() {
 
     // 產生摘要以提升翻譯品質
     const allTexts = blocks.map(b => b.text).join('\n');
-    let summary = '';    try {
+    let summary = '';
+    
+    // 使用重試機制產生摘要
+    try {
         console.log('正在產生內容摘要以提升翻譯品質...');
         const contentType = inputType === 'md' ? '文件' : '字幕';
-        const summaryPrompt = `請閱讀以下英文${contentType}內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
-        const summaryBody = {
-            contents: [
-                { role: 'user', parts: [{ text: summaryPrompt }] },
-            ],
-            generationConfig: {
-                responseMimeType: 'text/plain',
+        
+        summary = await withRetry(async () => {
+            const summaryPrompt = `請閱讀以下英文${contentType}內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
+            const summaryBody = {
+                contents: [
+                    { role: 'user', parts: [{ text: summaryPrompt }] },
+                ],
+                generationConfig: {
+                    responseMimeType: 'text/plain',
+                }
+            };
+            const summaryUrl = `${API_URL}/${model}:generateContent?key=${apiKey}`;
+            const resp = await axios.post(summaryUrl, summaryBody, { headers: { 'Content-Type': 'application/json' } });
+            
+            // 嘗試從 Gemini API 回傳中取得摘要
+            let result = '';
+            if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.parts) {
+                result = resp.data.candidates[0].content.parts.map(p => p.text).join('');
+            } else if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.text) {
+                result = resp.data.candidates[0].content.text;
             }
-        };
-        const summaryUrl = `${API_URL}/${model}:generateContent?key=${apiKey}`;
-        const resp = await axios.post(summaryUrl, summaryBody, { headers: { 'Content-Type': 'application/json' } });
-        // 嘗試從 Gemini API 回傳中取得摘要
-        if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.parts) {
-            summary = resp.data.candidates[0].content.parts.map(p => p.text).join('');
-        } else if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.text) {
-            summary = resp.data.candidates[0].content.text;
-        } else {
-            summary = '';
-        }
+            
+            if (!result || result.trim() === '') {
+                throw new Error('API 未回傳有效的摘要內容');
+            }
+            
+            return result;
+        }, MAX_RETRY_ATTEMPTS, '摘要產生');
+        
         if (summary) {
             // console.log('摘要產生完成：', summary);
-        } else {
-            console.warn('未能成功產生摘要，將直接進行翻譯。');
         }
     } catch (e) {
         console.warn('產生摘要失敗，將直接進行翻譯。', e.message);
@@ -916,34 +951,27 @@ async function main() {
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
         process.stdout.write(`\r翻譯第 ${batchIdx * BATCH_SIZE + 1}-${Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length)}/${blocks.length} 條...`);
-        let translations;        try {
+        
+        // 使用重試機制進行翻譯
+        const translations = await withRetry(async () => {
             // console.error('翻譯內容:', JSON.stringify(texts, null, 2));
             const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
-            translations = await translateBatch(texts, apiKey, model, contentType);
-            // console.error('翻譯結果:', JSON.stringify(translations, null, 2));
+            const result = await translateBatch(texts, apiKey, model, contentType);
+            // console.error('翻譯結果:', JSON.stringify(result, null, 2));
 
-            if (!Array.isArray(translations) || translations.length !== batch.length) {
+            // 檢核翻譯結果
+            if (!Array.isArray(result) || result.length !== batch.length) {
                 const itemType = inputType === 'md' ? '段落' : '字幕';
-                console.error(`\n翻譯失敗: 翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(translations) ? translations.length : 'N/A'})`);
-                if (Array.isArray(translations)) {
-                    console.error('翻譯結果:', JSON.stringify(translations, null, 2));
+                const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                if (Array.isArray(result)) {
+                    console.error('翻譯結果:', JSON.stringify(result, null, 2));
                 }
-                throw new Error(`翻譯數量與原始${itemType}數量不符`);
+                throw error;
             }
-        } catch (e) {
-            const itemType = inputType === 'md' ? '段落' : '字幕';
-            if (!e.message || !e.message.includes(`翻譯數量與原始${itemType}數量不符`)) {
-                console.error(`\n翻譯失敗:`, e.message);
-                throw e;
-            }
-            if (e.response) {
-                console.error('API 回應:', JSON.stringify(e.response.data, null, 2));
-            }
-            if (e.raw) {
-                console.error('API 原始回傳:', JSON.stringify(e.raw, null, 2));
-            }
-            process.exit(1);
-        }
+            
+            return result;
+        }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
+        
         // 回傳本 batch 的翻譯結果
         return translations;
     });
