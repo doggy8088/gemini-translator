@@ -966,6 +966,7 @@ async function main() {
     const totalTasks = batches.length;
 
     // 建立任務陣列
+    const inputFilename = path.basename(inputPath);
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
 
@@ -993,7 +994,7 @@ async function main() {
         completedTasks++;
         const startIdx = batchIdx * BATCH_SIZE + 1;
         const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
-        process.stdout.write(`\r翻譯進度: ${completedTasks}/${totalTasks} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
+        process.stdout.write(`\r[${inputFilename}] 翻譯進度: ${completedTasks}/${totalTasks} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
 
         // 回傳本 batch 的翻譯結果
         return translations;
@@ -1064,7 +1065,7 @@ async function main() {
                         completedRetranslations++;
                         const startIdx = batchIdx * BATCH_SIZE + 1;
                         const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
-                        process.stdout.write(`\r重新翻譯進度: ${completedRetranslations}/${totalRetranslations} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
+                        process.stdout.write(`\r[${inputFilename}] 重新翻譯進度: ${completedRetranslations}/${totalRetranslations} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
 
                         return translations;
                     });
