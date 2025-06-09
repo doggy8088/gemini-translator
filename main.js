@@ -13,10 +13,11 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MAX_RETRY_ATTEMPTS = 3;
 
 function parseArgs() {
-    return yargs(hideBin(process.argv))        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+    return yargs(hideBin(process.argv))
+        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入檔案路徑 (支援 .srt, .vtt, .ass, .md)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL })        .option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false })        .example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-preview-05-20', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-translator -i input.md', '翻譯 Markdown 檔案')
@@ -193,7 +194,8 @@ function serializeASS(blocks, originalContent = '') {
                 header += line + '\n';
                 break;
             }
-        }    } else {
+        }
+    } else {
         // Default ASS header
         header = `[Script Info]
 Title: Converted from WebVTT
@@ -375,7 +377,7 @@ function checkSequentialTimestamps(blocks) {
  */
 function checkMarkdownFormat(originalBlocks, translatedBlocks) {
     const errors = [];
-    
+
     // 檢查區塊數量是否一致
     if (originalBlocks.length !== translatedBlocks.length) {
         errors.push(`區塊數量不一致: 原始 ${originalBlocks.length} 個，翻譯後 ${translatedBlocks.length} 個`);
@@ -386,11 +388,11 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
     for (let i = 0; i < originalBlocks.length; i++) {
         const original = originalBlocks[i].text;
         const translated = translatedBlocks[i].text;
-        
+
         // 檢查標題格式 (# ## ### 等)
         const originalHeaders = extractMarkdownHeaders(original);
         const translatedHeaders = extractMarkdownHeaders(translated);
-        
+
         if (originalHeaders.length !== translatedHeaders.length) {
             errors.push(`區塊 ${i + 1}: 標題數量不一致 (原始: ${originalHeaders.length}, 翻譯: ${translatedHeaders.length})`);
         } else {
@@ -404,7 +406,7 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
         // 檢查列表格式
         const originalLists = extractMarkdownLists(original);
         const translatedLists = extractMarkdownLists(translated);
-        
+
         if (originalLists.length !== translatedLists.length) {
             errors.push(`區塊 ${i + 1}: 列表項目數量不一致 (原始: ${originalLists.length}, 翻譯: ${translatedLists.length})`);
         } else {
@@ -421,7 +423,7 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
         // 檢查程式碼區塊
         const originalCodeBlocks = extractMarkdownCodeBlocks(original);
         const translatedCodeBlocks = extractMarkdownCodeBlocks(translated);
-        
+
         if (originalCodeBlocks.length !== translatedCodeBlocks.length) {
             errors.push(`區塊 ${i + 1}: 程式碼區塊數量不一致 (原始: ${originalCodeBlocks.length}, 翻譯: ${translatedCodeBlocks.length})`);
         } else {
@@ -438,7 +440,7 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
         // 檢查連結格式
         const originalLinks = extractMarkdownLinks(original);
         const translatedLinks = extractMarkdownLinks(translated);
-        
+
         if (originalLinks.length !== translatedLinks.length) {
             errors.push(`區塊 ${i + 1}: 連結數量不一致 (原始: ${originalLinks.length}, 翻譯: ${translatedLinks.length})`);
         } else {
@@ -452,7 +454,7 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
         // 檢查特殊語法（如 ::: tip 等）
         const originalSpecial = extractMarkdownSpecialSyntax(original);
         const translatedSpecial = extractMarkdownSpecialSyntax(translated);
-        
+
         if (originalSpecial.length !== translatedSpecial.length) {
             errors.push(`區塊 ${i + 1}: 特殊語法數量不一致 (原始: ${originalSpecial.length}, 翻譯: ${translatedSpecial.length})`);
         } else {
@@ -478,7 +480,7 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
 function extractMarkdownHeaders(text) {
     const headers = [];
     const lines = text.split('\n');
-    
+
     for (const line of lines) {
         const trimmed = line.trim();
         if (trimmed.startsWith('#')) {
@@ -491,7 +493,7 @@ function extractMarkdownHeaders(text) {
             }
         }
     }
-    
+
     return headers;
 }
 
@@ -503,10 +505,10 @@ function extractMarkdownHeaders(text) {
 function extractMarkdownLists(text) {
     const lists = [];
     const lines = text.split('\n');
-    
+
     for (const line of lines) {
         const trimmed = line.trim();
-        
+
         // 無序列表 (*, -, +)
         const unorderedMatch = trimmed.match(/^(\s*)([-*+])\s+/);
         if (unorderedMatch) {
@@ -517,7 +519,7 @@ function extractMarkdownLists(text) {
             });
             continue;
         }
-        
+
         // 有序列表 (1., 2., etc.)
         const orderedMatch = trimmed.match(/^(\s*)(\d+\.)\s+/);
         if (orderedMatch) {
@@ -528,7 +530,7 @@ function extractMarkdownLists(text) {
             });
         }
     }
-    
+
     return lists;
 }
 
@@ -542,10 +544,10 @@ function extractMarkdownCodeBlocks(text) {
     const lines = text.split('\n');
     let inCodeBlock = false;
     let currentBlock = null;
-    
+
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        
+
         // 檢查行內程式碼 `code`
         const inlineCodeMatches = line.match(/`[^`]+`/g);
         if (inlineCodeMatches) {
@@ -557,7 +559,7 @@ function extractMarkdownCodeBlocks(text) {
                 });
             });
         }
-        
+
         // 檢查程式碼區塊 ```
         if (line.trim().startsWith('```')) {
             if (!inCodeBlock) {
@@ -581,7 +583,7 @@ function extractMarkdownCodeBlocks(text) {
             currentBlock.content += line + '\n';
         }
     }
-    
+
     return codeBlocks;
 }
 
@@ -592,18 +594,18 @@ function extractMarkdownCodeBlocks(text) {
  */
 function extractMarkdownLinks(text) {
     const links = [];
-    
+
     // 標準連結格式 [text](url)
     const linkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
     let match;
-    
+
     while ((match = linkRegex.exec(text)) !== null) {
         links.push({
             text: match[1],
             url: match[2]
         });
     }
-    
+
     return links;
 }
 
@@ -615,10 +617,10 @@ function extractMarkdownLinks(text) {
 function extractMarkdownSpecialSyntax(text) {
     const special = [];
     const lines = text.split('\n');
-    
+
     for (const line of lines) {
         const trimmed = line.trim();
-        
+
         // VuePress 容器語法 ::: type
         if (trimmed.startsWith(':::')) {
             const match = trimmed.match(/^:::\s*(\w+)/);
@@ -629,23 +631,23 @@ function extractMarkdownSpecialSyntax(text) {
                 });
             }
         }
-        
+
         // 其他特殊語法可以在這裡添加
     }
-    
+
     return special;
 }
 
 // 重試包裝函數
 async function withRetry(asyncFunction, maxAttempts = MAX_RETRY_ATTEMPTS, description = '操作') {
     let lastError;
-    
+
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
         try {
             return await asyncFunction();
         } catch (error) {
             lastError = error;
-            
+
             if (attempt < maxAttempts) {
                 console.error(`\n${description}失敗 (第 ${attempt}/${maxAttempts} 次嘗試): ${error.message}`);
                 console.log(`等待 ${attempt} 秒後重試...`);
@@ -653,7 +655,7 @@ async function withRetry(asyncFunction, maxAttempts = MAX_RETRY_ATTEMPTS, descri
             }
         }
     }
-    
+
     // 所有重試都失敗，拋出最後一個錯誤
     console.error(`\n${description}在 ${maxAttempts} 次嘗試後仍然失敗`);
     throw lastError;
@@ -842,6 +844,15 @@ async function main() {
         outputType = inputType;
     }
 
+    // Check if input and output paths are the same (resolve to absolute paths for comparison)
+    const resolvedInputPath = path.resolve(inputPath);
+    const resolvedOutputPath = path.resolve(outputPath);
+    const isOverwriteMode = resolvedInputPath === resolvedOutputPath;
+
+    if (isOverwriteMode) {
+        console.log('偵測到輸入與輸出檔案相同，將自動覆蓋原檔案');
+    }
+
     const model = argv.model || DEFAULT_MODEL;
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -850,7 +861,9 @@ async function main() {
     }
     if (!fs.existsSync(inputPath)) {
         console.error('找不到輸入檔案:', inputPath);
-        process.exit(1);    }    console.log(`檢測到輸入檔案格式: ${inputType.toUpperCase()}`);
+        process.exit(1);
+    }
+    console.log(`檢測到輸入檔案格式: ${inputType.toUpperCase()}`);
     if (inputType !== outputType) {
         console.log(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
     }
@@ -884,7 +897,8 @@ async function main() {
                 console.error('字幕序號不連續，發現缺漏：');
                 broken.forEach(b => {
                     console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
-                });                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
+                });
+                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
                 const fileExt = inputType === 'srt' ? 'srt' : 'vtt';
                 console.error(`例如：npx @willh/gemini-translator --input input.${fileExt} --autofix`);
                 process.exit(1);
@@ -895,12 +909,12 @@ async function main() {
     // 產生摘要以提升翻譯品質
     const allTexts = blocks.map(b => b.text).join('\n');
     let summary = '';
-    
+
     // 使用重試機制產生摘要
     try {
         console.log('正在產生內容摘要以提升翻譯品質...');
         const contentType = inputType === 'md' ? '文件' : '字幕';
-        
+
         summary = await withRetry(async () => {
             const summaryPrompt = `請閱讀以下英文${contentType}內容，並以繁體中文摘要其主題、內容重點、專有名詞、人物、背景、風格等，摘要長度 100-200 字，僅回傳摘要內容：\n${allTexts}`;
             const summaryBody = {
@@ -913,7 +927,7 @@ async function main() {
             };
             const summaryUrl = `${API_URL}/${model}:generateContent?key=${apiKey}`;
             const resp = await axios.post(summaryUrl, summaryBody, { headers: { 'Content-Type': 'application/json' } });
-            
+
             // 嘗試從 Gemini API 回傳中取得摘要
             let result = '';
             if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.parts) {
@@ -921,14 +935,14 @@ async function main() {
             } else if (resp.data && resp.data.candidates && resp.data.candidates[0] && resp.data.candidates[0].content && resp.data.candidates[0].content.text) {
                 result = resp.data.candidates[0].content.text;
             }
-            
+
             if (!result || result.trim() === '') {
                 throw new Error('API 未回傳有效的摘要內容');
             }
-            
+
             return result;
         }, MAX_RETRY_ATTEMPTS, '摘要產生');
-        
+
         if (summary) {
             // console.log('摘要產生完成：', summary);
         }
@@ -950,11 +964,11 @@ async function main() {
     // 進度追蹤
     let completedTasks = 0;
     const totalTasks = batches.length;
-    
+
     // 建立任務陣列
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
-        
+
         // 使用重試機制進行翻譯
         const translations = await withRetry(async () => {
             // console.error('翻譯內容:', JSON.stringify(texts, null, 2));
@@ -971,16 +985,16 @@ async function main() {
                 }
                 throw error;
             }
-            
+
             return result;
         }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
-        
+
         // 更新進度
         completedTasks++;
         const startIdx = batchIdx * BATCH_SIZE + 1;
         const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
         process.stdout.write(`\r翻譯進度: ${completedTasks}/${totalTasks} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
-        
+
         // 回傳本 batch 的翻譯結果
         return translations;
     });
@@ -1010,61 +1024,61 @@ async function main() {
         let retryCount = 0;
         const maxRetries = 3;
         let formatCheckPassed = false;
-        
+
         while (!formatCheckPassed && retryCount < maxRetries) {
             console.log('檢查 Markdown 格式一致性...');
             console.log();
             const formatCheck = checkMarkdownFormat(blocks, translatedBlocks);
-            
+
             if (!formatCheck.isValid) {
                 retryCount++;
                 console.error(`Markdown 格式檢查失敗 (第 ${retryCount} 次):`);
                 formatCheck.errors.forEach(error => {
                     console.error(`  - ${error}`);
                 });
-                
+
                 if (retryCount < maxRetries) {
                     console.log('正在重新翻譯...');
-                    
+
                     // 進度追蹤
                     let completedRetranslations = 0;
                     const totalRetranslations = batches.length;
-                    
+
                     // 重新翻譯所有區塊
                     const retranslationTasks = batches.map((batch, batchIdx) => async () => {
                         const texts = batch.map(b => b.text);
-                        
+
                         const translations = await withRetry(async () => {
                             const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
                             const result = await translateBatch(texts, apiKey, model, contentType);
-                            
+
                             if (!Array.isArray(result) || result.length !== batch.length) {
                                 const error = new Error(`重新翻譯數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
                                 throw error;
                             }
-                            
+
                             return result;
                         }, MAX_RETRY_ATTEMPTS, `重新翻譯批次 ${batchIdx + 1}`);
-                        
+
                         // 更新進度
                         completedRetranslations++;
                         const startIdx = batchIdx * BATCH_SIZE + 1;
                         const endIdx = Math.min((batchIdx + 1) * BATCH_SIZE, blocks.length);
                         process.stdout.write(`\r重新翻譯進度: ${completedRetranslations}/${totalRetranslations} 批次完成 (第 ${startIdx}-${endIdx} 條已完成)...`);
-                        
+
                         return translations;
                     });
-                    
+
                     // 執行重新翻譯
                     const allRetranslations = await promisePool(retranslationTasks, 20);
                     const flatRetranslations = allRetranslations.flat();
-                    
+
                     // 更新翻譯結果
                     translatedBlocks = blocks.map((block, idx) => ({
                         ...block,
                         text: flatRetranslations[idx] || ''
                     }));
-                    
+
                     process.stdout.write('\n'); // 確保下一行從新行開始
                     console.log('重新翻譯完成，再次檢查格式...');
                 } else {
