@@ -1027,10 +1027,9 @@ async function main() {
     } else if (inputType === 'md') {
         // 檢查 Markdown 格式一致性，如果失敗則重新翻譯
         let retryCount = 0;
-        const maxRetries = 3;
         let formatCheckPassed = false;
 
-        while (!formatCheckPassed && retryCount < maxRetries) {
+        while (!formatCheckPassed && retryCount < MAX_RETRY_ATTEMPTS) {
             console.log('檢查 Markdown 格式一致性...');
             console.log();
             const formatCheck = checkMarkdownFormat(blocks, translatedBlocks);
@@ -1042,7 +1041,7 @@ async function main() {
                     console.error(`  - ${error}`);
                 });
 
-                if (retryCount < maxRetries) {
+                if (retryCount < MAX_RETRY_ATTEMPTS) {
                     console.log('正在重新翻譯...');
 
                     // 進度追蹤
@@ -1087,7 +1086,7 @@ async function main() {
                     process.stdout.write('\n'); // 確保下一行從新行開始
                     console.log('重新翻譯完成，再次檢查格式...');
                 } else {
-                    console.error(`已達到最大重試次數 (${maxRetries})，格式檢查仍然失敗`);
+                    console.error(`已達到最大重試次數 (${MAX_RETRY_ATTEMPTS})，格式檢查仍然失敗`);
                     console.log('將繼續處理，但可能存在格式不一致問題');
                     formatCheckPassed = true; // 強制退出迴圈
                 }
