@@ -94,13 +94,13 @@ This will create `movie.zh.srt` in the same directory.
 npx @willh/gemini-translator --input movie.srt --output movie-chinese.srt
 
 # Use specific Gemini model
-npx @willh/gemini-translator --input movie.srt --model gemini-1.5-pro
+npx @willh/gemini-translator --input movie.srt --model gemini-2.5-pro
 
 # Auto-fix subtitle numbering issues
 npx @willh/gemini-translator --input movie.srt --autofix
 
 # Combine options
-npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-1.5-pro --autofix
+npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-2.5-pro --autofix
 ```
 
 ## Command Line Options
@@ -125,8 +125,8 @@ npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-1.5-pro --auto
 ## Supported Models
 
 - `gemini-2.5-flash-lite-preview-06-17` (default - fastest)
-- `gemini-2.5-pro-preview-06-05` (highest quality)
-- `gemini-2.0-flash` (fast, stable)
+- `gemini-2.5-flash` (fast, stable)
+- `gemini-2.5-pro` (highest quality)
 - Other Gemini models as they become available
 
 ## Error Handling
@@ -158,7 +158,7 @@ npx @willh/gemini-translator -i "Series S01E01.srt" --autofix
 ### Example 3: High-Quality Translation
 
 ```bash
-npx @willh/gemini-translator -i "Documentary.srt" -m gemini-1.5-pro -o "Documentary-TC.srt"
+npx @willh/gemini-translator -i "Documentary.srt" -m gemini-2.5-pro -o "Documentary-TC.srt"
 # Uses the most advanced model for better accuracy
 ```
 
@@ -185,7 +185,7 @@ npx @willh/gemini-translator -i "Documentary.srt" -m gemini-1.5-pro -o "Document
 ### Performance Tips
 
 - Use `gemini-2.5-flash-lite-preview-06-17` for faster processing
-- Use `gemini-1.5-pro` for higher quality translations
+- Use `gemini-2.5-pro` for higher quality translations
 - Ensure stable internet connection for batch processing
 - Large files (1000+ subtitles) may take several minutes
 
