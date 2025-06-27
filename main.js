@@ -1100,7 +1100,7 @@ async function main() {
         // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
     fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, outputType, subtitleContent), 'utf8');
-    console.log(`\n翻譯完成，已寫入 ${outputPath}`);
+    console.log(`\n翻譯完成，已寫入 ${outputPath}\n---\n`);
 }
 
 // console.log(process.argv)
