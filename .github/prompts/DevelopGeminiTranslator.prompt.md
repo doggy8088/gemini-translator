@@ -11,7 +11,7 @@ Reference the REST API spec:
 set -e -E
 
 GEMINI_API_KEY="$GEMINI_API_KEY"
-MODEL_ID="gemini-2.5-flash-preview-05-20"
+MODEL_ID="gemini-2.5-flash-lite-preview-06-17"
 GENERATE_CONTENT_API="streamGenerateContent"
 
 cat << EOF > request.json
@@ -44,7 +44,7 @@ You have to read `GEMINI_API_KEY` from the environment variables.
 
 - `input`: The input SRT file path.
 - `output`: The output SRT file path. Defaults to `<inputFilename>.zh.srt`.
-- `model`: The model to use for translation. Defaults to `gemini-2.5-flash-preview-05-20`.
+- `model`: The model to use for translation. Defaults to `gemini-2.5-flash-lite-preview-06-17`.
 
 ## USAGE EXAMPLE
 
