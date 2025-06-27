@@ -825,6 +825,10 @@ Do not translate the following terms:
 async function main() {
     const argv = parseArgs();
     const inputPath = argv.input;
+    
+    // Show input filename at the beginning for better progress understanding
+    console.log(`開始處理檔案: ${path.basename(inputPath)}`);
+    
     const inputType = detectSubtitleType(inputPath);
 
     // Determine output type and path
