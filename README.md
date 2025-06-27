@@ -109,7 +109,7 @@ npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-1.5-pro --auto
 | ----------- | ----- | ------------------------------------------ | -------------------------------- |
 | `--input`   | `-i`  | Input SRT file path (required)             | -                                |
 | `--output`  | `-o`  | Output SRT file path                       | `<input>.zh.srt`                 |
-| `--model`   | `-m`  | Gemini model to use                        | `gemini-2.5-flash-preview-05-20` |
+| `--model`   | `-m`  | Gemini model to use                        | `gemini-2.5-flash-lite-preview-06-17` |
 | `--autofix` | -     | Auto-fix non-sequential subtitle numbering | `false`                          |
 | `--help`    | `-h`  | Show help information                      | -                                |
 
@@ -124,7 +124,7 @@ npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-1.5-pro --auto
 
 ## Supported Models
 
-- `gemini-2.5-flash-preview-05-20` (default - fastest)
+- `gemini-2.5-flash-lite-preview-06-17` (default - fastest)
 - `gemini-2.5-pro-preview-06-05` (highest quality)
 - `gemini-2.0-flash` (fast, stable)
 - Other Gemini models as they become available
@@ -184,7 +184,7 @@ npx @willh/gemini-translator -i "Documentary.srt" -m gemini-1.5-pro -o "Document
 
 ### Performance Tips
 
-- Use `gemini-2.5-flash-preview-05-20` for faster processing
+- Use `gemini-2.5-flash-lite-preview-06-17` for faster processing
 - Use `gemini-1.5-pro` for higher quality translations
 - Ensure stable internet connection for batch processing
 - Large files (1000+ subtitles) may take several minutes
