@@ -10,7 +10,7 @@ import promisePool from './promisePool.js';
 const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-flash-lite-preview-06-17';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
-const MAX_RETRY_ATTEMPTS = 3;
+const MAX_RETRY_ATTEMPTS = 10;
 
 function parseArgs() {
     return yargs(hideBin(process.argv))
