@@ -1334,6 +1334,12 @@ async function main() {
     }
     const subtitleContent = fs.readFileSync(inputPath, 'utf8');
     const blocks = parseSubtitle(subtitleContent, inputType, argv.bytesPerChunk);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
+    
+    // show blocks for debugging
+    if (argv.debug) {
+        console.log('檢測到的字幕區塊:', JSON.stringify(blocks, null, 2));
+    }
+    
     if (inputType === 'srt' || inputType === 'webvtt') {
         const indices = blocks.map(b => parseInt(b.index, 10));
         let broken = [];
