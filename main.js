@@ -487,6 +487,78 @@ function checkSequentialTimestamps(blocks) {
 }
 
 /**
+ * 顯示除錯比對資訊
+ * @param {Array} originalBlocks - 原始區塊
+ * @param {Array} translatedBlocks - 翻譯後區塊
+ * @param {string} title - 除錯標題
+ * @param {boolean} showDetails - 是否顯示詳細內容
+ */
+function showDebugComparison(originalBlocks, translatedBlocks, title, showDetails = false) {
+    console.error(`\n=== ${title} ===`);
+    console.error(`原始區塊數量: ${originalBlocks.length}`);
+    console.error(`翻譯區塊數量: ${translatedBlocks.length}`);
+    
+    if (showDetails) {
+        console.error('\n原始區塊內容:');
+        originalBlocks.forEach((block, index) => {
+            const text = block.text || block.toString();
+            const preview = text.replace(/\n/g, '\\n').substring(0, 100);
+            console.error(`  ${index + 1}. ${preview}${text.length > 100 ? '...' : ''}`);
+        });
+        
+        console.error('\n翻譯區塊內容:');
+        translatedBlocks.forEach((block, index) => {
+            const text = block.text || block.toString();
+            const preview = text.replace(/\n/g, '\\n').substring(0, 100);
+            console.error(`  ${index + 1}. ${preview}${text.length > 100 ? '...' : ''}`);
+        });
+    }
+    
+    console.error(`=== ${title}結束 ===\n`);
+}
+
+/**
+ * 顯示 Markdown 格式除錯資訊
+ * @param {Array} originalBlocks - 原始 Markdown 區塊
+ * @param {Array} translatedBlocks - 翻譯後 Markdown 區塊  
+ * @param {Array} errors - 錯誤列表
+ * @param {boolean} isDebugMode - 是否為除錯模式
+ */
+function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode) {
+    if (!isDebugMode) return;
+    
+    console.error('\n=== Markdown 格式檢查除錯資訊 ===');
+    console.error(`發現 ${errors.length} 個格式問題:`);
+    
+    errors.forEach((error, index) => {
+        console.error(`  ${index + 1}. ${error}`);
+    });
+    
+    console.error('\n詳細區塊比對:');
+    const maxBlocks = Math.max(originalBlocks.length, translatedBlocks.length);
+    
+    for (let i = 0; i < maxBlocks; i++) {
+        console.error(`\n--- 區塊 ${i + 1} ---`);
+        
+        if (i < originalBlocks.length) {
+            const originalText = originalBlocks[i].text || '';
+            console.error(`原始: ${originalText.replace(/\n/g, '\\n').substring(0, 150)}${originalText.length > 150 ? '...' : ''}`);
+        } else {
+            console.error('原始: [不存在]');
+        }
+        
+        if (i < translatedBlocks.length) {
+            const translatedText = translatedBlocks[i].text || '';
+            console.error(`翻譯: ${translatedText.replace(/\n/g, '\\n').substring(0, 150)}${translatedText.length > 150 ? '...' : ''}`);
+        } else {
+            console.error('翻譯: [不存在]');
+        }
+    }
+    
+    console.error('\n=== Markdown 格式檢查除錯資訊結束 ===\n');
+}
+
+/**
  * 檢查原始 Markdown 和翻譯後 Markdown 的格式是否一致
  * @param {Array} originalBlocks - 原始 Markdown 區塊
  * @param {Array} translatedBlocks - 翻譯後 Markdown 區塊
