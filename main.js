@@ -11,6 +11,7 @@ const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-flash-lite-preview-06-17';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MAX_RETRY_ATTEMPTS = 10;
+const BYTES_PER_CHUNK = 1000; // 每個區塊的最大位元數
 
 function parseArgs() {
     return yargs(hideBin(process.argv))
@@ -229,7 +230,7 @@ function parseMarkdown(content) {
     // Each chunk is treated as a block with text content
     const chunks = [];
 
-    if (Buffer.byteLength(content, 'utf8') > 1000) {
+    if (Buffer.byteLength(content, 'utf8') > BYTES_PER_CHUNK) {
         // Smart chunking that respects Markdown semantic boundaries
         const lines = content.split(/\r?\n/);
         let currentChunk = '';
