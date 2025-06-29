@@ -260,13 +260,17 @@ function parseMarkdown(content) {
                                !isPartOfList(lines, i) && 
                                !isPartOfHeader(lines, i);
             
+            // For list items, also check if we're at a safe list boundary
+            const isAtSafeListBoundary = !isPartOfList(lines, i) || isAtListBoundary(lines, i);
+            
             // Natural break points: empty lines after content, or before new sections
             const isNaturalBreak = (trimmed === '' && currentChunk.trim() !== '') ||
                                    (trimmed.startsWith('# ') || trimmed.startsWith('## ') || 
                                     trimmed.startsWith('### ') || trimmed.startsWith('#### ') ||
                                     trimmed.startsWith('##### ') || trimmed.startsWith('###### '));
 
-            if (shouldBreak && isBreakSafe && (isNaturalBreak || !hasOngoingStructure(lines, i))) {
+            if (shouldBreak && isBreakSafe && isAtSafeListBoundary && 
+                (isNaturalBreak || !hasOngoingStructure(lines, i))) {
                 // Save current chunk if it has content
                 if (currentChunk.trim()) {
                     chunks.push({
@@ -377,6 +381,44 @@ function hasOngoingStructure(lines, index) {
     }
     
     return false;
+}
+
+// Helper function to check if we're at a safe list boundary for chunking
+function isAtListBoundary(lines, index) {
+    // If we're not in a list, it's always safe
+    if (!isPartOfList(lines, index)) {
+        return true;
+    }
+    
+    // Check if the next lines continue the current list item
+    for (let i = index + 1; i < lines.length; i++) {
+        const nextLine = lines[i];
+        const nextTrimmed = nextLine.trim();
+        
+        // Empty line - could be end of list item or just spacing
+        if (nextTrimmed === '') {
+            continue;
+        }
+        
+        // If next non-empty line is a new list item at same level or header, we're at boundary
+        if (nextTrimmed.match(/^[-*+]\s/) || nextTrimmed.match(/^\d+\.\s/) || 
+            nextTrimmed.startsWith('#')) {
+            return true;
+        }
+        
+        // If next non-empty line is indented (continuation of current list item), not at boundary
+        if (nextLine.match(/^\s+/) && nextTrimmed !== '') {
+            return false;
+        }
+        
+        // If next line is not indented and not a list item, we're at boundary
+        if (!nextLine.match(/^\s+/)) {
+            return true;
+        }
+    }
+    
+    // End of content, so we're at boundary
+    return true;
 }
 
 function serializeMarkdown(blocks) {
