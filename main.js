@@ -11,7 +11,7 @@ const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-pro';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MAX_RETRY_ATTEMPTS = 10;
-const BYTES_PER_CHUNK = 1000; // 每個區塊的最大位元數
+const BYTES_PER_CHUNK = 3000; // 每個區塊的最大位元數
 
 function parseArgs() {
     return yargs(hideBin(process.argv))
@@ -226,89 +226,97 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 }
 
 function parseMarkdown(content) {
-    // Parse Markdown content and return chunks for translation
-    // Each chunk is treated as a block with text content
+    // 1. 先將所有 \r\n 都先改為 \n
+    content = content.replace(/\r\n/g, '\n');
+
     const chunks = [];
 
-    if (Buffer.byteLength(content, 'utf8') > BYTES_PER_CHUNK) {
-        // Smart chunking that respects Markdown semantic boundaries
-        const lines = content.split(/\r?\n/);
-        let currentChunk = '';
-        let chunkIndex = 1;
+    // 2. 每個 chunk 絕對不能用 .trim() 去除空白字元
+    // The logic below preserves whitespace.
 
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            const trimmed = line.trim();
+    // Regex for blocks
+    const codeFenceRegex = /^```[\s\S]*?^```\n?/gm;
+    const blockquoteRegex = /^(?:>[ \t]?.*(?:\n|$))+/gm;
+    const tableRegex = /^(?:\|.*\|(?:\n|$))+/gm;
+    const htmlTagRegex = /^(?:<([a-z][a-z0-9]*)\b[^>]*>[\s\S]*?<\/\1>|<[a-z][a-z0-9]*\b[^>]*\/>)\n?/gmi;
+    const latexRegex = /^\$\$[\s\S]*?\$\$\n?/gm;
+    const listRegex = /^(?:(?:[ ]{0,3}(?:[-*+]|\d+\.))[ \t]+.*(?:\n|$)(?:[ \t].*(?:\n|$))*)+/gm;
 
-            // If we encounter a code block, consume it entirely as one unit
-            if (trimmed.startsWith('```')) {
-                const codeBlockStartIndex = i;
-                let codeBlockEndIndex = -1;
-                for (let j = i + 1; j < lines.length; j++) {
-                    if (lines[j].trim().startsWith('```')) {
-                        codeBlockEndIndex = j;
-                        break;
-                    }
-                }
 
-                if (codeBlockEndIndex !== -1) {
-                    const codeBlockLines = lines.slice(codeBlockStartIndex, codeBlockEndIndex + 1);
-                    const codeBlockText = codeBlockLines.join('\n');
+    const patterns = [
+        codeFenceRegex, // 4. Code fence
+        listRegex, // 3. List
+        blockquoteRegex, // 5. Blockquote
+        tableRegex, // 6. Table
+        htmlTagRegex, // 7. HTML Tag
+        latexRegex, // 8. LaTeX
+    ];
 
-                    // If the current chunk is not empty, push it before processing the code block.
-                    if (currentChunk) {
-                        chunks.push({ index: String(chunkIndex++), text: currentChunk });
-                        currentChunk = '';
-                    }
+    let extractedBlocks = [];
 
-                    // Add the entire code block as its own chunk.
-                    chunks.push({ index: String(chunkIndex++), text: codeBlockText });
-
-                    i = codeBlockEndIndex; // Move the loop counter past the code block
-                    continue; // Continue to the next line after the code block
-                }
-            }
-
-            const testChunk = currentChunk + (currentChunk ? '\n' : '') + line;
-            const shouldBreak = Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk;
-
-            const isBreakSafe = !isPartOfList(lines, i) && !isPartOfHeader(lines, i);
-            const isAtSafeListBoundary = !isPartOfList(lines, i) || isAtListBoundary(lines, i);
-            const isNaturalBreak = (trimmed === '' && currentChunk !== '') ||
-                (trimmed.startsWith('# ') || trimmed.startsWith('## ') ||
-                    trimmed.startsWith('### ') || trimmed.startsWith('#### ') ||
-                    trimmed.startsWith('##### ') || trimmed.startsWith('###### '));
-
-            if (shouldBreak && isBreakSafe && isAtSafeListBoundary &&
-                (isNaturalBreak || !hasOngoingStructure(lines, i))) {
-                if (currentChunk) {
-                    chunks.push({
-                        index: String(chunkIndex++),
-                        text: currentChunk
-                    });
-                }
-                currentChunk = line;
-            } else {
-                currentChunk = testChunk;
-            }
-        }
-
-        // Add the last chunk
-        if (currentChunk) {
-            chunks.push({
-                index: String(chunkIndex),
-                text: currentChunk
+    patterns.forEach(regex => {
+        let match;
+        // We need to reset lastIndex for global regexes before each exec loop.
+        regex.lastIndex = 0;
+        while ((match = regex.exec(content)) !== null) {
+            extractedBlocks.push({
+                start: match.index,
+                end: match.index + match[0].length,
+                text: match[0]
             });
         }
-    } else {
-        // Small files are treated as single chunk
-        chunks.push({
-            index: '1',
-            text: content
-        });
+    });
+
+    // Sort blocks by start index
+    extractedBlocks.sort((a, b) => a.start - b.start);
+
+    // Filter out overlapping blocks, keeping the first one found (usually the larger container)
+    const finalBlocks = [];
+    let lastEnd = -1;
+    for (const block of extractedBlocks) {
+        if (block.start >= lastEnd) {
+            finalBlocks.push(block);
+            lastEnd = block.end;
+        }
     }
 
-    return chunks;
+    let lastIndex = 0;
+    finalBlocks.forEach(block => {
+        const precedingText = content.substring(lastIndex, block.start);
+        if (precedingText) {
+            // 9. 剩下的內容，都以 \n\n 為分隔符號
+            chunks.push(...precedingText.split('\n\n').filter(c => c.length > 0));
+        }
+        chunks.push(block.text);
+        lastIndex = block.end;
+    });
+
+    const trailingText = content.substring(lastIndex);
+    if (trailingText) {
+        chunks.push(...trailingText.split('\n\n').filter(c => c.length > 0));
+    }
+
+    // 10. 最後合併小型的 chunks
+    const mergedChunks = [];
+    if (chunks.length > 0) {
+        let currentChunk = chunks[0];
+        for (let i = 1; i < chunks.length; i++) {
+            const nextChunk = chunks[i];
+            // Check if adding the next chunk (with a separator) exceeds the limit
+            if (Buffer.byteLength(currentChunk + '\n\n' + nextChunk, 'utf8') <= BYTES_PER_CHUNK) {
+                currentChunk += '\n\n' + nextChunk;
+            } else {
+                mergedChunks.push(currentChunk);
+                currentChunk = nextChunk;
+            }
+        }
+        mergedChunks.push(currentChunk); // Add the last processed chunk
+    }
+
+    return mergedChunks.map((chunk, index) => ({
+        index: String(index + 1),
+        text: chunk,
+    }));
 }
 
 // Helper function to check if a line is part of a list
