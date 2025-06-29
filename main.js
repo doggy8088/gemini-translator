@@ -1500,6 +1500,13 @@ async function main() {
 
             if (!formatCheck.isValid) {
                 retryCount++;
+                if (argv.debug) {
+                    console.error(`當前處理檔案: ${inputPath}`);
+                    console.error('原始 chunk 內容:');
+                    blocks.forEach((block, idx) => console.error(`Chunk ${idx + 1} 原文:\n${block.text}`));
+                    console.error('翻譯後 chunk 內容:');
+                    translatedBlocks.forEach((block, idx) => console.error(`Chunk ${idx + 1} 翻譯:\n${block.text}`));
+                }
                 console.error(`Markdown 格式檢查失敗 (第 ${retryCount} 次):`);
                 formatCheck.errors.forEach(error => {
                     console.error(`  - ${error}`);
