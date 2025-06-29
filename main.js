@@ -11,17 +11,19 @@ const BATCH_SIZE = 10;
 const DEFAULT_MODEL = 'gemini-2.5-pro';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MAX_RETRY_ATTEMPTS = 10;
-const BYTES_PER_CHUNK = 3000; // 每個區塊的最大位元數
 
 function parseArgs() {
     return yargs(hideBin(process.argv))
         .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix] [--debug]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入檔案路徑 (支援 .srt, .vtt, .ass, .md)', type: 'string' })
-        .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-pro', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).option('debug', { describe: '顯示詳細的除錯資訊，包括翻譯前後的完整內容比對', type: 'boolean', default: false }).example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可���定不同格式的副檔名進行格式轉換', type: 'string' })
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-pro', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).option('debug', { describe: '顯示詳細的除錯資訊，包括翻譯前後的完整內容比對', type: 'boolean', default: false })
+        .option('bytes-per-chunk', { describe: '每個區塊的最大位元數 (適用於 Markdown)', type: 'number', default: 3000 })
+        .example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-translator -i input.md', '翻譯 Markdown 檔案')
+        .example('npx @willh/gemini-translator -i input.md --bytes-per-chunk 5000', '翻譯 Markdown 並設定每個區塊 5000 bytes')
         .example('npx @willh/gemini-translator -i input.srt -o output.ass', '將 SRT 翻譯並轉換為 ASS 格式')
         .example('npx @willh/gemini-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
         .example('npx @willh/gemini-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
@@ -225,7 +227,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     return header + dialogues.join('\n') + '\n';
 }
 
-function parseMarkdown(content) {
+function parseMarkdown(content, bytesPerChunk) {
     // 1. 先將所有 \r\n 都先改為 \n
     content = content.replace(/\r\n/g, '\n');
 
@@ -303,7 +305,7 @@ function parseMarkdown(content) {
         for (let i = 1; i < chunks.length; i++) {
             const nextChunk = chunks[i];
             // Check if adding the next chunk (with a separator) exceeds the limit
-            if (Buffer.byteLength(currentChunk + '\n\n' + nextChunk, 'utf8') <= BYTES_PER_CHUNK) {
+            if (Buffer.byteLength(currentChunk + '\n\n' + nextChunk, 'utf8') <= bytesPerChunk) {
                 currentChunk += '\n\n' + nextChunk;
             } else {
                 mergedChunks.push(currentChunk);
@@ -472,7 +474,7 @@ function serializeMarkdown(blocks) {
     return markdown;
 }
 
-function parseSubtitle(content, type) {
+function parseSubtitle(content, type, bytesPerChunk) {
     switch (type) {
         case 'srt':
             return parseSRT(content);
@@ -481,7 +483,7 @@ function parseSubtitle(content, type) {
         case 'ass':
             return parseASS(content);
         case 'md':
-            return parseMarkdown(content);
+            return parseMarkdown(content, bytesPerChunk);
         default:
             throw new Error(`不支援的字幕格式: ${type}`);
     }
@@ -1331,7 +1333,7 @@ async function main() {
         console.log(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
     }
     const subtitleContent = fs.readFileSync(inputPath, 'utf8');
-    const blocks = parseSubtitle(subtitleContent, inputType);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
+    const blocks = parseSubtitle(subtitleContent, inputType, argv.bytesPerChunk);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
     if (inputType === 'srt' || inputType === 'webvtt') {
         const indices = blocks.map(b => parseInt(b.index, 10));
         let broken = [];
