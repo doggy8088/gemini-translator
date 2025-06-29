@@ -514,7 +514,7 @@ function showDebugComparison(originalBlocks, translatedBlocks, title, showDetail
         });
     }
     
-    console.error(`=== ${title}結束 ===\n`);
+    console.error(`=== ${title} 結束 ===\n`);
 }
 
 /**
