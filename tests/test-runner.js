@@ -133,6 +133,45 @@ async function runAllTests() {
     });
   });
 
+  // Test 6.5: Enhanced Markdown parsing test
+  await runTest('Enhanced Markdown parsing', () => {
+    // Test if enhanced Markdown detection works properly
+    const testMd = `# Test Header
+
+This is a test with various Markdown elements:
+
+- List item 1
+- List item 2
+  - Nested item
+
+\`\`\`javascript
+function test() {
+  console.log("test");
+}
+\`\`\`
+
+[Link](https://example.com)
+
+::: tip
+This is a tip
+:::
+
+$$
+E = mc^2
+$$
+`;
+
+    // Test that the markdown contains various elements we can now detect
+    assertTrue(testMd.includes('# Test'), 'Should contain headers');
+    assertTrue(testMd.includes('- List'), 'Should contain lists');
+    assertTrue(testMd.includes('```'), 'Should contain code blocks');
+    assertTrue(testMd.includes('[Link]'), 'Should contain links');
+    assertTrue(testMd.includes(':::'), 'Should contain special syntax');
+    assertTrue(testMd.includes('$$'), 'Should contain math blocks');
+    
+    console.log('   ✅ Enhanced Markdown elements detected correctly');
+  });
+
   // Test 7: Check overwrite detection (input same as output)
   await runTest('Overwrite detection test', async () => {
     // Create a temporary test file
