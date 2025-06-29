@@ -440,7 +440,7 @@ function serializeMarkdown(blocks) {
                 const nextText = nextBlock.text.trim();
                 
                 // Add extra spacing before headers or after code blocks
-                if (nextText.startsWith('#') || text.includes('```') || 
+                if (text.startsWith('#') || nextText.startsWith('#') || text.includes('```') || 
                     text.match(/^[-*+]\s/) || nextText.match(/^[-*+]\s/) ||
                     text.match(/^\d+\.\s/) || nextText.match(/^\d+\.\s/)) {
                     result.push('');
