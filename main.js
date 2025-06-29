@@ -579,11 +579,13 @@ function showDebugComparison(originalBlocks, translatedBlocks, title, showDetail
  * @param {Array} translatedBlocks - 翻譯後 Markdown 區塊  
  * @param {Array} errors - 錯誤列表
  * @param {boolean} isDebugMode - 是否為除錯模式
+ * @param {string} inputPath - 輸入檔案路徑
  */
-function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode) {
+function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode, inputPath) {
     if (!isDebugMode) return;
     
     console.error('\n=== Markdown 格式檢查除錯資訊 ===');
+    console.error(`正在處理檔案: ${inputPath}`);
     console.error(`發現 ${errors.length} 個格式問題:`);
     
     errors.forEach((error, index) => {
@@ -619,9 +621,10 @@ function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDeb
  * @param {Array} originalBlocks - 原始 Markdown 區塊
  * @param {Array} translatedBlocks - 翻譯後 Markdown 區塊
  * @param {boolean} isDebugMode - 是否為除錯模式
+ * @param {string} inputPath - 輸入檔案路徑
  * @returns {Object} 檢查結果 { isValid: boolean, errors: Array }
  */
-function checkMarkdownFormat(originalBlocks, translatedBlocks, isDebugMode = false) {
+function checkMarkdownFormat(originalBlocks, translatedBlocks, isDebugMode = false, inputPath = '') {
     const errors = [];
 
     // 檢查區塊數量是否一致
@@ -739,7 +742,7 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks, isDebugMode = fal
 
     // 如果檢查失敗且開啟除錯模式，顯示詳細除錯資訊
     if (!result.isValid && isDebugMode) {
-        showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode);
+        showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode, inputPath);
     }
 
     return result;
@@ -1492,7 +1495,7 @@ async function main() {
         while (!formatCheckPassed && retryCount < MAX_RETRY_ATTEMPTS) {
             console.log('檢查 Markdown 格式一致性...');
             console.log();
-            const formatCheck = checkMarkdownFormat(blocks, translatedBlocks, argv.debug);
+            const formatCheck = checkMarkdownFormat(blocks, translatedBlocks, argv.debug, inputPath);
 
             if (!formatCheck.isValid) {
                 retryCount++;
