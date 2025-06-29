@@ -235,44 +235,52 @@ function parseMarkdown(content) {
         const lines = content.split(/\r?\n/);
         let currentChunk = '';
         let chunkIndex = 1;
-        let inCodeBlock = false;
-        let codeBlockStart = -1;
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
             const trimmed = line.trim();
-            
-            // Track code block boundaries
+
+            // If we encounter a code block, consume it entirely as one unit
             if (trimmed.startsWith('```')) {
-                if (!inCodeBlock) {
-                    inCodeBlock = true;
-                    codeBlockStart = i;
-                } else {
-                    inCodeBlock = false;
-                    codeBlockStart = -1;
+                const codeBlockStartIndex = i;
+                let codeBlockEndIndex = -1;
+                for (let j = i + 1; j < lines.length; j++) {
+                    if (lines[j].trim().startsWith('```')) {
+                        codeBlockEndIndex = j;
+                        break;
+                    }
+                }
+
+                if (codeBlockEndIndex !== -1) {
+                    const codeBlockLines = lines.slice(codeBlockStartIndex, codeBlockEndIndex + 1);
+                    const codeBlockText = codeBlockLines.join('\n');
+
+                    // If the current chunk is not empty, push it before processing the code block.
+                    if (currentChunk.trim()) {
+                        chunks.push({ index: String(chunkIndex++), text: currentChunk });
+                        currentChunk = '';
+                    }
+
+                    // Add the entire code block as its own chunk.
+                    chunks.push({ index: String(chunkIndex++), text: codeBlockText });
+
+                    i = codeBlockEndIndex; // Move the loop counter past the code block
+                    continue; // Continue to the next line after the code block
                 }
             }
-            
+
             const testChunk = currentChunk + (currentChunk ? '\n' : '') + line;
             const shouldBreak = Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk;
-            
-            // Don't break inside code blocks, inside lists, or in the middle of headers
-            const isBreakSafe = !inCodeBlock && 
-                               !isPartOfList(lines, i) && 
-                               !isPartOfHeader(lines, i);
-            
-            // For list items, also check if we're at a safe list boundary
-            const isAtSafeListBoundary = !isPartOfList(lines, i) || isAtListBoundary(lines, i);
-            
-            // Natural break points: empty lines after content, or before new sections
-            const isNaturalBreak = (trimmed === '' && currentChunk.trim() !== '') ||
-                                   (trimmed.startsWith('# ') || trimmed.startsWith('## ') || 
-                                    trimmed.startsWith('### ') || trimmed.startsWith('#### ') ||
-                                    trimmed.startsWith('##### ') || trimmed.startsWith('###### '));
 
-            if (shouldBreak && isBreakSafe && isAtSafeListBoundary && 
+            const isBreakSafe = !isPartOfList(lines, i) && !isPartOfHeader(lines, i);
+            const isAtSafeListBoundary = !isPartOfList(lines, i) || isAtListBoundary(lines, i);
+            const isNaturalBreak = (trimmed === '' && currentChunk.trim() !== '') ||
+                (trimmed.startsWith('# ') || trimmed.startsWith('## ') ||
+                    trimmed.startsWith('### ') || trimmed.startsWith('#### ') ||
+                    trimmed.startsWith('##### ') || trimmed.startsWith('###### '));
+
+            if (shouldBreak && isBreakSafe && isAtSafeListBoundary &&
                 (isNaturalBreak || !hasOngoingStructure(lines, i))) {
-                // Save current chunk if it has content
                 if (currentChunk.trim()) {
                     chunks.push({
                         index: String(chunkIndex++),
@@ -426,21 +434,21 @@ function serializeMarkdown(blocks) {
     // Reconstruct Markdown content from translated blocks
     // Preserve appropriate spacing between blocks
     const result = [];
-    
+
     for (let i = 0; i < blocks.length; i++) {
         const block = blocks[i];
         const text = block.text;
-        
+
         if (text) {
             result.push(text);
-            
+
             // Add appropriate spacing after blocks
             if (i < blocks.length - 1) {
                 const nextBlock = blocks[i + 1];
                 const nextText = nextBlock.text;
-                
+
                 // Add extra spacing before headers or after code blocks
-                if (text.startsWith('#') || nextText.startsWith('#') || text.includes('```') || 
+                if (text.startsWith('#') || nextText.startsWith('#') || text.includes('```') ||
                     text.match(/^[-*+]\s/) || nextText.match(/^[-*+]\s/) ||
                     text.match(/^\d+\.\s/) || nextText.match(/^\d+\.\s/)) {
                     result.push('');
@@ -448,8 +456,12 @@ function serializeMarkdown(blocks) {
             }
         }
     }
-    
-    return result.join('\n');
+
+    let markdown = result.join('\n');
+    // Final cleanup: Replace multiple newlines before a closing code fence with a single newline.
+    // This specifically targets blank lines (or lines with only whitespace) before the fence.
+    markdown = markdown.replace(/(\r?\n[ \t]*){2,}(```)/g, '\n$2');
+    return markdown;
 }
 
 function parseSubtitle(content, type) {
