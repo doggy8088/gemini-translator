@@ -310,14 +310,28 @@ function isPartOfList(lines, index) {
     
     // Check if current line is a continuation of a list item (indented)
     if (line.match(/^\s+/) && trimmed !== '') {
-        // Look backward for the nearest list item
+        // Look backward for the nearest list item, considering indentation levels
+        const currentIndent = line.match(/^\s*/)[0].length;
+        
         for (let i = index - 1; i >= 0; i--) {
-            const prevLine = lines[i].trim();
-            if (prevLine === '') continue;
-            if (prevLine.match(/^[-*+]\s/) || prevLine.match(/^\d+\.\s/)) {
+            const prevLine = lines[i];
+            const prevTrimmed = prevLine.trim();
+            
+            // Skip empty lines
+            if (prevTrimmed === '') continue;
+            
+            // Found a list item
+            if (prevTrimmed.match(/^[-*+]\s/) || prevTrimmed.match(/^\d+\.\s/)) {
                 return true;
             }
-            break;
+            
+            // If we encounter a line with less indentation than current line,
+            // and it's not a list item, then we're not in a list
+            const prevIndent = prevLine.match(/^\s*/)[0].length;
+            if (prevIndent < currentIndent && !prevTrimmed.match(/^[-*+]\s/) && !prevTrimmed.match(/^\d+\.\s/)) {
+                // But continue if the previous line is also indented (could be nested list content)
+                if (prevIndent === 0) break;
+            }
         }
     }
     
@@ -825,7 +839,8 @@ function extractMarkdownCodeBlocks(text) {
         else if (!inCodeBlock && line.match(/^    /) && line.trim() !== '') {
             // Ensure previous line is empty or also indented code
             const prevLine = i > 0 ? lines[i - 1] : '';
-            if (prevLine.trim() === '' || prevLine.match(/^    /)) {
+            // Don't treat list continuation lines as indented code blocks
+            if ((prevLine.trim() === '' || prevLine.match(/^    /)) && !isPartOfList(lines, i)) {
                 codeBlocks.push({
                     type: 'indented',
                     language: '',

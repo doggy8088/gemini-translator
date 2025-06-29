@@ -225,6 +225,86 @@ This is a test subtitle
     }
   });
 
+  // Test 8: Check extractMarkdownCodeBlocks fix for list continuation lines
+  await runTest('Markdown code blocks detection fix', () => {
+    // Read main.js content to extract functions for testing
+    const mainJsContent = fs.readFileSync('main.js', 'utf8');
+    
+    // Extract the extractMarkdownCodeBlocks function
+    const functionStart = mainJsContent.indexOf('function extractMarkdownCodeBlocks(text) {');
+    let braceCount = 0;
+    let functionEnd = functionStart;
+    let started = false;
+
+    for (let i = functionStart; i < mainJsContent.length; i++) {
+        if (mainJsContent[i] === '{') {
+            braceCount++;
+            started = true;
+        } else if (mainJsContent[i] === '}') {
+            braceCount--;
+            if (started && braceCount === 0) {
+                functionEnd = i + 1;
+                break;
+            }
+        }
+    }
+
+    const extractMarkdownCodeBlocksCode = mainJsContent.substring(functionStart, functionEnd);
+
+    // Extract the isPartOfList function
+    const isPartOfListStart = mainJsContent.indexOf('function isPartOfList(lines, index) {');
+    let isPartOfListBraceCount = 0;
+    let isPartOfListEnd = isPartOfListStart;
+    let isPartOfListStarted = false;
+
+    for (let i = isPartOfListStart; i < mainJsContent.length; i++) {
+        if (mainJsContent[i] === '{') {
+            isPartOfListBraceCount++;
+            isPartOfListStarted = true;
+        } else if (mainJsContent[i] === '}') {
+            isPartOfListBraceCount--;
+            if (isPartOfListStarted && isPartOfListBraceCount === 0) {
+                isPartOfListEnd = i + 1;
+                break;
+            }
+        }
+    }
+
+    const isPartOfListCode = mainJsContent.substring(isPartOfListStart, isPartOfListEnd);
+
+    // Test the issue case - should only detect inline code blocks, not indented ones in lists
+    const testMarkdownWithLists = `## Authentication
+
+- **Error: \`Failed to login. Message: Request contains an invalid argument\`**
+  - Users with Google Workspace accounts, or users with Google Cloud accounts
+    associated with their Gmail accounts may not be able to activate the free
+    tier of the Google Code Assist plan.
+  - For Google Cloud accounts, you can work around this by setting
+    \`GOOGLE_CLOUD_PROJECT\` to your project ID.
+  - You can also grab an API key from [AI
+    Studio](http://aistudio.google.com/app/apikey), which also includes a
+    separate free tier.`;
+
+    // Test the fix by evaluating the functions in a sandbox
+    const testCode = `
+    ${isPartOfListCode}
+    
+    ${extractMarkdownCodeBlocksCode}
+    
+    const blocks = extractMarkdownCodeBlocks(\`${testMarkdownWithLists.replace(/`/g, '\\`')}\`);
+    blocks;
+    `;
+
+    const blocks = eval(testCode);
+    
+    // Should only find 2 inline code blocks, not the indented list continuation lines
+    assertTrue(blocks.length === 2, `Expected 2 code blocks, but found ${blocks.length}`);
+    assertTrue(blocks.every(block => block.type === 'inline'), 'All blocks should be inline type');
+    
+    console.log('   ✅ Correctly identified only inline code blocks in lists');
+    console.log(`   ✅ Found ${blocks.length} code blocks (expected 2)`);
+  });
+
   // Summary
   console.log('\n📊 Test Summary');
   console.log('===============');
