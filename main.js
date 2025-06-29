@@ -600,14 +600,14 @@ function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDeb
         
         if (i < originalBlocks.length) {
             const originalText = originalBlocks[i].text || '';
-            console.error(`原始: ${originalText.replace(/\n/g, '\\n').substring(0, 150)}${originalText.length > 150 ? '...' : ''}`);
+            console.error(`原始: ${originalText.replace(/\n/g, '\\n')}`);
         } else {
             console.error('原始: [不存在]');
         }
         
         if (i < translatedBlocks.length) {
             const translatedText = translatedBlocks[i].text || '';
-            console.error(`翻譯: ${translatedText.replace(/\n/g, '\\n').substring(0, 150)}${translatedText.length > 150 ? '...' : ''}`);
+            console.error(`翻譯: ${translatedText.replace(/\n/g, '\\n')}`);
         } else {
             console.error('翻譯: [不存在]');
         }
