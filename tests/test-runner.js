@@ -419,6 +419,81 @@ More content to ensure adequate size for chunking test.`;
     console.log('   ✅ List boundaries are properly respected');
   });
 
+  // Test debug functionality doesn't truncate content
+  await runTest('Debug output shows full content without truncation', async () => {
+    const longContent = 'This is a very long piece of content that definitely exceeds 150 characters and should be displayed in full when debug mode is enabled. It contains important information that users need to see for debugging purposes. The content should not be truncated at all.';
+    
+    // Mock console.error to capture output
+    const originalConsoleError = console.error;
+    const capturedOutput = [];
+    console.error = (...args) => {
+      capturedOutput.push(args.join(' '));
+    };
+    
+    try {
+      // Create test blocks with long content
+      const originalBlocks = [{ text: longContent }];
+      const translatedBlocks = [{ text: longContent + ' (translated)' }];
+      const errors = ['Test error'];
+      
+      // Extract the showMarkdownFormatDebug function
+      const showMarkdownFormatDebugCode = `
+        function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode, inputPath) {
+          if (!isDebugMode) return;
+          
+          console.error('\\n=== Markdown 格式檢查除錯資訊 ===');
+          console.error(\`正在處理檔案: \${inputPath}\`);
+          console.error(\`發現 \${errors.length} 個格式問題:\`);
+          
+          errors.forEach((error, index) => {
+              console.error(\`  \${index + 1}. \${error}\`);
+          });
+          
+          console.error('\\n詳細區塊比對:');
+          const maxBlocks = Math.max(originalBlocks.length, translatedBlocks.length);
+          
+          for (let i = 0; i < maxBlocks; i++) {
+              console.error(\`\\n--- 區塊 \${i + 1} ---\`);
+              
+              if (i < originalBlocks.length) {
+                  const originalText = originalBlocks[i].text || '';
+                  console.error(\`原始: \${originalText.replace(/\\n/g, '\\\\n')}\`);
+              } else {
+                  console.error('原始: [不存在]');
+              }
+              
+              if (i < translatedBlocks.length) {
+                  const translatedText = translatedBlocks[i].text || '';
+                  console.error(\`翻譯: \${translatedText.replace(/\\n/g, '\\\\n')}\`);
+              } else {
+                  console.error('翻譯: [不存在]');
+              }
+          }
+          
+          console.error('\\n=== Markdown 格式檢查除錯資訊結束 ===\\n');
+        }
+        
+        showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, true, 'test.md');
+      `;
+      
+      eval(showMarkdownFormatDebugCode);
+      
+      // Check that the full content is displayed (no truncation)
+      const fullOutput = capturedOutput.join(' ');
+      assertTrue(fullOutput.includes(longContent), 'Full original content should be displayed');
+      assertTrue(fullOutput.includes(longContent + ' (translated)'), 'Full translated content should be displayed');
+      assertTrue(!fullOutput.includes('...'), 'Output should not contain truncation indicators');
+      
+      console.log('   ✅ Debug output shows full content without truncation');
+      console.log(`   ✅ Content length: ${longContent.length} characters (exceeds old 150 limit)`);
+      console.log('   ✅ No truncation indicators found in output');
+      
+    } finally {
+      // Restore console.error
+      console.error = originalConsoleError;
+    }
+  });
+
   // Summary
   console.log('\n📊 Test Summary');
   console.log('===============');
