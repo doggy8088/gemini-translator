@@ -14,10 +14,10 @@ const MAX_RETRY_ATTEMPTS = 10;
 
 function parseArgs() {
     return yargs(hideBin(process.argv))
-        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix]')
+        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix] [--debug]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入檔案路徑 (支援 .srt, .vtt, .ass, .md)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-lite-preview-06-17', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-flash-lite-preview-06-17', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).option('debug', { describe: '顯示詳細的除錯資訊，包括翻譯前後的完整內容比對', type: 'boolean', default: false }).example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-translator -i input.md', '翻譯 Markdown 檔案')
@@ -25,6 +25,7 @@ function parseArgs() {
         .example('npx @willh/gemini-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
         .example('npx @willh/gemini-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
         .example('npx @willh/gemini-translator -i input.vtt --autofix', '自動修正 WebVTT 字幕序號不連續問題')
+        .example('npx @willh/gemini-translator -i input.md --debug', '翻譯 Markdown 並顯示除錯資訊')
         .help('h')
         .alias('h', 'help')
         .wrap(null)
@@ -489,14 +490,21 @@ function checkSequentialTimestamps(blocks) {
  * 檢查原始 Markdown 和翻譯後 Markdown 的格式是否一致
  * @param {Array} originalBlocks - 原始 Markdown 區塊
  * @param {Array} translatedBlocks - 翻譯後 Markdown 區塊
+ * @param {boolean} isDebugMode - 是否為除錯模式
  * @returns {Object} 檢查結果 { isValid: boolean, errors: Array }
  */
-function checkMarkdownFormat(originalBlocks, translatedBlocks) {
+function checkMarkdownFormat(originalBlocks, translatedBlocks, isDebugMode = false) {
     const errors = [];
 
     // 檢查區塊數量是否一致
     if (originalBlocks.length !== translatedBlocks.length) {
         errors.push(`區塊數量不一致: 原始 ${originalBlocks.length} 個，翻譯後 ${translatedBlocks.length} 個`);
+        
+        // 如果開啟除錯模式，顯示詳細比對
+        if (isDebugMode) {
+            showDebugComparison(originalBlocks, translatedBlocks, '區塊數量不一致詳細比對', true);
+        }
+        
         return { isValid: false, errors };
     }
 
@@ -596,10 +604,17 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
         }
     }
 
-    return {
+    const result = {
         isValid: errors.length === 0,
         errors
     };
+
+    // 如果檢查失敗且開啟除錯模式，顯示詳細除錯資訊
+    if (!result.isValid && isDebugMode) {
+        showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode);
+    }
+
+    return result;
 }
 
 /**
@@ -1276,6 +1291,31 @@ async function main() {
             if (!Array.isArray(result) || result.length !== batch.length) {
                 const itemType = inputType === 'md' ? '段落' : '字幕';
                 const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                
+                // 如果開啟除錯模式，顯示詳細的輸入輸出比對
+                if (argv.debug) {
+                    console.error('\n=== 翻譯數量不符詳細除錯資訊 ===');
+                    console.error(`批次 ${batchIdx + 1} 翻譯失敗`);
+                    console.error(`預期輸出數量: ${batch.length}`);
+                    console.error(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
+                    console.error(`實際輸出類型: ${typeof result}`);
+                    
+                    console.error('\n原始輸入內容:');
+                    texts.forEach((text, index) => {
+                        console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                    });
+                    
+                    console.error('\n翻譯輸出內容:');
+                    if (Array.isArray(result)) {
+                        result.forEach((text, index) => {
+                            console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                        });
+                    } else {
+                        console.error(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
+                    }
+                    console.error('=== 翻譯數量不符詳細除錯資訊結束 ===\n');
+                }
+                
                 if (Array.isArray(result)) {
                     console.error('翻譯結果:', JSON.stringify(result, null, 2));
                 }
@@ -1323,7 +1363,7 @@ async function main() {
         while (!formatCheckPassed && retryCount < MAX_RETRY_ATTEMPTS) {
             console.log('檢查 Markdown 格式一致性...');
             console.log();
-            const formatCheck = checkMarkdownFormat(blocks, translatedBlocks);
+            const formatCheck = checkMarkdownFormat(blocks, translatedBlocks, argv.debug);
 
             if (!formatCheck.isValid) {
                 retryCount++;
@@ -1349,6 +1389,31 @@ async function main() {
 
                             if (!Array.isArray(result) || result.length !== batch.length) {
                                 const error = new Error(`重新翻譯數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                                
+                                // 如果開啟除錯模式，顯示詳細的輸入輸出比對
+                                if (argv.debug) {
+                                    console.error('\n=== 重新翻譯數量不符詳細除錯資訊 ===');
+                                    console.error(`重新翻譯批次 ${batchIdx + 1} 失敗`);
+                                    console.error(`預期輸出數量: ${batch.length}`);
+                                    console.error(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
+                                    console.error(`實際輸出類型: ${typeof result}`);
+                                    
+                                    console.error('\n原始輸入內容:');
+                                    texts.forEach((text, index) => {
+                                        console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                                    });
+                                    
+                                    console.error('\n重新翻譯輸出內容:');
+                                    if (Array.isArray(result)) {
+                                        result.forEach((text, index) => {
+                                            console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                                        });
+                                    } else {
+                                        console.error(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
+                                    }
+                                    console.error('=== 重新翻譯數量不符詳細除錯資訊結束 ===\n');
+                                }
+                                
                                 throw error;
                             }
 
