@@ -226,27 +226,51 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 function parseMarkdown(content) {
     // Parse Markdown content and return chunks for translation
     // Each chunk is treated as a block with text content
-    // For files larger than 1000 bytes, split by lines
     const chunks = [];
 
     if (Buffer.byteLength(content, 'utf8') > 1000) {
-        // Split large files by lines, but keep related content together
+        // Smart chunking that respects Markdown semantic boundaries
         const lines = content.split(/\r?\n/);
         let currentChunk = '';
         let chunkIndex = 1;
+        let inCodeBlock = false;
+        let codeBlockStart = -1;
 
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
+            const trimmed = line.trim();
+            
+            // Track code block boundaries
+            if (trimmed.startsWith('```')) {
+                if (!inCodeBlock) {
+                    inCodeBlock = true;
+                    codeBlockStart = i;
+                } else {
+                    inCodeBlock = false;
+                    codeBlockStart = -1;
+                }
+            }
+            
             const testChunk = currentChunk + (currentChunk ? '\n' : '') + line;
+            const shouldBreak = Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk;
+            
+            // Don't break inside code blocks, inside lists, or in the middle of headers
+            const isBreakSafe = !inCodeBlock && 
+                               !isPartOfList(lines, i) && 
+                               !isPartOfHeader(lines, i);
+            
+            // Natural break points: empty lines after content, or before new sections
+            const isNaturalBreak = (trimmed === '' && currentChunk.trim() !== '') ||
+                                   (trimmed.startsWith('# ') || trimmed.startsWith('## ') || 
+                                    trimmed.startsWith('### ') || trimmed.startsWith('#### ') ||
+                                    trimmed.startsWith('##### ') || trimmed.startsWith('###### '));
 
-            // If adding this line would exceed reasonable chunk size (500 bytes),
-            // or we hit a natural break point (empty line after content)
-            if (Buffer.byteLength(testChunk, 'utf8') > 500 && currentChunk) {
+            if (shouldBreak && isBreakSafe && (isNaturalBreak || !hasOngoingStructure(lines, i))) {
                 // Save current chunk if it has content
-                if (currentChunk) {
+                if (currentChunk.trim()) {
                     chunks.push({
                         index: String(chunkIndex++),
-                        text: currentChunk
+                        text: currentChunk.trim()
                     });
                 }
                 currentChunk = line;
@@ -256,10 +280,10 @@ function parseMarkdown(content) {
         }
 
         // Add the last chunk
-        if (currentChunk) {
+        if (currentChunk.trim()) {
             chunks.push({
                 index: String(chunkIndex),
-                text: currentChunk
+                text: currentChunk.trim()
             });
         }
     } else {
@@ -273,9 +297,101 @@ function parseMarkdown(content) {
     return chunks;
 }
 
+// Helper function to check if a line is part of a list
+function isPartOfList(lines, index) {
+    const line = lines[index];
+    const trimmed = line.trim();
+    
+    // Check if current line is a list item
+    if (trimmed.match(/^[-*+]\s/) || trimmed.match(/^\d+\.\s/)) {
+        return true;
+    }
+    
+    // Check if current line is a continuation of a list item (indented)
+    if (line.match(/^\s+/) && trimmed !== '') {
+        // Look backward for the nearest list item
+        for (let i = index - 1; i >= 0; i--) {
+            const prevLine = lines[i].trim();
+            if (prevLine === '') continue;
+            if (prevLine.match(/^[-*+]\s/) || prevLine.match(/^\d+\.\s/)) {
+                return true;
+            }
+            break;
+        }
+    }
+    
+    return false;
+}
+
+// Helper function to check if a line is part of a header structure
+function isPartOfHeader(lines, index) {
+    const line = lines[index];
+    
+    // Current line is a header
+    if (line.trim().startsWith('#')) {
+        return true;
+    }
+    
+    // Check for setext-style headers (underlined with = or -)
+    if (index + 1 < lines.length) {
+        const nextLine = lines[index + 1].trim();
+        if (nextLine.match(/^=+$/) || nextLine.match(/^-+$/)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+// Helper function to check if there's an ongoing structure that shouldn't be broken
+function hasOngoingStructure(lines, index) {
+    // Look ahead for immediate structure continuations
+    if (index + 1 < lines.length) {
+        const nextLine = lines[index + 1];
+        const trimmed = nextLine.trim();
+        
+        // Next line is indented content (likely continuation)
+        if (nextLine.match(/^\s+\S/) && trimmed !== '') {
+            return true;
+        }
+        
+        // Next line is a table separator or continuation
+        if (trimmed.includes('|') || trimmed.match(/^[-|:\s]+$/)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 function serializeMarkdown(blocks) {
     // Reconstruct Markdown content from translated blocks
-    return blocks.map(b => b.text).join('\n');
+    // Preserve appropriate spacing between blocks
+    const result = [];
+    
+    for (let i = 0; i < blocks.length; i++) {
+        const block = blocks[i];
+        const text = block.text.trim();
+        
+        if (text) {
+            result.push(text);
+            
+            // Add appropriate spacing after blocks
+            if (i < blocks.length - 1) {
+                const nextBlock = blocks[i + 1];
+                const nextText = nextBlock.text.trim();
+                
+                // Add extra spacing before headers or after code blocks
+                if (nextText.startsWith('#') || text.includes('```') || 
+                    text.match(/^[-*+]\s/) || nextText.match(/^[-*+]\s/) ||
+                    text.match(/^\d+\.\s/) || nextText.match(/^\d+\.\s/)) {
+                    result.push('');
+                }
+            }
+        }
+    }
+    
+    return result.join('\n');
 }
 
 function parseSubtitle(content, type) {
@@ -445,8 +561,22 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks) {
             errors.push(`區塊 ${i + 1}: 連結數量不一致 (原始: ${originalLinks.length}, 翻譯: ${translatedLinks.length})`);
         } else {
             for (let j = 0; j < originalLinks.length; j++) {
-                if (originalLinks[j].url !== translatedLinks[j].url) {
-                    errors.push(`區塊 ${i + 1}: 連結 URL 不一致 (位置 ${j + 1}, 原始: "${originalLinks[j].url}", 翻譯: "${translatedLinks[j].url}")`);
+                const origLink = originalLinks[j];
+                const transLink = translatedLinks[j];
+                
+                // Check URL consistency for links that have URLs
+                if (origLink.url && transLink.url && origLink.url !== transLink.url) {
+                    errors.push(`區塊 ${i + 1}: 連結 URL 不一致 (位置 ${j + 1}, 原始: "${origLink.url}", 翻譯: "${transLink.url}")`);
+                }
+                
+                // Check link type consistency
+                if (origLink.type !== transLink.type) {
+                    errors.push(`區塊 ${i + 1}: 連結類型不一致 (位置 ${j + 1}, 原始: ${origLink.type}, 翻譯: ${transLink.type})`);
+                }
+                
+                // Check reference consistency for reference-style links
+                if (origLink.ref && transLink.ref && origLink.ref !== transLink.ref) {
+                    errors.push(`區塊 ${i + 1}: 連結參考不一致 (位置 ${j + 1}, 原始: "${origLink.ref}", 翻譯: "${transLink.ref}")`);
                 }
             }
         }
@@ -508,25 +638,34 @@ function extractMarkdownLists(text) {
 
     for (const line of lines) {
         const trimmed = line.trim();
+        const leadingSpaces = line.match(/^(\s*)/)?.[1] || '';
 
         // 無序列表 (*, -, +)
-        const unorderedMatch = trimmed.match(/^(\s*)([-*+])\s+/);
+        const unorderedMatch = trimmed.match(/^([-*+])\s+/);
         if (unorderedMatch) {
+            // Calculate level based on actual indentation, supporting both 2 and 4 space styles
+            const level = leadingSpaces.length === 0 ? 1 : 
+                         Math.floor(leadingSpaces.length / (leadingSpaces.length >= 4 ? 4 : 2)) + 1;
             lists.push({
                 type: 'unordered',
-                level: Math.floor(unorderedMatch[1].length / 4) + 1, // 假設每 4 個空格為一層
-                marker: unorderedMatch[2]
+                level: level,
+                marker: unorderedMatch[1],
+                indent: leadingSpaces.length
             });
             continue;
         }
 
         // 有序列表 (1., 2., etc.)
-        const orderedMatch = trimmed.match(/^(\s*)(\d+\.)\s+/);
+        const orderedMatch = trimmed.match(/^(\d+\.)\s+/);
         if (orderedMatch) {
+            // Calculate level based on actual indentation
+            const level = leadingSpaces.length === 0 ? 1 : 
+                         Math.floor(leadingSpaces.length / (leadingSpaces.length >= 4 ? 4 : 2)) + 1;
             lists.push({
                 type: 'ordered',
-                level: Math.floor(orderedMatch[1].length / 4) + 1,
-                marker: orderedMatch[2]
+                level: level,
+                marker: orderedMatch[1],
+                indent: leadingSpaces.length
             });
         }
     }
@@ -544,44 +683,77 @@ function extractMarkdownCodeBlocks(text) {
     const lines = text.split('\n');
     let inCodeBlock = false;
     let currentBlock = null;
+    let codeBlockStartLine = -1;
 
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
 
-        // 檢查行內程式碼 `code`
-        const inlineCodeMatches = line.match(/`[^`]+`/g);
-        if (inlineCodeMatches) {
-            inlineCodeMatches.forEach(() => {
-                codeBlocks.push({
-                    type: 'inline',
-                    language: '',
-                    content: ''
+        // 檢查行內程式碼 `code` (avoid matching inside fenced code blocks)
+        if (!inCodeBlock) {
+            const inlineCodeMatches = line.match(/`[^`\n]+`/g);
+            if (inlineCodeMatches) {
+                inlineCodeMatches.forEach(() => {
+                    codeBlocks.push({
+                        type: 'inline',
+                        language: '',
+                        content: '',
+                        line: i + 1
+                    });
                 });
-            });
+            }
         }
 
-        // 檢查程式碼區塊 ```
-        if (line.trim().startsWith('```')) {
+        // 檢查程式碼區塊 ``` or ~~~
+        const fenceMatch = line.trim().match(/^(```|~~~)(.*)$/);
+        if (fenceMatch) {
             if (!inCodeBlock) {
                 // 開始程式碼區塊
-                const language = line.trim().substring(3).trim();
+                const language = fenceMatch[2].trim();
                 currentBlock = {
                     type: 'block',
                     language: language,
-                    content: ''
+                    content: '',
+                    startLine: i + 1,
+                    fence: fenceMatch[1]
                 };
                 inCodeBlock = true;
-            } else {
-                // 結束程式碼區塊
-                if (currentBlock) {
-                    codeBlocks.push(currentBlock);
-                    currentBlock = null;
-                }
+                codeBlockStartLine = i;
+            } else if (currentBlock && fenceMatch[1] === currentBlock.fence) {
+                // 結束程式碼區塊 (matching fence type)
+                currentBlock.endLine = i + 1;
+                codeBlocks.push(currentBlock);
+                currentBlock = null;
                 inCodeBlock = false;
+                codeBlockStartLine = -1;
+            }
+            // If fence types don't match, treat as content
+            else if (inCodeBlock && currentBlock) {
+                currentBlock.content += line + '\n';
             }
         } else if (inCodeBlock && currentBlock) {
             currentBlock.content += line + '\n';
         }
+        
+        // Check for indented code blocks (4+ spaces, not inside fenced blocks)
+        else if (!inCodeBlock && line.match(/^    /) && line.trim() !== '') {
+            // Ensure previous line is empty or also indented code
+            const prevLine = i > 0 ? lines[i - 1] : '';
+            if (prevLine.trim() === '' || prevLine.match(/^    /)) {
+                codeBlocks.push({
+                    type: 'indented',
+                    language: '',
+                    content: line.substring(4),
+                    line: i + 1
+                });
+            }
+        }
+    }
+
+    // Handle unclosed code blocks
+    if (inCodeBlock && currentBlock) {
+        currentBlock.endLine = lines.length;
+        currentBlock.unclosed = true;
+        codeBlocks.push(currentBlock);
     }
 
     return codeBlocks;
@@ -601,8 +773,44 @@ function extractMarkdownLinks(text) {
 
     while ((match = linkRegex.exec(text)) !== null) {
         links.push({
+            type: 'inline',
             text: match[1],
-            url: match[2]
+            url: match[2],
+            full: match[0]
+        });
+    }
+
+    // 參考式連結格式 [text][ref]
+    const refLinkRegex = /\[([^\]]*)\]\[([^\]]*)\]/g;
+    while ((match = refLinkRegex.exec(text)) !== null) {
+        links.push({
+            type: 'reference',
+            text: match[1],
+            ref: match[2] || match[1], // If ref is empty, use text as ref
+            full: match[0]
+        });
+    }
+
+    // 連結定義格式 [ref]: url "title"
+    const linkDefRegex = /^\s*\[([^\]]+)\]:\s*(\S+)(?:\s+"([^"]*)")?/gm;
+    while ((match = linkDefRegex.exec(text)) !== null) {
+        links.push({
+            type: 'definition',
+            ref: match[1],
+            url: match[2],
+            title: match[3] || '',
+            full: match[0]
+        });
+    }
+
+    // 自動連結格式 <url>
+    const autoLinkRegex = /<(https?:\/\/[^>]+)>/g;
+    while ((match = autoLinkRegex.exec(text)) !== null) {
+        links.push({
+            type: 'autolink',
+            text: match[1],
+            url: match[1],
+            full: match[0]
         });
     }
 
@@ -618,21 +826,104 @@ function extractMarkdownSpecialSyntax(text) {
     const special = [];
     const lines = text.split('\n');
 
-    for (const line of lines) {
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
         const trimmed = line.trim();
 
         // VuePress 容器語法 ::: type
-        if (trimmed.startsWith(':::')) {
-            const match = trimmed.match(/^:::\s*(\w+)/);
-            if (match) {
-                special.push({
-                    type: match[1],
-                    syntax: 'vuepress-container'
-                });
-            }
+        const vuepressMatch = trimmed.match(/^:::\s*(\w+)(.*)$/);
+        if (vuepressMatch) {
+            special.push({
+                type: vuepressMatch[1],
+                syntax: 'vuepress-container',
+                content: vuepressMatch[2].trim(),
+                line: i + 1
+            });
+            continue;
         }
 
-        // 其他特殊語法可以在這裡添加
+        // Admonition syntax (mkdocs, docusaurus) !!! type
+        const admonitionMatch = trimmed.match(/^!!!\s*(\w+)(.*)$/);
+        if (admonitionMatch) {
+            special.push({
+                type: admonitionMatch[1],
+                syntax: 'admonition',
+                content: admonitionMatch[2].trim(),
+                line: i + 1
+            });
+            continue;
+        }
+
+        // GitHub callouts > [!NOTE]
+        const calloutMatch = trimmed.match(/^>\s*\[!(\w+)\](.*)$/);
+        if (calloutMatch) {
+            special.push({
+                type: calloutMatch[1].toLowerCase(),
+                syntax: 'github-callout',
+                content: calloutMatch[2].trim(),
+                line: i + 1
+            });
+            continue;
+        }
+
+        // Front matter (YAML)
+        if (i === 0 && trimmed === '---') {
+            // Look for closing ---
+            for (let j = i + 1; j < lines.length; j++) {
+                if (lines[j].trim() === '---') {
+                    special.push({
+                        type: 'yaml',
+                        syntax: 'frontmatter',
+                        startLine: i + 1,
+                        endLine: j + 1,
+                        content: lines.slice(i + 1, j).join('\n')
+                    });
+                    break;
+                }
+            }
+            continue;
+        }
+
+        // Math blocks $$
+        if (trimmed === '$$') {
+            special.push({
+                type: 'math',
+                syntax: 'math-block',
+                line: i + 1
+            });
+            continue;
+        }
+
+        // Inline math $...$
+        const inlineMathMatches = trimmed.match(/\$[^$\n]+\$/g);
+        if (inlineMathMatches) {
+            inlineMathMatches.forEach(() => {
+                special.push({
+                    type: 'math',
+                    syntax: 'math-inline',
+                    line: i + 1
+                });
+            });
+        }
+
+        // HTML comments <!-- -->
+        const htmlCommentMatch = trimmed.match(/<!--[\s\S]*?-->/);
+        if (htmlCommentMatch) {
+            special.push({
+                type: 'comment',
+                syntax: 'html-comment',
+                line: i + 1
+            });
+        }
+
+        // Table rows (containing |)
+        if (trimmed.includes('|') && !trimmed.startsWith('```')) {
+            special.push({
+                type: 'table',
+                syntax: 'table-row',
+                line: i + 1
+            });
+        }
     }
 
     return special;
