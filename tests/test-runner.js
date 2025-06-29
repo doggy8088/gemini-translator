@@ -375,6 +375,7 @@ Additional content to ensure we exceed the chunking threshold and trigger the sm
 More content to ensure adequate size for chunking test.`;
 
     const testCode = `
+    const BYTES_PER_CHUNK = 1000;
     ${isPartOfListCode}
     ${isPartOfHeaderCode}
     ${hasOngoingStructureCode}
