@@ -13,12 +13,51 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 const MAX_RETRY_ATTEMPTS = 10;
 const BYTES_PER_CHUNK = 1000; // 每個區塊的最大位元數
 
+// Global variable to store logfile path
+let logFilePath = null;
+
+// Logging utility function
+function logMessage(level, message, ...additionalArgs) {
+    const timestamp = new Date().toISOString();
+    const logContent = `[${timestamp}] [${level}] ${message}`;
+    
+    // Always output to console
+    if (level === 'ERROR') {
+        console.error(logContent, ...additionalArgs);
+    } else {
+        console.log(logContent, ...additionalArgs);
+    }
+    
+    // Write to logfile if specified
+    if (logFilePath) {
+        try {
+            const logLine = `[${timestamp}] [${level}] ${message}\n`;
+            fs.appendFileSync(logFilePath, logLine, 'utf8');
+        } catch (error) {
+            console.error('無法寫入日誌檔案:', error.message);
+        }
+    }
+}
+
+// Convenience functions for different log levels
+function logInfo(message, ...args) {
+    logMessage('INFO', message, ...args);
+}
+
+function logError(message, ...args) {
+    logMessage('ERROR', message, ...args);
+}
+
+function logDebug(message, ...args) {
+    logMessage('DEBUG', message, ...args);
+}
+
 function parseArgs() {
     return yargs(hideBin(process.argv))
-        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix] [--debug]')
+        .usage('用法: npx @willh/gemini-translator --input <input.srt> [--output <output.srt>] [--model <model>] [--autofix] [--debug] [--logfile <filename>]')
         .option('input', { alias: 'i', demandOption: true, describe: '輸入檔案路徑 (支援 .srt, .vtt, .ass, .md)', type: 'string' })
         .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可指定不同格式的副檔名進行格式轉換', type: 'string' })
-        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-pro', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).option('debug', { describe: '顯示詳細的除錯資訊，包括翻譯前後的完整內容比對', type: 'boolean', default: false }).example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
+        .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-pro', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).option('debug', { describe: '顯示詳細的除錯資訊，包括翻譯前後的完整內容比對', type: 'boolean', default: false }).option('logfile', { describe: '指定日誌檔案路徑，將執行過程記錄到檔案中（包含時間戳和除錯資訊）', type: 'string' }).example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-translator -i input.md', '翻譯 Markdown 檔案')
@@ -27,6 +66,7 @@ function parseArgs() {
         .example('npx @willh/gemini-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
         .example('npx @willh/gemini-translator -i input.vtt --autofix', '自動修正 WebVTT 字幕序號不連續問題')
         .example('npx @willh/gemini-translator -i input.md --debug', '翻譯 Markdown 並顯示除錯資訊')
+        .example('npx @willh/gemini-translator -i input.srt --logfile=translate.log', '翻譯字幕並記錄過程到日誌檔案')
         .help('h')
         .alias('h', 'help')
         .wrap(null)
@@ -537,21 +577,21 @@ function checkSequentialTimestamps(blocks) {
     for (let i = 0; i < blocks.length; ++i) {
         const b = blocks[i];
         if (!b.time) {
-            console.warn(`[checkSequentialTimestamps] Block ${i + 1} 缺少時間碼:`, b);
+            logDebug(`[checkSequentialTimestamps] Block ${i + 1} 缺少時間碼:`, b);
             continue;
         }
         const [start] = b.time.split(' --> ');
         if (!start) {
-            console.warn(`[checkSequentialTimestamps] Block ${i + 1} 時間碼格式錯誤:`, b.time);
+            logDebug(`[checkSequentialTimestamps] Block ${i + 1} 時間碼格式錯誤:`, b.time);
             continue;
         }
         if (prev && start < prev) {
-            console.error(`[checkSequentialTimestamps] 時間碼順序錯誤: Block ${i} (${prev}) -> Block ${i + 1} (${start})`);
+            logError(`[checkSequentialTimestamps] 時間碼順序錯誤: Block ${i} (${prev}) -> Block ${i + 1} (${start})`);
             return false;
         }
         prev = start;
     }
-    // console.log('[checkSequentialTimestamps] 時間碼順序檢查通過');
+    // logDebug('[checkSequentialTimestamps] 時間碼順序檢查通過');
     return true;
 }
 
@@ -563,27 +603,27 @@ function checkSequentialTimestamps(blocks) {
  * @param {boolean} showDetails - 是否顯示詳細內容
  */
 function showDebugComparison(originalBlocks, translatedBlocks, title, showDetails = false) {
-    console.error(`\n=== ${title} ===`);
-    console.error(`原始區塊數量: ${originalBlocks.length}`);
-    console.error(`翻譯區塊數量: ${translatedBlocks.length}`);
+    logDebug(`\n=== ${title} ===`);
+    logDebug(`原始區塊數量: ${originalBlocks.length}`);
+    logDebug(`翻譯區塊數量: ${translatedBlocks.length}`);
     
     if (showDetails) {
-        console.error('\n原始區塊內容:');
+        logDebug('\n原始區塊內容:');
         originalBlocks.forEach((block, index) => {
             const text = block.text || block.toString();
             const preview = text.replace(/\n/g, '\\n').substring(0, 100);
-            console.error(`  ${index + 1}. ${preview}${text.length > 100 ? '...' : ''}`);
+            logDebug(`  ${index + 1}. ${preview}${text.length > 100 ? '...' : ''}`);
         });
         
-        console.error('\n翻譯區塊內容:');
+        logDebug('\n翻譯區塊內容:');
         translatedBlocks.forEach((block, index) => {
             const text = block.text || block.toString();
             const preview = text.replace(/\n/g, '\\n').substring(0, 100);
-            console.error(`  ${index + 1}. ${preview}${text.length > 100 ? '...' : ''}`);
+            logDebug(`  ${index + 1}. ${preview}${text.length > 100 ? '...' : ''}`);
         });
     }
     
-    console.error(`=== ${title} 結束 ===\n`);
+    logDebug(`=== ${title} 結束 ===\n`);
 }
 
 /**
@@ -597,36 +637,36 @@ function showDebugComparison(originalBlocks, translatedBlocks, title, showDetail
 function showMarkdownFormatDebug(originalBlocks, translatedBlocks, errors, isDebugMode, inputPath) {
     if (!isDebugMode) return;
     
-    console.error('\n=== Markdown 格式檢查除錯資訊 ===');
-    console.error(`正在處理檔案: ${inputPath}`);
-    console.error(`發現 ${errors.length} 個格式問題:`);
+    logDebug('\n=== Markdown 格式檢查除錯資訊 ===');
+    logDebug(`正在處理檔案: ${inputPath}`);
+    logDebug(`發現 ${errors.length} 個格式問題:`);
     
     errors.forEach((error, index) => {
-        console.error(`  ${index + 1}. ${error}`);
+        logDebug(`  ${index + 1}. ${error}`);
     });
     
-    console.error('\n詳細區塊比對:');
+    logDebug('\n詳細區塊比對:');
     const maxBlocks = Math.max(originalBlocks.length, translatedBlocks.length);
     
     for (let i = 0; i < maxBlocks; i++) {
-        console.error(`\n--- 區塊 ${i + 1} ---`);
+        logDebug(`\n--- 區塊 ${i + 1} ---`);
         
         if (i < originalBlocks.length) {
             const originalText = originalBlocks[i].text || '';
-            console.error(`原始: ${originalText.replace(/\n/g, '\\n')}`);
+            logDebug(`原始: ${originalText.replace(/\n/g, '\\n')}`);
         } else {
-            console.error('原始: [不存在]');
+            logDebug('原始: [不存在]');
         }
         
         if (i < translatedBlocks.length) {
             const translatedText = translatedBlocks[i].text || '';
-            console.error(`翻譯: ${translatedText.replace(/\n/g, '\\n')}`);
+            logDebug(`翻譯: ${translatedText.replace(/\n/g, '\\n')}`);
         } else {
-            console.error('翻譯: [不存在]');
+            logDebug('翻譯: [不存在]');
         }
     }
     
-    console.error('\n=== Markdown 格式檢查除錯資訊結束 ===\n');
+    logDebug('\n=== Markdown 格式檢查除錯資訊結束 ===\n');
 }
 
 /**
@@ -1100,15 +1140,15 @@ async function withRetry(asyncFunction, maxAttempts = MAX_RETRY_ATTEMPTS, descri
             lastError = error;
 
             if (attempt < maxAttempts) {
-                console.error(`\n${description}失敗 (第 ${attempt}/${maxAttempts} 次嘗試): ${error.message}`);
-                console.log(`等待 ${attempt} 秒後重試...`);
+                logError(`\n${description}失敗 (第 ${attempt}/${maxAttempts} 次嘗試): ${error.message}`);
+                logInfo(`等待 ${attempt} 秒後重試...`);
                 await new Promise(resolve => setTimeout(resolve, attempt * 1000));
             }
         }
     }
 
     // 所有重試都失敗，拋出最後一個錯誤
-    console.error(`\n${description}在 ${maxAttempts} 次嘗試後仍然失敗`);
+    logError(`\n${description}在 ${maxAttempts} 次嘗試後仍然失敗`);
     throw lastError;
 }
 
@@ -1277,8 +1317,14 @@ async function main() {
     const argv = parseArgs();
     const inputPath = argv.input;
     
+    // Initialize logfile if specified
+    if (argv.logfile) {
+        logFilePath = argv.logfile;
+        logInfo(`日誌檔案已設定: ${logFilePath}`);
+    }
+    
     // Show input filename at the beginning for better progress understanding
-    console.log(`開始處理檔案: ${inputPath}`);
+    logInfo(`開始處理檔案: ${inputPath}`);
     
     const inputType = detectSubtitleType(inputPath);
 
@@ -1305,22 +1351,22 @@ async function main() {
     const isOverwriteMode = resolvedInputPath === resolvedOutputPath;
 
     if (isOverwriteMode) {
-        console.log('偵測到輸入與輸出檔案相同，將自動覆蓋原檔案');
+        logInfo('偵測到輸入與輸出檔案相同，將自動覆蓋原檔案');
     }
 
     const model = argv.model || DEFAULT_MODEL;
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-        console.error('請設定 GEMINI_API_KEY 環境變數');
+        logError('請設定 GEMINI_API_KEY 環境變數');
         process.exit(1);
     }
     if (!fs.existsSync(inputPath)) {
-        console.error('找不到輸入檔案:', inputPath);
+        logError('找不到輸入檔案:', inputPath);
         process.exit(1);
     }
-    console.log(`檢測到輸入檔案格式: ${inputType.toUpperCase()}`);
+    logInfo(`檢測到輸入檔案格式: ${inputType.toUpperCase()}`);
     if (inputType !== outputType) {
-        console.log(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
+        logInfo(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
     }
     const subtitleContent = fs.readFileSync(inputPath, 'utf8');
     const blocks = parseSubtitle(subtitleContent, inputType);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
@@ -1339,23 +1385,23 @@ async function main() {
         }
         if (broken.length > 0) {
             if (argv.autofix) {
-                console.warn('發現字幕序號不連續，自動修正中...');
+                logInfo('發現字幕序號不連續，自動修正中...');
                 // 重新編號 blocks
                 for (let i = 0; i < blocks.length; ++i) {
                     blocks[i].index = String(i + 1);
                 }                // 修正後直接覆蓋原檔，根據格式使用對應的序列化函數
                 const fixedContent = inputType === 'srt' ? serializeSRT(blocks) : serializeWebVTT(blocks);
                 fs.writeFileSync(inputPath, fixedContent, 'utf8');
-                console.log('已自動修正並覆蓋原始檔案，請重新執行本程式。');
+                logInfo('已自動修正並覆蓋原始檔案，請重新執行本程式。');
                 process.exit(0);
             } else {
-                console.error('字幕序號不連續，發現缺漏：');
+                logError('字幕序號不連續，發現缺漏：');
                 broken.forEach(b => {
-                    console.error(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
+                    logError(`缺少序號 ${b.missing}，前一字幕時間碼: ${b.prevTime}，下一字幕時間碼: ${b.nextTime}`);
                 });
-                console.error('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
+                logError('\n提示：您可以使用 --autofix 選項來自動修正字幕序號不連續問題');
                 const fileExt = inputType === 'srt' ? 'srt' : 'vtt';
-                console.error(`例如：npx @willh/gemini-translator --input input.${fileExt} --autofix`);
+                logError(`例如：npx @willh/gemini-translator --input input.${fileExt} --autofix`);
                 process.exit(1);
             }
         }
@@ -1367,7 +1413,7 @@ async function main() {
 
     // 使用重試機制產生摘要
     try {
-        console.log('正在產生內容摘要以提升翻譯品質...');
+        logInfo('正在產生內容摘要以提升翻譯品質...');
         const contentType = inputType === 'md' ? '文件' : '字幕';
 
         summary = await withRetry(async () => {
@@ -1402,14 +1448,14 @@ async function main() {
             // console.log('摘要產生完成：', summary);
         }
     } catch (e) {
-        console.warn('產生摘要失敗，將直接進行翻譯。', e.message);
+        logInfo('產生摘要失敗，將直接進行翻譯。', e.message);
         summary = '';
     }    // 將摘要存入 global 以便後續翻譯任務使用
     globalThis.translationSummary = summary;
 
     let translatedBlocks = [];
     const itemType = inputType === 'md' ? '段落' : '條字幕';
-    console.log(`共 ${blocks.length} ${itemType}，分批處理中...`);
+    logInfo(`共 ${blocks.length} ${itemType}，分批處理中...`);
     // 將 blocks 分批
     const batches = [];
     for (let i = 0; i < blocks.length; i += BATCH_SIZE) {
@@ -1450,26 +1496,26 @@ async function main() {
                         const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${textsToTranslate.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
                         
                         if (argv.debug) {
-                            console.error('\n=== 翻譯數量不符詳細除錯資訊 ===');
-                            console.error(`批次 ${batchIdx + 1} 翻譯失敗`);
-                            console.error(`預期輸出數量: ${textsToTranslate.length}`);
-                            console.error(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
-                            console.error(`實際輸出類型: ${typeof result}`);
+                            logDebug('\n=== 翻譯數量不符詳細除錯資訊 ===');
+                            logDebug(`批次 ${batchIdx + 1} 翻譯失敗`);
+                            logDebug(`預期輸出數量: ${textsToTranslate.length}`);
+                            logDebug(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
+                            logDebug(`實際輸出類型: ${typeof result}`);
                             
-                            console.error('\n原始輸入內容 (送往 API 的部分):');
+                            logDebug('\n原始輸入內容 (送往 API 的部分):');
                             textsToTranslate.forEach((text, index) => {
-                                console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                                logDebug(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
                             });
                             
-                            console.error('\n翻譯輸出內容:');
+                            logDebug('\n翻譯輸出內容:');
                             if (Array.isArray(result)) {
                                 result.forEach((text, index) => {
-                                    console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                                    logDebug(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
                                 });
                             } else {
-                                console.error(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
+                                logDebug(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
                             }
-                            console.error('=== 翻譯數量不符詳細除錯資訊結束 ===\n');
+                            logDebug('=== 翻譯數量不符詳細除錯資訊結束 ===\n');
                         }
                         
                         throw error;

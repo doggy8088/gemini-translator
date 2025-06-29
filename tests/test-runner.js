@@ -133,6 +133,56 @@ async function runAllTests() {
     });
   });
 
+  // Test 6.1: Logfile functionality
+  await runTest('Logfile argument functionality', async () => {
+    const testLogFile = './test-log.log';
+    
+    // Clean up any existing test log file
+    if (fs.existsSync(testLogFile)) {
+      fs.unlinkSync(testLogFile);
+    }
+    
+    return new Promise((resolve, reject) => {
+      // Use a fake input file to trigger the main function but expect it to fail early
+      const child = spawn('node', ['main.js', '-i', 'nonexistent.srt', `--logfile=${testLogFile}`], {
+        cwd: process.cwd(),
+        stdio: 'pipe',
+        env: { ...process.env, GEMINI_API_KEY: 'fake-key-for-test' }
+      });
+
+      let stdout = '';
+      let stderr = '';
+
+      child.stdout.on('data', (data) => {
+        stdout += data.toString();
+      });
+
+      child.stderr.on('data', (data) => {
+        stderr += data.toString();
+      });
+
+      child.on('close', (code) => {
+        try {
+          // We expect this to fail due to nonexistent file, but logfile should be created first
+          if (fs.existsSync(testLogFile)) {
+            const logContent = fs.readFileSync(testLogFile, 'utf8');
+            if (logContent.includes('日誌檔案已設定') && logContent.includes('[INFO]')) {
+              // Clean up
+              fs.unlinkSync(testLogFile);
+              resolve();
+            } else {
+              reject(new Error('Logfile does not contain expected content'));
+            }
+          } else {
+            reject(new Error('Logfile was not created'));
+          }
+        } catch (error) {
+          reject(new Error(`Logfile test error: ${error.message}`));
+        }
+      });
+    });
+  });
+
   // Test 6.5: Enhanced Markdown parsing test
   await runTest('Enhanced Markdown parsing', () => {
     // Test if enhanced Markdown detection works properly
