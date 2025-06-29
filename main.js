@@ -256,7 +256,7 @@ function parseMarkdown(content) {
                     const codeBlockText = codeBlockLines.join('\n');
 
                     // If the current chunk is not empty, push it before processing the code block.
-                    if (currentChunk.trim()) {
+                    if (currentChunk) {
                         chunks.push({ index: String(chunkIndex++), text: currentChunk });
                         currentChunk = '';
                     }
@@ -274,14 +274,14 @@ function parseMarkdown(content) {
 
             const isBreakSafe = !isPartOfList(lines, i) && !isPartOfHeader(lines, i);
             const isAtSafeListBoundary = !isPartOfList(lines, i) || isAtListBoundary(lines, i);
-            const isNaturalBreak = (trimmed === '' && currentChunk.trim() !== '') ||
+            const isNaturalBreak = (trimmed === '' && currentChunk !== '') ||
                 (trimmed.startsWith('# ') || trimmed.startsWith('## ') ||
                     trimmed.startsWith('### ') || trimmed.startsWith('#### ') ||
                     trimmed.startsWith('##### ') || trimmed.startsWith('###### '));
 
             if (shouldBreak && isBreakSafe && isAtSafeListBoundary &&
                 (isNaturalBreak || !hasOngoingStructure(lines, i))) {
-                if (currentChunk.trim()) {
+                if (currentChunk) {
                     chunks.push({
                         index: String(chunkIndex++),
                         text: currentChunk
@@ -294,7 +294,7 @@ function parseMarkdown(content) {
         }
 
         // Add the last chunk
-        if (currentChunk.trim()) {
+        if (currentChunk) {
             chunks.push({
                 index: String(chunkIndex),
                 text: currentChunk
