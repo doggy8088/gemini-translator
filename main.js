@@ -1583,11 +1583,11 @@ async function main() {
         // 回傳本 batch 的翻譯結果
         return translations;
     });
-    console.log('開始平行處理翻譯任務，最多同時執行 20 個任務...');
+    logInfo('開始平行處理翻譯任務，最多同時執行 20 個任務...');
     // 平行處理，最多 20 個同時執行
     const allTranslations = await promisePool(tasks, 20);
     process.stdout.write('\n'); // 確保下一行從新行開始
-    console.log('所有翻譯任務已完成，開始合併翻譯結果...');
+    logInfo('所有翻譯任務已完成，開始合併翻譯結果...');
     // 合併所有翻譯結果
     const flatTranslations = allTranslations.flat();
     // 將翻譯結果還原回 blocks 結構
@@ -1597,21 +1597,21 @@ async function main() {
     }));
     // console.log('翻譯結果合併完成', translatedBlocks);    // 檢查時間碼順序 (僅適用於 SRT 和 WebVTT)
     if (outputType !== 'ass' && outputType !== 'md') {
-        console.log('檢查時間碼順序...');
-        console.log();
+        logInfo('檢查時間碼順序...');
+        logInfo('');
         if (!checkSequentialTimestamps(translatedBlocks)) {
-            console.error('時間碼順序錯誤');
+            logError('時間碼順序錯誤');
             process.exit(1);
         }
-        console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
+        logInfo('時間碼順序檢查通過，準備寫入輸出檔案...');
     } else if (inputType === 'md') {
         // 檢查 Markdown 格式一致性，如果失敗則重新翻譯
         let retryCount = 0;
         let formatCheckPassed = false;
 
         while (!formatCheckPassed && retryCount < MAX_RETRY_ATTEMPTS) {
-            console.log('檢查 Markdown 格式一致性...');
-            console.log();
+            logInfo('檢查 Markdown 格式一致性...');
+            logInfo('');
             const formatCheck = checkMarkdownFormat(blocks, translatedBlocks, argv.debug, inputPath);
 
             if (!formatCheck.isValid) {
@@ -1629,7 +1629,7 @@ async function main() {
                 });
 
                 if (retryCount < MAX_RETRY_ATTEMPTS) {
-                    console.log('正在重新翻譯...');
+                    logInfo('正在重新翻譯...');
 
                     // 進度追蹤
                     let completedRetranslations = 0;
@@ -1696,22 +1696,22 @@ async function main() {
                     }));
 
                     process.stdout.write('\n'); // 確保下一行從新行開始
-                    console.log('重新翻譯完成，再次檢查格式...');
+                    logInfo('重新翻譯完成，再次檢查格式...');
                 } else {
-                    console.error(`已達到最大重試次數 (${MAX_RETRY_ATTEMPTS})，格式檢查仍然失敗`);
-                    console.log('將繼續處理，但可能存在格式不一致問題');
+                    logError(`已達到最大重試次數 (${MAX_RETRY_ATTEMPTS})，格式檢查仍然失敗`);
+                    logInfo('將繼續處理，但可能存在格式不一致問題');
                     formatCheckPassed = true; // 強制退出迴圈
                 }
             } else {
                 formatCheckPassed = true;
-                console.log('Markdown 格式檢查通過，準備寫入輸出檔案...');
+                logInfo('Markdown 格式檢查通過，準備寫入輸出檔案...');
             }
         }
     } else {
         // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }
     fs.writeFileSync(outputPath, serializeSubtitle(translatedBlocks, outputType, subtitleContent), 'utf8');
-    console.log(`\n翻譯完成，已寫入 ${outputPath}\n---\n`);
+    logInfo(`\n翻譯完成，已寫入 ${outputPath}\n---\n`);
 }
 
 // console.log(process.argv)

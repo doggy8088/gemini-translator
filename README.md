@@ -99,6 +99,9 @@ npx @willh/gemini-translator --input movie.srt --model gemini-2.5-pro
 # Auto-fix subtitle numbering issues
 npx @willh/gemini-translator --input movie.srt --autofix
 
+# Enable debug mode and log to file
+npx @willh/gemini-translator --input movie.srt --debug --logfile=translation.log
+
 # Combine options
 npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-2.5-pro --autofix
 ```
@@ -111,6 +114,8 @@ npx @willh/gemini-translator -i movie.srt -o output.srt -m gemini-2.5-pro --auto
 | `--output`  | `-o`  | Output SRT file path                       | `<input>.zh.srt`                 |
 | `--model`   | `-m`  | Gemini model to use                        | `gemini-2.5-flash-lite-preview-06-17` |
 | `--autofix` | -     | Auto-fix non-sequential subtitle numbering | `false`                          |
+| `--debug`   | -     | Show detailed debug information            | `false`                          |
+| `--logfile` | -     | Log to file with timestamps and debug info | -                                |
 | `--help`    | `-h`  | Show help information                      | -                                |
 
 ## How It Works
