@@ -1424,51 +1424,109 @@ async function main() {
     const inputFilename = path.basename(inputPath);
     const tasks = batches.map((batch, batchIdx) => async () => {
         const texts = batch.map(b => b.text);
+        const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
 
-        // 使用重試機制進行翻譯
-        const translations = await withRetry(async () => {
-            // console.error('翻譯內容:', JSON.stringify(texts, null, 2));
-            const contentType = inputType === 'md' ? 'markdown' : 'subtitle';
-            const result = await translateBatch(texts, apiKey, model, contentType);
-            // console.error('翻譯結果:', JSON.stringify(result, null, 2));
+        let translations;
 
-            // 檢核翻譯結果
-            if (!Array.isArray(result) || result.length !== batch.length) {
-                const itemType = inputType === 'md' ? '段落' : '字幕';
-                const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
-                
-                // 如果開啟除錯模式，顯示詳細的輸入輸出比對
-                if (argv.debug) {
-                    console.error('\n=== 翻譯數量不符詳細除錯資訊 ===');
-                    console.error(`批次 ${batchIdx + 1} 翻譯失敗`);
-                    console.error(`預期輸出數量: ${batch.length}`);
-                    console.error(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
-                    console.error(`實際輸出類型: ${typeof result}`);
-                    
-                    console.error('\n原始輸入內容:');
-                    texts.forEach((text, index) => {
-                        console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
-                    });
-                    
-                    console.error('\n翻譯輸出內容:');
-                    if (Array.isArray(result)) {
-                        result.forEach((text, index) => {
-                            console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
-                        });
-                    } else {
-                        console.error(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
+        if (contentType === 'markdown') {
+            // For Markdown, we separate code blocks from text to be translated
+            const textsToTranslate = [];
+            const codeBlockIndices = new Map(); // Map original index to content
+
+            texts.forEach((text, index) => {
+                if (text.trim().startsWith('```') && text.trim().endsWith('```')) {
+                    codeBlockIndices.set(index, text);
+                } else {
+                    textsToTranslate.push(text);
+                }
+            });
+
+            let translatedTexts = [];
+            if (textsToTranslate.length > 0) {
+                translatedTexts = await withRetry(async () => {
+                    const result = await translateBatch(textsToTranslate, apiKey, model, contentType);
+                    if (!Array.isArray(result) || result.length !== textsToTranslate.length) {
+                        const itemType = '段落';
+                        const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${textsToTranslate.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                        
+                        if (argv.debug) {
+                            console.error('\n=== 翻譯數量不符詳細除錯資訊 ===');
+                            console.error(`批次 ${batchIdx + 1} 翻譯失敗`);
+                            console.error(`預期輸出數量: ${textsToTranslate.length}`);
+                            console.error(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
+                            console.error(`實際輸出類型: ${typeof result}`);
+                            
+                            console.error('\n原始輸入內容 (送往 API 的部分):');
+                            textsToTranslate.forEach((text, index) => {
+                                console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                            });
+                            
+                            console.error('\n翻譯輸出內容:');
+                            if (Array.isArray(result)) {
+                                result.forEach((text, index) => {
+                                    console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                                });
+                            } else {
+                                console.error(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
+                            }
+                            console.error('=== 翻譯數量不符詳細除錯資訊結束 ===\n');
+                        }
+                        
+                        throw error;
                     }
-                    console.error('=== 翻譯數量不符詳細除錯資訊結束 ===\n');
-                }
-                
-                if (Array.isArray(result)) {
-                    console.error('翻譯結果:', JSON.stringify(result, null, 2));
-                }
-                throw error;
+                    return result;
+                }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
             }
 
-            return result;
-        }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
+            // Merge results
+            translations = [];
+            let translatedIdx = 0;
+            for (let i = 0; i < texts.length; i++) {
+                if (codeBlockIndices.has(i)) {
+                    translations.push(codeBlockIndices.get(i));
+                } else {
+                    translations.push(translatedTexts[translatedIdx++]);
+                }
+            }
+        } else {
+            // Original logic for non-markdown
+            translations = await withRetry(async () => {
+                const result = await translateBatch(texts, apiKey, model, contentType);
+                if (!Array.isArray(result) || result.length !== batch.length) {
+                    const itemType = inputType === 'md' ? '段落' : '字幕';
+                    const error = new Error(`翻譯數量與原始${itemType}數量不符 (input: ${batch.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+                    
+                    if (argv.debug) {
+                        console.error('\n=== 翻譯數量不符詳細除錯資訊 ===');
+                        console.error(`批次 ${batchIdx + 1} 翻譯失敗`);
+                        console.error(`預期輸出數量: ${batch.length}`);
+                        console.error(`實際輸出數量: ${Array.isArray(result) ? result.length : 'N/A'}`);
+                        console.error(`實際輸出類型: ${typeof result}`);
+                        
+                        console.error('\n原始輸入內容:');
+                        texts.forEach((text, index) => {
+                            console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                        });
+                        
+                        console.error('\n翻譯輸出內容:');
+                        if (Array.isArray(result)) {
+                            result.forEach((text, index) => {
+                                console.error(`  ${index + 1}. ${text.replace(/\n/g, '\\n').substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+                            });
+                        } else {
+                            console.error(`  非陣列結果: ${JSON.stringify(result, null, 2)}`);
+                        }
+                        console.error('=== 翻譯數量不符詳細除錯資訊結束 ===\n');
+                    }
+                    
+                    if (Array.isArray(result)) {
+                        console.error('翻譯結果:', JSON.stringify(result, null, 2));
+                    }
+                    throw error;
+                }
+                return result;
+            }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
+        }
 
         // 更新進度
         completedTasks++;
