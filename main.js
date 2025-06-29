@@ -276,7 +276,7 @@ function parseMarkdown(content) {
                 if (currentChunk.trim()) {
                     chunks.push({
                         index: String(chunkIndex++),
-                        text: currentChunk.trim()
+                        text: currentChunk
                     });
                 }
                 currentChunk = line;
@@ -289,14 +289,14 @@ function parseMarkdown(content) {
         if (currentChunk.trim()) {
             chunks.push({
                 index: String(chunkIndex),
-                text: currentChunk.trim()
+                text: currentChunk
             });
         }
     } else {
         // Small files are treated as single chunk
         chunks.push({
             index: '1',
-            text: content.trim()
+            text: content
         });
     }
 
@@ -429,7 +429,7 @@ function serializeMarkdown(blocks) {
     
     for (let i = 0; i < blocks.length; i++) {
         const block = blocks[i];
-        const text = block.text.trim();
+        const text = block.text;
         
         if (text) {
             result.push(text);
@@ -437,7 +437,7 @@ function serializeMarkdown(blocks) {
             // Add appropriate spacing after blocks
             if (i < blocks.length - 1) {
                 const nextBlock = blocks[i + 1];
-                const nextText = nextBlock.text.trim();
+                const nextText = nextBlock.text;
                 
                 // Add extra spacing before headers or after code blocks
                 if (text.startsWith('#') || nextText.startsWith('#') || text.includes('```') || 
