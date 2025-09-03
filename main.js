@@ -748,7 +748,16 @@ function checkMarkdownFormat(originalBlocks, translatedBlocks, isDebugMode = fal
         const translatedSpecial = extractMarkdownSpecialSyntax(translated);
 
         if (originalSpecial.length !== translatedSpecial.length) {
-            errors.push(`區塊 ${i + 1}: 特殊語法數量不一致 (原始: ${originalSpecial.length}, 翻譯: ${translatedSpecial.length})`);
+            const specialSyntaxDiff = generateSpecialSyntaxDifference(originalSpecial, translatedSpecial, i + 1);
+            
+            // 生成更詳細的錯誤訊息
+            const detailedError = generateDetailedSpecialSyntaxError(originalSpecial, translatedSpecial, i + 1);
+            errors.push(detailedError);
+            
+            // 如果開啟除錯模式，顯示詳細的特殊語法差異
+            if (isDebugMode) {
+                console.error('\n' + specialSyntaxDiff);
+            }
         } else {
             for (let j = 0; j < originalSpecial.length; j++) {
                 if (originalSpecial[j].type !== translatedSpecial[j].type) {
@@ -985,6 +994,160 @@ function extractMarkdownLinks(text) {
     }
 
     return links;
+}
+
+/**
+ * 生成詳細的特殊語法錯誤訊息
+ * @param {Array} originalSpecial - 原始特殊語法列表
+ * @param {Array} translatedSpecial - 翻譯後特殊語法列表
+ * @param {number} blockIndex - 區塊索引
+ * @returns {string} 詳細的錯誤訊息
+ */
+function generateDetailedSpecialSyntaxError(originalSpecial, translatedSpecial, blockIndex) {
+    const basicError = `區塊 ${blockIndex}: 特殊語法數量不一致 (原始: ${originalSpecial.length}, 翻譯: ${translatedSpecial.length})`;
+    
+    const details = [];
+    
+    if (originalSpecial.length > translatedSpecial.length) {
+        const missingCount = originalSpecial.length - translatedSpecial.length;
+        details.push(`缺失 ${missingCount} 個特殊語法`);
+        
+        // 簡要列出缺失的語法類型
+        const originalTypes = originalSpecial.map(s => s.type);
+        const translatedTypes = translatedSpecial.map(s => s.type);
+        const missing = originalTypes.filter(type => !translatedTypes.includes(type));
+        
+        if (missing.length > 0) {
+            details.push(`缺失類型: ${missing.join(', ')}`);
+        }
+    } else if (translatedSpecial.length > originalSpecial.length) {
+        const extraCount = translatedSpecial.length - originalSpecial.length;
+        details.push(`多出 ${extraCount} 個特殊語法`);
+        
+        // 簡要列出多出的語法類型
+        const originalTypes = originalSpecial.map(s => s.type);
+        const translatedTypes = translatedSpecial.map(s => s.type);
+        const extra = translatedTypes.filter(type => !originalTypes.includes(type));
+        
+        if (extra.length > 0) {
+            details.push(`多出類型: ${extra.join(', ')}`);
+        }
+    }
+    
+    if (details.length > 0) {
+        return `${basicError} (${details.join('; ')})`;
+    }
+    
+    return basicError;
+}
+
+/**
+ * 生成特殊語法差異的視覺化顯示
+ * @param {Array} originalSpecial - 原始特殊語法列表
+ * @param {Array} translatedSpecial - 翻譯後特殊語法列表
+ * @param {number} blockIndex - 區塊索引
+ * @returns {string} 格式化的差異顯示
+ */
+function generateSpecialSyntaxDifference(originalSpecial, translatedSpecial, blockIndex) {
+    const lines = [];
+    lines.push(`🔍 === 區塊 ${blockIndex} 特殊語法差異分析 ===`);
+    lines.push(`📊 數量比較: 原始 ${originalSpecial.length} 個 → 翻譯 ${translatedSpecial.length} 個`);
+    lines.push('');
+    
+    // 顯示原始特殊語法
+    if (originalSpecial.length > 0) {
+        lines.push('✅ 原始文本中的特殊語法:');
+        originalSpecial.forEach((syntax, index) => {
+            const icon = getSyntaxIcon(syntax.syntax);
+            lines.push(`   ${index + 1}. ${icon} ${syntax.syntax} → "${syntax.type}" (行 ${syntax.line})`);
+            if (syntax.content) {
+                lines.push(`      內容: "${syntax.content}"`);
+            }
+        });
+    } else {
+        lines.push('❌ 原始文本中沒有特殊語法');
+    }
+    
+    lines.push('');
+    
+    // 顯示翻譯後特殊語法
+    if (translatedSpecial.length > 0) {
+        lines.push('📝 翻譯文本中的特殊語法:');
+        translatedSpecial.forEach((syntax, index) => {
+            const icon = getSyntaxIcon(syntax.syntax);
+            lines.push(`   ${index + 1}. ${icon} ${syntax.syntax} → "${syntax.type}" (行 ${syntax.line})`);
+            if (syntax.content) {
+                lines.push(`      內容: "${syntax.content}"`);
+            }
+        });
+    } else {
+        lines.push('❌ 翻譯文本中沒有特殊語法');
+    }
+    
+    lines.push('');
+    
+    // 分析差異
+    lines.push('🔄 差異分析:');
+    
+    if (originalSpecial.length > translatedSpecial.length) {
+        const missingCount = originalSpecial.length - translatedSpecial.length;
+        lines.push(`   ⚠️  缺失了 ${missingCount} 個特殊語法`);
+        
+        // 找出可能缺失的項目
+        const originalTypes = originalSpecial.map(s => `${s.syntax}:${s.type}`);
+        const translatedTypes = translatedSpecial.map(s => `${s.syntax}:${s.type}`);
+        const missing = originalTypes.filter(type => !translatedTypes.includes(type));
+        
+        if (missing.length > 0) {
+            lines.push('   🚫 可能缺失的特殊語法:');
+            missing.forEach(type => {
+                const [syntax, syntaxType] = type.split(':');
+                const icon = getSyntaxIcon(syntax);
+                lines.push(`      • ${icon} ${syntax} → "${syntaxType}"`);
+            });
+        }
+    } else if (translatedSpecial.length > originalSpecial.length) {
+        const extraCount = translatedSpecial.length - originalSpecial.length;
+        lines.push(`   ⚠️  多了 ${extraCount} 個特殊語法`);
+        
+        // 找出多出的項目
+        const originalTypes = originalSpecial.map(s => `${s.syntax}:${s.type}`);
+        const translatedTypes = translatedSpecial.map(s => `${s.syntax}:${s.type}`);
+        const extra = translatedTypes.filter(type => !originalTypes.includes(type));
+        
+        if (extra.length > 0) {
+            lines.push('   ➕ 多出的特殊語法:');
+            extra.forEach(type => {
+                const [syntax, syntaxType] = type.split(':');
+                const icon = getSyntaxIcon(syntax);
+                lines.push(`      • ${icon} ${syntax} → "${syntaxType}"`);
+            });
+        }
+    }
+    
+    lines.push('🔚 === 特殊語法差異分析結束 ===');
+    lines.push('');
+    
+    return lines.join('\n');
+}
+
+/**
+ * 根據語法類型獲取對應的圖標
+ * @param {string} syntaxType - 語法類型
+ * @returns {string} 對應的圖標
+ */
+function getSyntaxIcon(syntaxType) {
+    const icons = {
+        'vuepress-container': '📦',
+        'admonition': '💡',
+        'github-callout': '📢',
+        'frontmatter': '📋',
+        'math-block': '🧮',
+        'math-inline': '🔢',
+        'html-comment': '💬',
+        'table-row': '📊'
+    };
+    return icons[syntaxType] || '🔧';
 }
 
 /**
