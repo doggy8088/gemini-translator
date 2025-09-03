@@ -231,19 +231,14 @@ function parseMarkdown(content, bytesPerChunk) {
     // 1. 先將所有 \r\n 都先改為 \n
     content = content.replace(/\r\n/g, '\n');
 
-    const chunks = [];
-
-    // 2. 每個 chunk 絕對不能用 .trim() 去除空白字元
-    // The logic below preserves whitespace.
-
     // Regex for blocks
-    const codeFenceRegex = /^```[\s\S]*?^```\n?/gm;
+    // 支援 ``` 與 ~~~ 的 code fence（需成對匹配）
+    const codeFenceRegex = /^(```|~~~)[\s\S]*?^\1\n?/gm;
     const blockquoteRegex = /^(?:>[ \t]?.*(?:\n|$))+/gm;
     const tableRegex = /^(?:\|.*\|(?:\n|$))+/gm;
     const htmlTagRegex = /^(?:<([a-z][a-z0-9]*)\b[^>]*>[\s\S]*?<\/\1>|<[a-z][a-z0-9]*\b[^>]*\/>)\n?/gmi;
     const latexRegex = /^\$\$[\s\S]*?\$\$\n?/gm;
     const listRegex = /^(?:(?:[ ]{0,3}(?:[-*+]|\d+\.))[ \t]+.*(?:\n|$)(?:[ \t].*(?:\n|$))*)+/gm;
-
 
     const patterns = [
         codeFenceRegex, // 4. Code fence
@@ -255,17 +250,11 @@ function parseMarkdown(content, bytesPerChunk) {
     ];
 
     let extractedBlocks = [];
-
     patterns.forEach(regex => {
         let match;
-        // We need to reset lastIndex for global regexes before each exec loop.
         regex.lastIndex = 0;
         while ((match = regex.exec(content)) !== null) {
-            extractedBlocks.push({
-                start: match.index,
-                end: match.index + match[0].length,
-                text: match[0]
-            });
+            extractedBlocks.push({ start: match.index, end: match.index + match[0].length, text: match[0] });
         }
     });
 
@@ -282,42 +271,80 @@ function parseMarkdown(content, bytesPerChunk) {
         }
     }
 
-    let lastIndex = 0;
-    finalBlocks.forEach(block => {
-        const precedingText = content.substring(lastIndex, block.start);
-        if (precedingText) {
-            // 9. 剩下的內容，都以 \n\n 為分隔符號
-            chunks.push(...precedingText.split('\n\n').filter(c => c.length > 0));
-        }
-        chunks.push(block.text);
-        lastIndex = block.end;
-    });
+    // 2. 將文字切為段落，保留原始分隔符（\n\n+）
+    const segments = []; // { text, sep }
+    let fileLeadingSep = '';
 
-    const trailingText = content.substring(lastIndex);
-    if (trailingText) {
-        chunks.push(...trailingText.split('\n\n').filter(c => c.length > 0));
+    function addParagraphs(part) {
+        if (!part) return;
+        // 將前導的多重空白行視為上一段的分隔符（若無上一段則記錄為檔案開頭的前置空白）
+        const leading = part.match(/^\n\n+/);
+        let rest = part;
+        if (leading) {
+            if (segments.length > 0) {
+                segments[segments.length - 1].sep = (segments[segments.length - 1].sep || '') + leading[0];
+            } else {
+                fileLeadingSep += leading[0];
+            }
+            rest = part.slice(leading[0].length);
+        }
+        if (!rest) return;
+
+        const re = /\n\n+/g;
+        let last = 0;
+        let m;
+        while ((m = re.exec(rest)) !== null) {
+            const text = rest.slice(last, m.index);
+            const sep = m[0];
+            if (text.length > 0) {
+                segments.push({ text, sep });
+            } else {
+                if (segments.length > 0) {
+                    segments[segments.length - 1].sep = (segments[segments.length - 1].sep || '') + sep;
+                } else {
+                    fileLeadingSep += sep;
+                }
+            }
+            last = re.lastIndex;
+        }
+        const tail = rest.slice(last);
+        if (tail.length > 0) {
+            segments.push({ text: tail, sep: '' });
+        }
     }
 
-    // 10. 最後合併小型的 chunks
-    const mergedChunks = [];
-    if (chunks.length > 0) {
-        let currentChunk = chunks[0];
-        for (let i = 1; i < chunks.length; i++) {
-            const nextChunk = chunks[i];
-            // Check if adding the next chunk (with a separator) exceeds the limit
-            if (Buffer.byteLength(currentChunk + '\n\n' + nextChunk, 'utf8') <= bytesPerChunk) {
-                currentChunk += '\n\n' + nextChunk;
+    let cursor = 0;
+    for (const block of finalBlocks) {
+        const preceding = content.slice(cursor, block.start);
+        addParagraphs(preceding);
+        segments.push({ text: block.text, sep: '' });
+        cursor = block.end;
+    }
+    addParagraphs(content.slice(cursor));
+
+    // 3. 合併小段落，保留原始分隔符
+    const merged = [];
+    if (segments.length > 0) {
+        let current = { ...segments[0] };
+        for (let i = 1; i < segments.length; i++) {
+            const next = segments[i];
+            const combinedBytes = Buffer.byteLength(current.text + (current.sep || '') + next.text, 'utf8');
+            if (combinedBytes <= bytesPerChunk) {
+                current.text = current.text + (current.sep || '') + next.text;
+                current.sep = next.sep || '';
             } else {
-                mergedChunks.push(currentChunk);
-                currentChunk = nextChunk;
+                merged.push(current);
+                current = { ...next };
             }
         }
-        mergedChunks.push(currentChunk); // Add the last processed chunk
+        merged.push(current);
     }
 
-    return mergedChunks.map((chunk, index) => ({
+    return merged.map((seg, index) => ({
         index: String(index + 1),
-        text: chunk,
+        text: seg.text,
+        sep: seg.sep || '',
+        leadingSep: index === 0 && fileLeadingSep ? fileLeadingSep : ''
     }));
 }
 
@@ -441,37 +468,15 @@ function isAtListBoundary(lines, index) {
 }
 
 function serializeMarkdown(blocks) {
-    // Reconstruct Markdown content from translated blocks
-    // Preserve appropriate spacing between blocks
-    const result = [];
-
-    for (let i = 0; i < blocks.length; i++) {
-        const block = blocks[i];
-        const text = block.text;
-
-        if (text) {
-            result.push(text);
-
-            // Add appropriate spacing after blocks
-            if (i < blocks.length - 1) {
-                const nextBlock = blocks[i + 1];
-                const nextText = nextBlock.text;
-
-                // Add extra spacing before headers or after code blocks
-                if (text.startsWith('#') || nextText.startsWith('#') || text.includes('```') ||
-                    text.match(/^[-*+]\s/) || nextText.match(/^[-*+]\s/) ||
-                    text.match(/^\d+\.\s/) || nextText.match(/^\d+\.\s/)) {
-                    result.push('');
-                }
-            }
-        }
+    if (!Array.isArray(blocks) || blocks.length === 0) return '';
+    const prefix = blocks[0]?.leadingSep || '';
+    let out = prefix;
+    for (const b of blocks) {
+        const txt = b?.text || '';
+        const sep = b?.sep || '';
+        out += txt + sep;
     }
-
-    let markdown = result.join('\n');
-    // Final cleanup: Replace multiple newlines before a closing code fence with a single newline.
-    // This specifically targets blank lines (or lines with only whitespace) before the fence.
-    markdown = markdown.replace(/(\r?\n[ \t]*){2,}(```)/g, '\n$2');
-    return markdown;
+    return out;
 }
 
 function parseSubtitle(content, type, bytesPerChunk) {
@@ -1446,6 +1451,160 @@ Do not translate the following terms:
     throw err;
 }
 
+// 逐行翻譯 Markdown 區塊，保留結構語法前綴
+async function translateMarkdownBlockLineByLine(blockText, apiKey, model) {
+    const content = (blockText || '').replace(/\r\n/g, '\n');
+    const lines = content.split('\n');
+
+    let inCodeBlock = false;
+    let inFrontmatter = false;
+    let frontmatterStarted = false;
+
+    const items = [];
+
+    const isLinkRefLine = (line) => /^(\s*)\[[^\]]+\]:\s+\S/.test(line);
+
+    for (let i = 0; i < lines.length; i++) {
+        const raw = lines[i];
+        const trimmed = raw.trim();
+
+        // Frontmatter --- ... ---
+        if (!frontmatterStarted && i === 0 && trimmed === '---') {
+            inFrontmatter = true;
+            frontmatterStarted = true;
+            items.push({ kind: 'literal', text: raw });
+            continue;
+        }
+        if (inFrontmatter) {
+            items.push({ kind: 'literal', text: raw });
+            if (trimmed === '---' && i !== 0) {
+                inFrontmatter = false;
+            }
+            continue;
+        }
+
+        // Code fences ``` or ~~~ (also allow inside blockquotes '>')
+        const stripped = raw.replace(/^\s*>+\s*/, '').trim();
+        const fenceMatch = stripped.match(/^(```|~~~)/);
+        if (fenceMatch) {
+            inCodeBlock = !inCodeBlock;
+            items.push({ kind: 'literal', text: raw });
+            continue;
+        }
+        if (inCodeBlock) {
+            items.push({ kind: 'literal', text: raw });
+            continue;
+        }
+
+        // Headers
+        const headerMatch = raw.match(/^(\s*#{1,6}\s+)(.*)$/);
+        if (headerMatch) {
+            items.push({ kind: 'translate', prefix: headerMatch[1], text: headerMatch[2] });
+            continue;
+        }
+
+        // Lists (unordered and ordered)
+        const listMatch = raw.match(/^(\s*(?:[-*+]|\d+\.)\s+)(.*)$/);
+        if (listMatch) {
+            items.push({ kind: 'translate', prefix: listMatch[1], text: listMatch[2] });
+            continue;
+        }
+
+        // GitHub callouts > [!NOTE] Title
+        const calloutMatch = raw.match(/^(\s*>\s*\[!\w+\]\s*)(.*)$/);
+        if (calloutMatch) {
+            items.push({ kind: 'translate', prefix: calloutMatch[1], text: calloutMatch[2] });
+            continue;
+        }
+
+        // Blockquote lines
+        const quoteMatch = raw.match(/^(\s*>\s*)(.*)$/);
+        if (quoteMatch) {
+            items.push({ kind: 'translate', prefix: quoteMatch[1], text: quoteMatch[2] });
+            continue;
+        }
+
+        // VuePress containers ::: tip Title
+        const vuepressMatch = raw.match(/^(\s*:::\s*\w+\s*)(.*)$/);
+        if (vuepressMatch) {
+            items.push({ kind: 'translate', prefix: vuepressMatch[1], text: vuepressMatch[2] });
+            continue;
+        }
+
+        // Admonitions !!! note Title
+        const admonitionMatch = raw.match(/^(\s*!!!\s*\w+\s*)(.*)$/);
+        if (admonitionMatch) {
+            items.push({ kind: 'translate', prefix: admonitionMatch[1], text: admonitionMatch[2] });
+            continue;
+        }
+
+        // Empty or whitespace-only lines
+        if (trimmed === '') {
+            items.push({ kind: 'literal', text: raw });
+            continue;
+        }
+
+        // Link reference definitions: keep literal
+        if (isLinkRefLine(raw)) {
+            items.push({ kind: 'literal', text: raw });
+            continue;
+        }
+
+        // Default: translate entire line
+        items.push({ kind: 'translate', prefix: '', text: raw });
+    }
+
+    const textsToTranslate = items.filter(x => x.kind === 'translate').map(x => x.text);
+    let translatedParts = [];
+    if (textsToTranslate.length > 0) {
+        translatedParts = await withRetry(async () => {
+            const result = await translateBatch(textsToTranslate, apiKey, model, 'markdown');
+            if (!Array.isArray(result) || result.length !== textsToTranslate.length) {
+                throw new Error(`逐行翻譯數量不符 (input: ${textsToTranslate.length}, result: ${Array.isArray(result) ? result.length : 'N/A'})`);
+            }
+            return result;
+        }, Math.min(MAX_RETRY_ATTEMPTS, 5), '逐行翻譯');
+    }
+
+    let ti = 0;
+    const outLines = items.map(x => x.kind === 'literal' ? x.text : (x.prefix + (translatedParts[ti++] || '')));
+    return outLines.join('\n');
+}
+
+// 顯示特殊語法不一致時的詳細差異
+function reportSpecialSyntaxMismatches(originalBlocks, translatedBlocks) {
+    for (let i = 0; i < Math.max(originalBlocks.length, translatedBlocks.length); i++) {
+        const orig = originalBlocks[i]?.text || '';
+        const trans = translatedBlocks[i]?.text || '';
+        if (!orig && !trans) continue;
+
+        const originalSpecial = extractMarkdownSpecialSyntax(orig);
+        const translatedSpecial = extractMarkdownSpecialSyntax(trans);
+
+        let hasMismatch = false;
+        if (originalSpecial.length !== translatedSpecial.length) {
+            hasMismatch = true;
+        } else {
+            for (let j = 0; j < originalSpecial.length; j++) {
+                if (originalSpecial[j].type !== translatedSpecial[j].type) {
+                    hasMismatch = true;
+                    break;
+                }
+            }
+        }
+
+        if (hasMismatch) {
+            const diff = generateSpecialSyntaxDifference(originalSpecial, translatedSpecial, i + 1);
+            console.error('\n' + diff);
+            // 同時呈現原始與翻譯內容，協助定位問題
+            console.error(`原文區塊 ${i + 1}:`);
+            console.error(orig);
+            console.error(`\n譯文區塊 ${i + 1}:`);
+            console.error(trans);
+        }
+    }
+}
+
 async function main() {
     const argv = parseArgs();
     const inputPath = argv.input;
@@ -1608,16 +1767,57 @@ async function main() {
         let translations;
 
         if (contentType === 'markdown') {
-            // For Markdown, we separate code blocks from text to be translated
+            // For Markdown, separate non-translatable blocks and special cases
             const textsToTranslate = [];
-            const codeBlockIndices = new Map(); // Map original index to content
+            const indexMap = []; // maps from textsToTranslate index -> original index
+            const keepLiteral = new Map(); // index -> literal text (code fences, pure ref-def blocks)
+            const lineByLine = []; // indices that should be translated line-by-line (contains ref-def lines)
+
+            const isLinkRefLine = (line) => /^(\s*)\[[^\]]+\]:\s+\S/.test(line);
+            const isPureLinkRefBlock = (text) => {
+                const lines = (text || '').replace(/\r\n/g, '\n').split('\n');
+                let hasContent = false;
+                for (const l of lines) {
+                    const t = l.trim();
+                    if (t === '') continue;
+                    hasContent = true;
+                    if (!isLinkRefLine(l)) return false;
+                }
+                return hasContent; // at least one ref line and all are ref lines
+            };
 
             texts.forEach((text, index) => {
-                if (text.trim().startsWith('```') && text.trim().endsWith('```')) {
-                    codeBlockIndices.set(index, text);
-                } else {
-                    textsToTranslate.push(text);
+                const trimmed = (text || '').trim();
+                const hasFence = (text || '').includes('```') || (text || '').includes('~~~');
+                const isFullFenceBlock = (t) => {
+                    const s = (t || '').trim();
+                    if (s.startsWith('```')) return s.endsWith('```');
+                    if (s.startsWith('~~~')) return s.endsWith('~~~');
+                    return false;
+                };
+                // Keep full code fences as-is
+                if (isFullFenceBlock(text)) {
+                    keepLiteral.set(index, text);
+                    return;
                 }
+                // If contains any fence markers but not a pure fence block, translate line-by-line to preserve
+                if (hasFence) {
+                    lineByLine.push(index);
+                    return;
+                }
+                // Skip translation for pure link reference definition blocks
+                if (isPureLinkRefBlock(text)) {
+                    keepLiteral.set(index, text);
+                    return;
+                }
+                // If any link-ref lines are present, handle via line-by-line to preserve them
+                if ((text || '').includes(']:') && (text || '').split('\n').some(isLinkRefLine)) {
+                    lineByLine.push(index);
+                    return;
+                }
+                // Default: include in batch translation
+                indexMap.push(index);
+                textsToTranslate.push(text);
             });
 
             let translatedTexts = [];
@@ -1657,15 +1857,20 @@ async function main() {
                 }, MAX_RETRY_ATTEMPTS, `批次 ${batchIdx + 1} 翻譯`);
             }
 
-            // Merge results
-            translations = [];
-            let translatedIdx = 0;
-            for (let i = 0; i < texts.length; i++) {
-                if (codeBlockIndices.has(i)) {
-                    translations.push(codeBlockIndices.get(i));
-                } else {
-                    translations.push(translatedTexts[translatedIdx++]);
-                }
+            // Merge results according to index categories
+            translations = new Array(texts.length);
+            // Fill batch translated results
+            for (let k = 0; k < indexMap.length; k++) {
+                translations[indexMap[k]] = translatedTexts[k];
+            }
+            // Fill literals (code fences and pure link-ref blocks)
+            for (const [idx, literal] of keepLiteral.entries()) {
+                translations[idx] = literal;
+            }
+            // Process line-by-line translations for mixed blocks
+            for (const idx of lineByLine) {
+                const translated = await translateMarkdownBlockLineByLine(texts[idx], apiKey, model);
+                translations[idx] = translated;
             }
         } else {
             // Original logic for non-markdown
@@ -1761,7 +1966,34 @@ async function main() {
                     console.error(`  - ${error}`);
                 });
 
+                // 若為特殊語法不一致，呈現更詳細的錯誤內容與差異
+                if (formatCheck.errors.some(e => e.includes('特殊語法'))) {
+                    reportSpecialSyntaxMismatches(blocks, translatedBlocks);
+                }
+
                 if (retryCount < MAX_RETRY_ATTEMPTS) {
+                    // 第三次失敗後，改用逐行翻譯整個 chunk
+                    if (retryCount >= 3) {
+                        console.log('多次驗證失敗，切換為逐行翻譯以保留特殊語法結構...');
+
+                        // 逐行翻譯每個區塊，平行處理
+                        const lineByLineTasks = blocks.map((block, idx) => async () => {
+                            const text = block.text || '';
+                            const translated = await translateMarkdownBlockLineByLine(text, apiKey, model);
+                            return { idx, text: translated };
+                        });
+
+                        const lineByLineResults = await promisePool(lineByLineTasks, 10);
+                        // 組回 translatedBlocks
+                        translatedBlocks = blocks.map((block, idx) => ({
+                            ...block,
+                            text: lineByLineResults[idx]?.text || ''
+                        }));
+
+                        console.log('逐行翻譯完成，重新進行格式檢查...');
+                        continue; // 回到 while 重新檢查
+                    }
+
                     console.log('正在重新翻譯...');
 
                     // 進度追蹤
