@@ -19,11 +19,13 @@ function parseArgs() {
         .option('output', { alias: 'o', describe: '輸出檔案路徑，預設根據輸入檔案自動產生。可���定不同格式的副檔名進行格式轉換', type: 'string' })
         .option('model', { alias: 'm', describe: 'Gemini 模型，預設為 gemini-2.5-pro', type: 'string', default: DEFAULT_MODEL }).option('autofix', { describe: '自動修正字幕序號不連續問題 (適用於 SRT 和 WebVTT)', type: 'boolean', default: false }).option('debug', { describe: '顯示詳細的除錯資訊，包括翻譯前後的完整內容比對', type: 'boolean', default: false })
         .option('bytes-per-chunk', { describe: '每個區塊的最大位元數 (適用於 Markdown)', type: 'number', default: 3000 })
+        .option('no-chunks', { describe: '不對 Markdown 檔案進行分塊處理，同時跳過格式驗證', type: 'boolean', default: false })
         .example('npx @willh/gemini-translator --input input.srt', '將 input.srt 翻譯為 input.zh.srt')
         .example('npx @willh/gemini-translator -i input.vtt', '翻譯 WebVTT 檔案')
         .example('npx @willh/gemini-translator -i input.ass -o output.ass', '翻譯 ASS 檔案')
         .example('npx @willh/gemini-translator -i input.md', '翻譯 Markdown 檔案')
         .example('npx @willh/gemini-translator -i input.md --bytes-per-chunk 5000', '翻譯 Markdown 並設定每個區塊 5000 bytes')
+        .example('npx @willh/gemini-translator -i input.md --no-chunks', '翻譯 Markdown 但不進行分塊處理和格式驗證')
         .example('npx @willh/gemini-translator -i input.srt -o output.ass', '將 SRT 翻譯並轉換為 ASS 格式')
         .example('npx @willh/gemini-translator -i input.vtt -o output.srt', '將 WebVTT 翻譯並轉換為 SRT 格式')
         .example('npx @willh/gemini-translator -i input.srt --autofix', '自動修正 SRT 字幕序號不連續問題')
@@ -227,7 +229,17 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     return header + dialogues.join('\n') + '\n';
 }
 
-function parseMarkdown(content, bytesPerChunk) {
+function parseMarkdown(content, bytesPerChunk, noChunks = false) {
+    // If no-chunks mode is enabled, return the entire content as a single block
+    if (noChunks) {
+        return [{
+            index: '1',
+            text: content,
+            sep: '',
+            leadingSep: ''
+        }];
+    }
+
     // 1. 先將所有 \r\n 都先改為 \n
     content = content.replace(/\r\n/g, '\n');
 
@@ -479,7 +491,7 @@ function serializeMarkdown(blocks) {
     return out;
 }
 
-function parseSubtitle(content, type, bytesPerChunk) {
+function parseSubtitle(content, type, bytesPerChunk, noChunks = false) {
     switch (type) {
         case 'srt':
             return parseSRT(content);
@@ -488,7 +500,7 @@ function parseSubtitle(content, type, bytesPerChunk) {
         case 'ass':
             return parseASS(content);
         case 'md':
-            return parseMarkdown(content, bytesPerChunk);
+            return parseMarkdown(content, bytesPerChunk, noChunks);
         default:
             throw new Error(`不支援的字幕格式: ${type}`);
     }
@@ -1655,7 +1667,7 @@ async function main() {
         console.log(`將轉換為輸出格式: ${outputType.toUpperCase()}`);
     }
     const subtitleContent = fs.readFileSync(inputPath, 'utf8');
-    const blocks = parseSubtitle(subtitleContent, inputType, argv.bytesPerChunk);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
+    const blocks = parseSubtitle(subtitleContent, inputType, argv.bytesPerChunk, argv.noChunks);    // 檢查 index 連續性，若有缺漏則顯示有問題的 time code 並停止，或自動修正 (適用於 SRT 和 WebVTT)
     
     // show blocks for debugging
     if (argv.debug) {
@@ -1942,8 +1954,8 @@ async function main() {
             process.exit(1);
         }
         console.log('時間碼順序檢查通過，準備寫入輸出檔案...');
-    } else if (inputType === 'md') {
-        // 檢查 Markdown 格式一致性，如果失敗則重新翻譯
+    } else if (inputType === 'md' && !argv.noChunks) {
+        // 檢查 Markdown 格式一致性，如果失敗則重新翻譯 (僅在未使用 --no-chunks 時執行)
         let retryCount = 0;
         let formatCheckPassed = false;
 
@@ -2072,6 +2084,9 @@ async function main() {
                 console.log('Markdown 格式檢查通過，準備寫入輸出檔案...');
             }
         }
+    } else if (inputType === 'md' && argv.noChunks) {
+        // 使用 --no-chunks 時跳過格式驗證
+        console.log('使用 --no-chunks 模式，跳過 Markdown 格式驗證，準備寫入輸出檔案...');
     } else {
         // console.log('ASS 格式無需檢查時間碼順序，準備寫入輸出檔案...');
     }

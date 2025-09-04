@@ -380,6 +380,44 @@ This is a test subtitle
     }
   });
 
+  // Test 11: CLI no-chunks argument validation
+  await runTest('CLI --no-chunks argument validation', async () => {
+    return new Promise((resolve, reject) => {
+      const child = spawn('node', ['main.js', '--help'], {
+        cwd: process.cwd(),
+        stdio: 'pipe'
+      });
+
+      let stdout = '';
+
+      child.stdout.on('data', (data) => {
+        stdout += data.toString();
+      });
+
+      child.on('close', (code) => {
+        if (code !== 0) {
+          reject(new Error(`CLI help failed with code ${code}`));
+          return;
+        }
+
+        try {
+          // Check that --no-chunks option is present in help text
+          assertTrue(stdout.includes('--no-chunks'), 'Help text should contain --no-chunks option');
+          assertTrue(stdout.includes('不對 Markdown 檔案進行分塊處理'), 'Help text should describe no-chunks functionality');
+          assertTrue(stdout.includes('--no-chunks             翻譯 Markdown 但不進行分塊處理和格式驗證'), 'Help text should include no-chunks example');
+          
+          console.log('   ✅ --no-chunks option found in help text');
+          console.log('   ✅ --no-chunks description found in help text');
+          console.log('   ✅ --no-chunks example found in help text');
+          
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+  });
+
   // Summary
   console.log('\n📊 Test Summary');
   console.log('===============');
