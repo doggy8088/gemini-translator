@@ -292,6 +292,15 @@ npm version patch
 npm publish --access public
 ```
 
+## 📚 Documentation
+
+For detailed technical documentation, please refer to the [docs](./docs/) folder:
+
+- [📋 Translation Strategy Analysis](./docs/translation-strategy.md) - Core translation methodology and context-aware processing
+- [🏗️ Architecture Analysis](./docs/architecture-analysis.md) - System design, components, and design patterns  
+- [📝 Format Processing Guide](./docs/format-processing.md) - Detailed file format handling strategies
+- [🔌 API Integration & Error Handling](./docs/api-integration.md) - Gemini API integration and retry mechanisms
+
 ## Technical Details
 
 ### Dependencies
